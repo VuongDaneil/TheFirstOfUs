@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Boston_Hell.unity
+    guid: 7fa8abdb78400f540ba830c657c984b2
+  - enabled: 1
+    path: Assets/Scenes/Gameplay.unity
+    guid: 36022b8594b98c24d8fb607243ad00da
+  - enabled: 1
+    path: Assets/Scenes/BootstrapScene.unity
+    guid: 23b975c162e55824c9e5ade0e85fa142
   m_configObjects: {}

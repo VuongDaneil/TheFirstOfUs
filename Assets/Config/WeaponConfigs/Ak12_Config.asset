@@ -39,7 +39,7 @@ MonoBehaviour:
   switchOutState: ak12_draw
   defaultTransitionDuration: 0.2
   attackTransitionDuration: 0.1
-  attackAnimationDuration: 0.65
+  attackAnimationDuration: 0.5
   movementTransitionDuration: 1
   inspectTransitionDuration: 0.25
   switchTransitionDuration: 0.15

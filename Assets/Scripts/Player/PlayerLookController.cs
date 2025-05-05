@@ -4,7 +4,7 @@ using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerLookController : MonoBehaviour
+public class PlayerLookController : MonoBehaviour, IDataPersistence
 {
     #region PROPERTIES
     [Header("STAT(s)")]
@@ -53,6 +53,18 @@ public class PlayerLookController : MonoBehaviour
 
             PlayerHead.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
         }
+    }
+    #endregion
+
+    #region SAVE GAME DATA
+    public void LoadData(GameData data)
+    {
+        PlayerHead.localEulerAngles = data.PlayerSavedData.PlayerEulerAngle;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.PlayerSavedData.PlayerEulerAngle = PlayerHead.localEulerAngles;
     }
     #endregion
 }

@@ -26,6 +26,11 @@ public class CharacterControllerBinding : ScriptableObject
     public KeyCode QuickThrow = KeyCode.G;
     public KeyCode WeaponSwap = KeyCode.Q;
 
+    [Header("SAVE GAME")]
+    public KeyCode SaveGameKey = KeyCode.F5;
+    public KeyCode LoadGameKey = KeyCode.F6;
+    public KeyCode ResetSaveFileKey = KeyCode.F7;
+
     // Add default preset
     public void Reset()
     {

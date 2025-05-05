@@ -4,7 +4,7 @@ using NaughtyAttributes;
 using Unity.VisualScripting;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMovementController : MonoBehaviour
+public class PlayerMovementController : MonoBehaviour, IDataPersistence
 {
     #region PROPERTIES
     [Header("Object - crouch / slide")]
@@ -65,6 +65,7 @@ public class PlayerMovementController : MonoBehaviour
     [ReadOnly] public Transform gameplayCamera;
     public Transform head;
     public Transform neck;
+    private Transform thisTransform;
 
     [Header("DEBUG")]
     public KeyCode RunKey;
@@ -84,6 +85,7 @@ public class PlayerMovementController : MonoBehaviour
     #region UNITY CORE
     private void Awake()
     {
+        thisTransform = transform;
         characterHeightStanding = CharacterDynamicBody.localPosition;
         characterHeightCrouching = characterHeightStanding - new Vector3(0, CrouchHeightOffset, 0);
         characterHeightSliding = characterHeightStanding - new Vector3(0, SlideHeightOffset, 0);
@@ -325,6 +327,19 @@ public class PlayerMovementController : MonoBehaviour
                 LeanTween.moveLocal(CharacterDynamicBody.gameObject, characterHeightSliding, 0.25f);
                 break;
         }
+    }
+    #endregion
+
+    #region SAVE GAME SYSTEM
+    public void LoadData(GameData data)
+    {
+        thisTransform.position = data.PlayerSavedData.PlayerPosition;
+
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.PlayerSavedData.PlayerPosition = thisTransform.position;
     }
     #endregion
 }

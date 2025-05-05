@@ -1,10 +1,12 @@
 using DigitalRuby.RainMaker;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using static SceneSharedAttributes;
 
-public class ScenePersonalEnvironmentController : MonoBehaviour
+public class WeatherController : MonoBehaviour
 {
     #region UNITY CORE
     [Header("WEATHER")]
@@ -38,7 +40,7 @@ public class ScenePersonalEnvironmentController : MonoBehaviour
                 RainController.SetRainIntensity(0);
                 StormController.enabled = false;
                 break;
-            case Weather.Rain:
+            case Weather.LightRain:
                 RainController.SetRainIntensity(1);
                 StormController.enabled = false;
                 break;
