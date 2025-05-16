@@ -4,11 +4,23 @@ using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
 using UnityEngine.Rendering;
+using static SceneSharedAttributes;
 
 [CreateAssetMenu(fileName = "SceneLightingPreset", menuName = "SceneSettingAsset/SceneLightingPreset")]
 public class SceneLightingPreset : ScriptableObject
 {
     #region PROPERTIES
+    public SceneLightingSettingPreset ClearLightingSetting;
+    public SceneLightingSettingPreset FoggyLightingSetting;
+    public SceneLightingSettingPreset SunnyLightingSetting;
+    public SceneLightingSettingPreset OvercastLightingSetting;
+    public SceneLightingSettingPreset SnowLightingSetting;
+    public SceneLightingSettingPreset SnowStormLightingSetting;
+    public SceneLightingSettingPreset LightRainLightingSetting;
+    public SceneLightingSettingPreset MediumRainLightingSetting;
+    public SceneLightingSettingPreset HeavyRainLightingSetting;
+    public SceneLightingSettingPreset StormLightingSetting;
+
     [Header("ENVIRONMENT")]
     public Material SkyBox;
     public Color SkyBoxColor;
@@ -52,35 +64,37 @@ public class SceneLightingPreset : ScriptableObject
     public void Apply()
     {
         if (sun == null) sun = GameObject.FindGameObjectWithTag("SunAndMoon").GetComponent<Light>();
-        sun.color = WorldLightColor;
-        sun.intensity = WorldLightIntensity;
+        SceneLightingSettingPreset targetPreset = ClearLightingSetting;
 
-        if (SkyBox != null) RenderSettings.skybox = SkyBox;
+        sun.color = targetPreset.WorldLightColor;
+        sun.intensity = targetPreset.WorldLightIntensity;
+
+        if (SkyBox != null) RenderSettings.skybox = targetPreset.SkyBox;
         Material skyBoxMaterial = RenderSettings.skybox;
         skyBoxMaterial.SetColor("_Tint", SkyBoxColor);
-        RenderSettings.ambientMode = AmbientMode;
+        RenderSettings.ambientMode = targetPreset.AmbientMode;
         switch (AmbientMode)
         {
             case AmbientMode.Skybox:
-                RenderSettings.ambientIntensity = Intensity;
+                RenderSettings.ambientIntensity = targetPreset.Intensity;
                 break;
             case AmbientMode.Trilight:
-                RenderSettings.ambientSkyColor = SkyColor;
-                RenderSettings.ambientEquatorColor = EquatorColor;
-                RenderSettings.ambientGroundColor = GroundColor;
+                RenderSettings.ambientSkyColor = targetPreset.SkyColor;
+                RenderSettings.ambientEquatorColor = targetPreset.EquatorColor;
+                RenderSettings.ambientGroundColor = targetPreset.GroundColor;
                 break;
             case AmbientMode.Flat:
-                RenderSettings.ambientLight = AmbientColor;
+                RenderSettings.ambientLight = targetPreset.AmbientColor;
                 break;
         }
         if (FogEnabled)
         {
-            RenderSettings.fog = FogEnabled;
-            RenderSettings.fogColor = FogColor;
-            RenderSettings.fogMode = FogMode;
-            RenderSettings.fogStartDistance = StartDistance;
-            RenderSettings.fogEndDistance = EndDistance;
-            RenderSettings.fogDensity = FogIntensity;
+            RenderSettings.fog = targetPreset.FogEnabled;
+            RenderSettings.fogColor = targetPreset.FogColor;
+            RenderSettings.fogMode = targetPreset.FogMode;
+            RenderSettings.fogStartDistance = targetPreset.StartDistance;
+            RenderSettings.fogEndDistance = targetPreset.EndDistance;
+            RenderSettings.fogDensity = targetPreset.FogIntensity;
         }
     }
 
@@ -88,33 +102,35 @@ public class SceneLightingPreset : ScriptableObject
     public void ApplySmoothly()
     {
         if (sun == null) sun = GameObject.FindGameObjectWithTag("SunAndMoon").GetComponent<Light>();
-        var currentLightIntensity = sun.intensity;
-        DOTween.To(() => currentLightIntensity, x => sun.intensity = x, WorldLightIntensity, 2);
-        var currentSunColor = sun.color;
-        DOTween.To(() => currentSunColor, x => sun.color = x, WorldLightColor, 2);
+        SceneLightingSettingPreset targetPreset = ClearLightingSetting;
 
-        if (SkyBox != null) RenderSettings.skybox = SkyBox;
+        var currentLightIntensity = sun.intensity;
+        DOTween.To(() => currentLightIntensity, x => sun.intensity = x, targetPreset.WorldLightIntensity, 2);
+        var currentSunColor = sun.color;
+        DOTween.To(() => currentSunColor, x => sun.color = x, targetPreset.WorldLightColor, 2);
+
+        if (SkyBox != null) RenderSettings.skybox = targetPreset.SkyBox;
         Material skyBoxMaterial = RenderSettings.skybox;
         Color fromColor = skyBoxMaterial.GetColor("_Tint");
-        DOTween.To(() => fromColor, x => skyBoxMaterial.SetColor("_Tint", x), SkyBoxColor, 2f);
-        RenderSettings.ambientMode = AmbientMode;
+        DOTween.To(() => fromColor, x => skyBoxMaterial.SetColor("_Tint", x), targetPreset.SkyBoxColor, 2f);
+        RenderSettings.ambientMode = targetPreset.AmbientMode;
         switch (AmbientMode)
         {
             case AmbientMode.Skybox:
                 var currentAmbientIntensity = RenderSettings.ambientIntensity;
-                DOTween.To(() => currentAmbientIntensity, x => RenderSettings.ambientIntensity = x, Intensity, 2);
+                DOTween.To(() => currentAmbientIntensity, x => RenderSettings.ambientIntensity = x, targetPreset.Intensity, 2);
                 break;
             case AmbientMode.Trilight:
                 var currentSkyColor = RenderSettings.ambientSkyColor;
                 var currentEquatorColor = RenderSettings.ambientEquatorColor;
                 var currentGroundColor = RenderSettings.ambientGroundColor;
-                DOTween.To(() => currentSkyColor, x => RenderSettings.ambientSkyColor = x, SkyColor, 2);
-                DOTween.To(() => currentEquatorColor, x => RenderSettings.ambientEquatorColor = x, EquatorColor, 2);
-                DOTween.To(() => currentGroundColor, x => RenderSettings.ambientGroundColor = x, GroundColor, 2);
+                DOTween.To(() => currentSkyColor, x => RenderSettings.ambientSkyColor = x, targetPreset.SkyColor, 2);
+                DOTween.To(() => currentEquatorColor, x => RenderSettings.ambientEquatorColor = x, targetPreset.EquatorColor, 2);
+                DOTween.To(() => currentGroundColor, x => RenderSettings.ambientGroundColor = x, targetPreset.GroundColor, 2);
                 break;
             case AmbientMode.Flat:
                 var currentAmbientColor = RenderSettings.ambientLight;
-                DOTween.To(() => currentAmbientColor, x => RenderSettings.ambientLight = x, AmbientColor, 2);
+                DOTween.To(() => currentAmbientColor, x => RenderSettings.ambientLight = x, targetPreset.AmbientColor, 2);
                 break;
         }
         if (FogEnabled)
@@ -122,15 +138,10 @@ public class SceneLightingPreset : ScriptableObject
             RenderSettings.fog = FogEnabled;
             RenderSettings.fogMode = FogMode;
             var currentFogColor = RenderSettings.fogColor;
-            DOTween.To(() => currentFogColor, x => RenderSettings.fogColor = x, FogColor, 2);
-            DOTween.To(() => RenderSettings.fogStartDistance, x => RenderSettings.fogStartDistance = x, StartDistance, 2);
-            DOTween.To(() => RenderSettings.fogEndDistance, x => RenderSettings.fogEndDistance = x, EndDistance, 2);
-            DOTween.To(() => RenderSettings.fogDensity, x => RenderSettings.fogDensity = x, FogIntensity, 2);
-
-            //RenderSettings.fogColor = FogColor;
-            //RenderSettings.fogStartDistance = StartDistance;
-            //RenderSettings.fogEndDistance = EndDistance;
-            //RenderSettings.fogDensity = FogIntensity;
+            DOTween.To(() => currentFogColor, x => RenderSettings.fogColor = x, targetPreset.FogColor, 2);
+            DOTween.To(() => RenderSettings.fogStartDistance, x => RenderSettings.fogStartDistance = x, targetPreset.StartDistance, 2);
+            DOTween.To(() => RenderSettings.fogEndDistance, x => RenderSettings.fogEndDistance = x, targetPreset.EndDistance, 2);
+            DOTween.To(() => RenderSettings.fogDensity, x => RenderSettings.fogDensity = x, targetPreset.FogIntensity, 2);
         }
     }
 
@@ -160,5 +171,6 @@ public class SceneLightingPreset : ScriptableObject
         EndDistance = RenderSettings.fogEndDistance;
         FogIntensity = RenderSettings.fogDensity;
     }
+
     #endregion
 }
