@@ -12,16 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441ae5c7f84229d4cb40be3263e3f07c, type: 3}
   m_Name: Storm
   m_EditorClassIdentifier: 
-  SkyBox: {fileID: 2100000, guid: 1612dc54605b67947bed7b6e6b4f48c4, type: 2}
+  SkyBox: {fileID: 2100000, guid: 6a3371ff7a26eb147b395207bad32e70, type: 2}
+  SkyBoxColor: {r: 1, g: 1, b: 1, a: 0.5019608}
   RealtimeShadowColor: {r: 0.41960785, g: 0.47843137, b: 0.627451, a: 1}
   AmbientMode: 0
   Intensity: 0.25
+  AmbientColor: {r: 0, g: 0, b: 0, a: 0}
   SkyColor: {r: 0, g: 0, b: 0, a: 0}
   EquatorColor: {r: 0, g: 0, b: 0, a: 0}
   GroundColor: {r: 0, g: 0, b: 0, a: 0}
-  AmbientColor: {r: 0, g: 0, b: 0, a: 0}
   FogEnabled: 1
   FogColor: {r: 0.49019608, g: 0.5647059, b: 0.6117647, a: 1}
   FogMode: 1
   StartDistance: 0
   EndDistance: 400
+  FogIntensity: 0

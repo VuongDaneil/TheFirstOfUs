@@ -15,6 +15,13 @@ MonoBehaviour:
   Season: 0
   DayTimeConfig: {fileID: 11400000, guid: f57ce74a4ee4e0844997199bb0be30df, type: 2}
   DaysInSeason: 7
+  DawnLightingPreset: {fileID: 11400000, guid: 31bf784244ff427448e5bdffe28cf8eb, type: 2}
+  MorningLightingPreset: {fileID: 11400000, guid: db3b0eb75f0e93243ba85e96025ea80e, type: 2}
+  AfternoonLightingPreset: {fileID: 11400000, guid: eaecec03392e09449aa74fe385f2b18a, type: 2}
+  EveningLightingPreset: {fileID: 11400000, guid: dde44ab288309c04495c27ae387ee3ac, type: 2}
+  NightLightingPreset: {fileID: 11400000, guid: d299b08bbb9128345a5c323923fa790d, type: 2}
+  MidnightLightingPreset: {fileID: 11400000, guid: f4555181773c24e4d80253bf1d48ed0a, type: 2}
+  DefaultLightingPreset: {fileID: 11400000, guid: 56d1a1f674c67fb459665cab1fd62b5c, type: 2}
   DefaultWeather: 0
   WeatherPossibilities: {fileID: 11400000, guid: 08e3c51e04c063f4eb124b6d61bda46a, type: 2}
   ClearDuration: {x: 1, y: 3}

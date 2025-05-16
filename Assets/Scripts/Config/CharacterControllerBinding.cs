@@ -31,6 +31,9 @@ public class CharacterControllerBinding : ScriptableObject
     public KeyCode LoadGameKey = KeyCode.F6;
     public KeyCode ResetSaveFileKey = KeyCode.F7;
 
+    [Header("DEBUG")]
+    public KeyCode ChangeDayPartKey = KeyCode.K;
+
     // Add default preset
     public void Reset()
     {

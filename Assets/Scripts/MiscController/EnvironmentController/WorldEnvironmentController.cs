@@ -5,11 +5,6 @@ using NaughtyAttributes;
 using UnityEngine;
 using static SceneSharedAttributes;
 using UnityEngine.Events;
-using Unity.VisualScripting;
-using UnityEditor.VersionControl;
-
-
-
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -21,6 +16,7 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
     [Header("CONTROLLER(s)")]
     public WeatherController WorldWeather;
     public GameDebugOptions DebugOptions;
+    public Light SunAndMoonLightSource;
 
     [Header("SEASON CONFIG(s)")]
     public WorldSeasonConfig SpringSeasonConfig;
@@ -31,12 +27,14 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
     public List<WeatherComponents> WeatherComponents = new List<WeatherComponents>();
 
     [Header("DEBUG(s)")]
+    public bool PauseTime = false;
     [ReadOnly] public Weather CurrentWeather;
     [ReadOnly] public WorldSeasonConfig CurrentSeasonConfig;
     public WorldSeason CurrentSeason => CurrentSeasonConfig == null ? WorldSeason.SPRING : CurrentSeasonConfig.Season;
     [ReadOnly] public int DayCount = 0;
     [ReadOnly] public TimeSpan DayTime = new TimeSpan(0, 0, 0);
     [ReadOnly] public DayPart CurrentDayPart = DayPart.Evening;
+    [SerializeField] private CharacterControllerBinding controlMapping;
 
     UnityEvent OnHourPassed = new UnityEvent();
     UnityEvent OnDayPassed = new UnityEvent();
@@ -46,9 +44,19 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
     #endregion
 
     #region UNITY CORE
+    private void Awake()
+    {
+        ValidateCurrentSeason();
+        ValidateDayPart();
+        ApplyDaypartLightingSettingInstantly(CurrentDayPart);
+    }
     private void Update()
     {
-        UpdateDayTime();
+        if (Input.GetKeyDown(controlMapping.ChangeDayPartKey))
+        {
+            ApplyNextDaypartLightingSettingSmoothly();
+        }
+        if (!PauseTime) { UpdateDayTime(); }
     }
     #endregion
 
@@ -85,13 +93,20 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
     {
         var dayTimeCycleConfig = CurrentSeasonConfig.DayTimeConfig;
         int currentHour = DayTime.Hours;
+        DayPart toCheckDaypart = CurrentDayPart;
 
-        if (currentHour >= dayTimeCycleConfig.Dawn.x && currentHour <= dayTimeCycleConfig.Dawn.y) CurrentDayPart = DayPart.Dawn;
-        else if (currentHour >= dayTimeCycleConfig.Morning.x && currentHour <= dayTimeCycleConfig.Morning.y) CurrentDayPart = DayPart.Morning;
-        else if (currentHour >= dayTimeCycleConfig.Afternoon.x && currentHour <= dayTimeCycleConfig.Afternoon.y) CurrentDayPart = DayPart.Afternoon;
-        else if (currentHour >= dayTimeCycleConfig.Evening.x && currentHour <= dayTimeCycleConfig.Evening.y) CurrentDayPart = DayPart.Evening;
-        else if (currentHour >= dayTimeCycleConfig.Night.x && currentHour <= dayTimeCycleConfig.Night.y) CurrentDayPart = DayPart.Night;
-        else if (currentHour >= dayTimeCycleConfig.Midnight.x && currentHour <= dayTimeCycleConfig.Midnight.y) CurrentDayPart = DayPart.Midnight;
+        if (currentHour >= dayTimeCycleConfig.Dawn.x && currentHour <= dayTimeCycleConfig.Dawn.y) toCheckDaypart = DayPart.Dawn;
+        else if (currentHour >= dayTimeCycleConfig.Morning.x && currentHour <= dayTimeCycleConfig.Morning.y) toCheckDaypart = DayPart.Morning;
+        else if (currentHour >= dayTimeCycleConfig.Afternoon.x && currentHour <= dayTimeCycleConfig.Afternoon.y) toCheckDaypart = DayPart.Afternoon;
+        else if (currentHour >= dayTimeCycleConfig.Evening.x && currentHour <= dayTimeCycleConfig.Evening.y) toCheckDaypart = DayPart.Evening;
+        else if (currentHour >= dayTimeCycleConfig.Night.x && currentHour <= dayTimeCycleConfig.Night.y) toCheckDaypart = DayPart.Night;
+        else if (currentHour >= dayTimeCycleConfig.Midnight.x && currentHour <= dayTimeCycleConfig.Midnight.y) toCheckDaypart = DayPart.Midnight;
+
+        if (CurrentDayPart != toCheckDaypart)
+        {
+            CurrentDayPart = toCheckDaypart;
+            ApplyDaypartLightingSetting(CurrentDayPart);
+        }
     }
     private void ValidateCurrentSeason()
     {
@@ -118,6 +133,84 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
         }
 
         realSecondLengthAsIngameSecond = 3600f / CurrentSeasonConfig.DayTimeConfig.HourInSecond;
+    }
+    private void ApplyDaypartLightingSetting(DayPart daypart)
+    {
+        switch (daypart)
+        {
+            case DayPart.Dawn:
+                CurrentSeasonConfig.DawnLightingPreset.ApplySmoothly();
+                break;
+            case DayPart.Morning:
+                CurrentSeasonConfig.MorningLightingPreset.ApplySmoothly();
+                break;
+            case DayPart.Afternoon:
+                CurrentSeasonConfig.AfternoonLightingPreset.ApplySmoothly();
+                break;
+            case DayPart.Evening:
+                CurrentSeasonConfig.EveningLightingPreset.ApplySmoothly();
+                break;
+            case DayPart.Night:
+                CurrentSeasonConfig.NightLightingPreset.ApplySmoothly();
+                break;
+            case DayPart.Midnight:
+                CurrentSeasonConfig.MidnightLightingPreset.ApplySmoothly();
+                break;
+        }
+    }
+    private void ApplyDaypartLightingSettingInstantly(DayPart daypart)
+    {
+        switch (daypart)
+        {
+            case DayPart.Dawn:
+                CurrentSeasonConfig.DawnLightingPreset.Apply();
+                break;
+            case DayPart.Morning:
+                CurrentSeasonConfig.MorningLightingPreset.Apply();
+                break;
+            case DayPart.Afternoon:
+                CurrentSeasonConfig.AfternoonLightingPreset.Apply();
+                break;
+            case DayPart.Evening:
+                CurrentSeasonConfig.EveningLightingPreset.Apply();
+                break;
+            case DayPart.Night:
+                CurrentSeasonConfig.NightLightingPreset.Apply();
+                break;
+            case DayPart.Midnight:
+                CurrentSeasonConfig.MidnightLightingPreset.Apply();
+                break;
+        }
+    }
+    private void ApplyNextDaypartLightingSettingSmoothly()
+    {
+        switch (CurrentDayPart)
+        {
+            case DayPart.Dawn:
+                CurrentDayPart = DayPart.Morning;
+                CurrentSeasonConfig.MorningLightingPreset.ApplySmoothly();
+                break;
+            case DayPart.Morning:
+                CurrentDayPart = DayPart.Afternoon;
+                CurrentSeasonConfig.AfternoonLightingPreset.ApplySmoothly();
+                break;
+            case DayPart.Afternoon:
+                CurrentDayPart = DayPart.Evening;
+                CurrentSeasonConfig.EveningLightingPreset.ApplySmoothly();
+                break;
+            case DayPart.Evening:
+                CurrentDayPart = DayPart.Night;
+                CurrentSeasonConfig.NightLightingPreset.ApplySmoothly();
+                break;
+            case DayPart.Night:
+                CurrentDayPart = DayPart.Midnight;
+                CurrentSeasonConfig.MidnightLightingPreset.ApplySmoothly();
+                break;
+            case DayPart.Midnight:
+                CurrentDayPart = DayPart.Dawn;
+                CurrentSeasonConfig.DawnLightingPreset.ApplySmoothly();
+                break;
+        }
     }
     #endregion
 

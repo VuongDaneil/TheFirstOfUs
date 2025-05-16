@@ -13,6 +13,15 @@ public class WorldSeasonConfig : ScriptableObject
     public TimeCycleConfig DayTimeConfig;
     public int DaysInSeason = 7;
 
+    [Header("DAY PART(s)")]
+    public SceneLightingPreset DawnLightingPreset;
+    public SceneLightingPreset MorningLightingPreset;
+    public SceneLightingPreset AfternoonLightingPreset;
+    public SceneLightingPreset EveningLightingPreset;
+    public SceneLightingPreset NightLightingPreset;
+    public SceneLightingPreset MidnightLightingPreset;
+    public SceneLightingPreset DefaultLightingPreset;
+
     [Header("WEATHER")]
     public Weather DefaultWeather;
     public WeatherPossibilityConfig WeatherPossibilities;
