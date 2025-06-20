@@ -23,9 +23,9 @@ MonoBehaviour:
   recoilForce: 2
   adsRecoilMultiplier: 0.7
   recoilPattern: {x: 1, y: 2}
-  hipFirePosition: {x: -0.218, y: -0.345, z: 0.45}
+  hipFirePosition: {x: 0.008206761, y: -0.289353, z: 0.164}
   hipFireRotation: {x: 0, y: 0, z: 0}
-  adsPosition: {x: -0.2953, y: -0.256, z: 0.29}
+  adsPosition: {x: -0.039, y: -0.255, z: 0.164}
   adsRotation: {x: 0, y: 0, z: 0}
   movementTransitionSpeed: 0.2
   idleState: metarig|idle

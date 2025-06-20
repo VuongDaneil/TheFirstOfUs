@@ -9,7 +9,7 @@ public class WeatherPossibilityConfig : ScriptableObject
     public List<WeatherChances> WeathersPossibility = new List<WeatherChances>();
 
     /// <summary>
-    /// using Weighted Random Algorithm
+    /// Using Weighted Random Algorithm
     /// </summary>
     /// <returns></returns>
     public Weather ChooseWeatherByChances()
@@ -26,6 +26,6 @@ public class WeatherPossibilityConfig : ScriptableObject
             if (cursor >= randomValue) return WeathersPossibility[i].Weather;
         }
 
-        return Weather.Storm;
+        return Weather.Clear;
     }
 }

@@ -35,14 +35,14 @@ MonoBehaviour:
     EndDistance: 400
     FogIntensity: 0
   FoggyLightingSetting:
-    OverrideSkybox: 1
+    OverrideSkybox: 0
     SkyBox: {fileID: 2100000, guid: 6a3371ff7a26eb147b395207bad32e70, type: 2}
     SkyBoxColor: {r: 0.2784314, g: 0.3019608, b: 0.34509805, a: 0.5019608}
     RealtimeShadowColor: {r: 0, g: 0, b: 0, a: 0}
-    OverrideWorldLight: 1
+    OverrideWorldLight: 0
     WorldLightColor: {r: 1, g: 1, b: 1, a: 1}
     WorldLightIntensity: 0.5
-    OverrideEnvironmentLight: 1
+    OverrideEnvironmentLight: 0
     AmbientMode: 1
     Intensity: 0.25
     AmbientColor: {r: 0, g: 0, b: 0, a: 0}
@@ -51,10 +51,10 @@ MonoBehaviour:
     GroundColor: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
     OverrideFog: 1
     FogEnabled: 1
-    FogColor: {r: 0.49019608, g: 0.5647059, b: 0.6117647, a: 1}
+    FogColor: {r: 0.49803922, g: 0.63529414, b: 0.65882355, a: 1}
     FogMode: 1
     StartDistance: 0
-    EndDistance: 400
+    EndDistance: 65
     FogIntensity: 0
   SunnyLightingSetting:
     OverrideSkybox: 1
@@ -232,20 +232,3 @@ MonoBehaviour:
     StartDistance: 0
     EndDistance: 400
     FogIntensity: 0
-  SkyBox: {fileID: 2100000, guid: 6a3371ff7a26eb147b395207bad32e70, type: 2}
-  SkyBoxColor: {r: 0.2784314, g: 0.3019608, b: 0.34509805, a: 0.5019608}
-  RealtimeShadowColor: {r: 0.41960785, g: 0.47843137, b: 0.627451, a: 1}
-  WorldLightColor: {r: 1, g: 1, b: 1, a: 1}
-  WorldLightIntensity: 0.5
-  AmbientMode: 1
-  Intensity: 0.25
-  AmbientColor: {r: 0, g: 0, b: 0, a: 0}
-  SkyColor: {r: 0.19999999, g: 0.19999999, b: 0.19999999, a: 0}
-  EquatorColor: {r: 0, g: 0, b: 0, a: 1}
-  GroundColor: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
-  FogEnabled: 1
-  FogColor: {r: 0.49019608, g: 0.5647059, b: 0.6117647, a: 1}
-  FogMode: 1
-  StartDistance: 0
-  EndDistance: 400
-  FogIntensity: 0

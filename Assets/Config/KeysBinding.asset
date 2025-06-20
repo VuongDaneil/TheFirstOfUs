@@ -12,31 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a348202a80a404991175491080db9d, type: 3}
   m_Name: KeysBinding
   m_EditorClassIdentifier: 
-  StartControl: 271
-  StartAndPauseSpawnEnemy: 44
   Sprint: 304
   Crouch: 306
   Jump: 32
-  LeanLeft: 113
-  LeanRight: 101
-  Kick: 99
-  InjectAdrenalineShot: 120
-  Shoot: 323
-  AlternativeShoot: 0
+  StartControl: 271
+  Fire: 323
   AimDownSight: 324
-  AltAimDownSight: 325
   Reload: 114
-  InspectWeapon: 121
-  SwitchScope: 116
-  ChangeAttrachments: 106
-  EquipRandomAttachments: 270
-  ChangeSkin: 256
-  ChangeScope: 257
-  ChangeSilencer: 258
-  ChangeLaser: 259
-  ChangeFlashlight: 260
-  ChangeGrip: 261
-  ChangeMagazine: 262
-  ChangeStock: 263
-  ChangeBarrel: 264
-  ChangeOther: 265
+  Inspect: 105
+  Weapon1: 49
+  Weapon2: 50
+  Weapon3: 51
+  Weapon4: 52
+  QuickMelee: 118
+  QuickThrow: 103
+  WeaponSwap: 113
+  SaveGameKey: 286
+  LoadGameKey: 287
+  ResetSaveFileKey: 288
+  ChangeDayPartKey: 107
+  ChangeWeatherKey: 106

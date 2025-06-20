@@ -18,10 +18,8 @@ public static class SceneSharedAttributes
     {
         Clear,
         Foggy,
-        Sunny,
         Overcast,
-        Snow,
-        SnowStorm,
+        Snowing,
         LightRain,
         MediumRain,
         HeavyRain,
@@ -38,7 +36,7 @@ public static class SceneSharedAttributes
     }
     #endregion
 
-    #region structs
+    #region types
     [System.Serializable]
     public struct WeatherChances
     {
@@ -50,20 +48,19 @@ public static class SceneSharedAttributes
     public class WeatherComponents
     {
         public Weather Weather;
-        public SceneLightingPreset LightingPreset;
         public List<GameObject> GameobjectToActive;
         public List<ParticleSystem> WeatherEffects;
         public UnityEvent OnThisWeatherAppear;
         public UnityEvent OnThisWeatherGone;
 
-        public void ActiveThisWeather()
+        public void Start()
         {
             foreach (var obj in GameobjectToActive) obj.SetActive(true);
             foreach (var effect in WeatherEffects) effect.Play();
             OnThisWeatherAppear?.Invoke();
         }
 
-        public void DeactiveThisWeather()
+        public void Stop()
         {
             foreach (var obj in GameobjectToActive) obj.SetActive(false);
             foreach (var effect in WeatherEffects) effect.Stop();
@@ -112,6 +109,26 @@ public static class SceneSharedAttributes
         [ShowIf("FogEnabled")][Label("Start Distance")] public float StartDistance = 0f;
         [ShowIf("FogEnabled")][Label("End Distance")] public float EndDistance = 300f;
         [ShowIf("FogEnabled")][Label("Intensity")] public float FogIntensity;
+    }
+
+    [System.Serializable]
+    public class WeatherInProgressing
+    {
+        public Weather Weather;
+        public int Duration;
+        public float ElapsedTime;
+        public WeatherInProgressing(Weather weather, int duration)
+        {
+            ElapsedTime = 0;
+            Weather = weather;
+            Duration = duration;
+        }
+
+        public bool IsFinished() => ElapsedTime >= Duration;
+        public void Update(int frameGap = 1)
+        {
+            if (!IsFinished()) ElapsedTime += Time.deltaTime * frameGap;
+        }
     }
     #endregion
 }

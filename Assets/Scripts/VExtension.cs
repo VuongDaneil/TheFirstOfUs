@@ -10,4 +10,10 @@ public static class VExtension
         if (input == null || !input.Any()) return default(T);
         return input.ElementAt(UnityEngine.Random.Range(0, input.Count()));
     }
+
+    public static T GetRandomEnumValue<T>() where T : System.Enum
+    {
+        var values = System.Enum.GetValues(typeof(T));
+        return (T)values.GetValue(UnityEngine.Random.Range(0, values.Length));
+    }
 }

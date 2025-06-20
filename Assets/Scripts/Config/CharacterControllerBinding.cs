@@ -33,6 +33,7 @@ public class CharacterControllerBinding : ScriptableObject
 
     [Header("DEBUG")]
     public KeyCode ChangeDayPartKey = KeyCode.K;
+    public KeyCode ChangeWeatherKey = KeyCode.K;
 
     // Add default preset
     public void Reset()

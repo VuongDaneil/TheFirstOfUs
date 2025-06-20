@@ -9631,8 +9631,6 @@ GameObject:
   m_Component:
   - component: {fileID: 470886}
   - component: {fileID: 11437536}
-  - component: {fileID: 4940396062620749069}
-  - component: {fileID: 445565222885160125}
   m_Layer: 0
   m_Name: RainPrefab
   m_TagString: Untagged
@@ -9657,7 +9655,6 @@ Transform:
   - {fileID: 498708}
   - {fileID: 487684}
   - {fileID: 481474}
-  - {fileID: 4576931721519759351}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11437536
@@ -9677,8 +9674,7 @@ MonoBehaviour:
   RainSoundLight: {fileID: 8300000, guid: c980eda1ec9b9ff4b930005976b00f41, type: 3}
   RainSoundMedium: {fileID: 8300000, guid: 3359e9d10af08ca46ae396298dbd1ed9, type: 3}
   RainSoundHeavy: {fileID: 8300000, guid: db1471092e49b7445bfbd374a17ea61a, type: 3}
-  RainSoundAudioMixer: {fileID: -8736041851046110365, guid: 4d0939084f664f840983da104c49568c,
-    type: 2}
+  RainSoundAudioMixer: {fileID: -8736041851046110365, guid: 4d0939084f664f840983da104c49568c, type: 2}
   RainIntensity: 1
   RainFallParticleSystem: {fileID: 19831730}
   RainExplosionParticleSystem: {fileID: 19824492}
@@ -9690,44 +9686,10 @@ MonoBehaviour:
   WindSpeedRange: {x: 50, y: 100, z: 500}
   WindChangeInterval: {x: 5, y: 30}
   EnableWind: 0
+  MaxRainVolume: 0
   RainHeight: 25
   RainForwardOffset: -7
   RainMistHeight: 3
---- !u!114 &4940396062620749069
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 160098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a18f40bd34a05543b7edc3db0439bda, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  light: {fileID: 3006562905441427689}
-  LightEnableDuration: 0.1
-  LightIntensityRange: {x: 0.1, y: 1.1}
---- !u!114 &445565222885160125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 160098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38cf0b4ad83a8d4b8bed8df1af43791, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LightingLight: {fileID: 4940396062620749069}
-  MaxFlashingTimes: 4
-  MinimumTimeBetweenEachLighting: 5
-  ThunderAudioSource: {fileID: 7968526691122620332}
-  ThunderAudioFx:
-  - {fileID: 8300000, guid: 6854823dbaeed734f82550a8bfd5d95f, type: 3}
-  - {fileID: 8300000, guid: 6a3f9eca172ff964cab5f022cf704050, type: 3}
-  - {fileID: 8300000, guid: 3e7fd500bd20ad448b9dd04ee22412be, type: 3}
 --- !u!1 &177510
 GameObject:
   m_ObjectHideFlags: 0
@@ -14523,195 +14485,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RainExplosion: {fileID: 19824492}
   RainParticleSystem: {fileID: 19831730}
---- !u!1 &1793531565488363136
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4576931721519759351}
-  - component: {fileID: 3006562905441427689}
-  - component: {fileID: 7968526691122620332}
-  m_Layer: 0
-  m_Name: Lighting_simulation
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4576931721519759351
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793531565488363136}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 20.63, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 470886}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!108 &3006562905441427689
-Light:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793531565488363136}
-  m_Enabled: 0
-  serializedVersion: 10
-  m_Type: 1
-  m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
---- !u!82 &7968526691122620332
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1793531565488363136}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -8736041851046110365, guid: 4d0939084f664f840983da104c49568c,
-    type: 2}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 100
-  Pan2D: 0
-  rolloffMode: 2
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
