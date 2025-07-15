@@ -1,7 +1,5 @@
-using UnityEngine;
-using System.Collections;
 using NaughtyAttributes;
-using Unity.VisualScripting;
+using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovementController : MonoBehaviour, IDataPersistence
@@ -100,6 +98,7 @@ public class PlayerMovementController : MonoBehaviour, IDataPersistence
     }
     private void Update()
     {
+        if (!PlayerBrain.Instance.IsAlive) return;
         HandleMovement();
     }
     #endregion
@@ -120,8 +119,17 @@ public class PlayerMovementController : MonoBehaviour, IDataPersistence
             }
             return;
         }
-        float moveX = Input.GetAxis("Horizontal");
-        float moveZ = Input.GetAxis("Vertical");
+        //float moveX = Input.GetAxis("Horizontal");
+        //float moveZ = Input.GetAxis("Vertical");
+
+        float moveX = 0f;
+        float moveZ = 0f;
+
+        if (Input.GetKey(ControlMapping.MoveForward)) moveZ += 1;
+        if (Input.GetKey(ControlMapping.MoveBackward)) moveZ -= 1;
+        if (Input.GetKey(ControlMapping.MoveRight)) moveX += 1;
+        if (Input.GetKey(ControlMapping.MoveLeft)) moveX -= 1;
+
 
         Vector3 move = gameplayCamera.right * moveX + gameplayCamera.forward * moveZ;
 
@@ -155,7 +163,7 @@ public class PlayerMovementController : MonoBehaviour, IDataPersistence
                 characterController.Move(Time.deltaTime * walkSpeed * move);
             }
 
-            PlayerControlEventsMananger.OnPlayerSteering?.Invoke(moveX);
+            PlayerControlEventMananger.OnPlayerSteering?.Invoke(moveX);
         }
 
         if (characterController.isGrounded && velocity.y < 0)
@@ -342,7 +350,7 @@ public class PlayerMovementController : MonoBehaviour, IDataPersistence
                 break;
         }
 
-        if (changed) PlayerControlEventsMananger.OnPlayerChangeMovementState?.Invoke(stage);
+        if (changed) PlayerControlEventMananger.OnPlayerChangeMovementState?.Invoke(stage);
     }
     #endregion
 

@@ -120,8 +120,11 @@ public abstract class ActorBase : MonoBehaviour, IActor
     }
     public virtual void Initialize()
     {
-        Target = PlayerBrain.Instance;
-        TargetTransform = PlayerBrain.Instance.transform;
+        if (PlayerBrain.Instance)
+        {
+            Target = PlayerBrain.Instance;
+            TargetTransform = PlayerBrain.Instance.transform;
+        }
     }
     #endregion
 

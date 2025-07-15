@@ -116,7 +116,7 @@ namespace WeaponSystem
             float horizontalRecoil = Random.Range(-weaponData.recoilPattern.x, weaponData.recoilPattern.x) * currentRecoil;
             float verticalRecoil = weaponData.recoilPattern.y * currentRecoil;
 
-            PlayerControlEventsMananger.OnRecoilAfterShoot?.Invoke(verticalRecoil);
+            PlayerControlEventMananger.OnRecoilAfterShoot?.Invoke(verticalRecoil);
         }
 
         private float ClampRotation(float rotation)

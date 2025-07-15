@@ -15,9 +15,9 @@ public class FirearmWeaponAnimationEvent : MonoBehaviour
     #region MAIN
 
     #region _events
-    public void ReloadDone() => PlayerControlEventsMananger.OnWeaponReloadDone?.Invoke();
-    public void SwitchedIn() => PlayerControlEventsMananger.OnWeaponSwitchInDone?.Invoke();
-    public void SwitchedOut() => PlayerControlEventsMananger.OnWeaponSwitchOutDone?.Invoke();
+    public void ReloadDone() => PlayerControlEventMananger.OnWeaponReloadDone?.Invoke();
+    public void SwitchedIn() => PlayerControlEventMananger.OnWeaponSwitchInDone?.Invoke();
+    public void SwitchedOut() => PlayerControlEventMananger.OnWeaponSwitchOutDone?.Invoke();
     #endregion
 
     public void MagOut() => ReloadAudioSource.PlayOneShot(MagOutClip);

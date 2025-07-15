@@ -18,11 +18,14 @@ public class NormalZombieActor : ActorBase
     private IState runAwayState;
 
     [Header("CONTROLLER(s)")]
+    public bool IsInMainMenu = false;
     public NavMeshAgent ActorNavAgent;
 
     [Header("DEBUG")]
     [ReadOnly] public string CurrentStateName = "IDLE";
     #endregion
+
+    #region UNITY CORE
     protected override void Awake()
     {
         base.Awake();
@@ -34,7 +37,9 @@ public class NormalZombieActor : ActorBase
         attackState = new AttackState(this);
         stunState = new StunState(this);
         runAwayState = new RunAwayState(this);
+        if (IsInMainMenu) ChangeState(StateType.Idle);
     }
+
     protected override void Update()
     {
         base.Update();
@@ -48,6 +53,7 @@ public class NormalZombieActor : ActorBase
         if (ActorNavAgent == null) ActorNavAgent = GetComponent<NavMeshAgent > ();
         if (ActorAnimationController == null) ActorAnimationController = GetComponent< ActorAnimationControl>();
     }
+    #endregion
 
     public override void ChangeState(StateType _state)
     {
@@ -161,22 +167,22 @@ public class NormalZombieActor : ActorBase
 
     public override bool IsTargetInChaseRange(float rangeMultiplier = 1)
     {
-        return AttributesConfig.IsTargetInChaseRange(TargetTransform.position, ActorTransform, rangeMultiplier);
+        return TargetTransform != null && AttributesConfig.IsTargetInChaseRange(TargetTransform.position, ActorTransform, rangeMultiplier);
     }
 
     public override bool IsTargetInSurroundingSenseRange()
     {
-        return AttributesConfig.IsTargetInSurroundingSenseRange(TargetTransform.position, ActorTransform);
+        return TargetTransform != null && AttributesConfig.IsTargetInSurroundingSenseRange(TargetTransform.position, ActorTransform);
     }
 
     public override bool IsTargetInVisionRange()
     {
-        return AttributesConfig.IsTargetInVisionRange(TargetTransform.position, ActorTransform);
+        return TargetTransform != null && AttributesConfig.IsTargetInVisionRange(TargetTransform.position, ActorTransform);
     }
 
     public override bool IsTargetInAttackRange()
     {
-        return AttributesConfig.IsTargetInAttackRange(TargetTransform.position, ActorTransform);
+        return TargetTransform != null && AttributesConfig.IsTargetInAttackRange(TargetTransform.position, ActorTransform);
     }
     #endregion
 

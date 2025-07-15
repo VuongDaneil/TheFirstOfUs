@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 499448}
   - component: {fileID: 1728249114495380178}
+  - component: {fileID: 4007120612520336499}
   m_Layer: 10
   m_Name: Hip_R
   m_TagString: Untagged
@@ -54,6 +55,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.49154738, y: 0.25344026, z: 0.20038769}
   m_Center: {x: -0.2542264, y: 0.019879192, z: 0.0136588765}
+--- !u!114 &4007120612520336499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef21d3584a264449d59bf652c9ed1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectHitEffectType: 5
 --- !u!1 &102562
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,6 +1049,7 @@ GameObject:
   m_Component:
   - component: {fileID: 486764}
   - component: {fileID: 3018854909453549123}
+  - component: {fileID: 9045178537207365171}
   m_Layer: 10
   m_Name: Spine1_M
   m_TagString: Untagged
@@ -1079,6 +1094,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.35469872, y: 0.4114803, z: 0.43484706}
   m_Center: {x: 0.078885, y: 0.018488163, z: 0}
+--- !u!114 &9045178537207365171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 120934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef21d3584a264449d59bf652c9ed1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectHitEffectType: 5
 --- !u!1 &124668
 GameObject:
   m_ObjectHideFlags: 0
@@ -2002,6 +2030,7 @@ GameObject:
   m_Component:
   - component: {fileID: 427794}
   - component: {fileID: 3552287562582606429}
+  - component: {fileID: 7382959553329079238}
   m_Layer: 10
   m_Name: Elbow_L
   m_TagString: Untagged
@@ -2046,6 +2075,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4266096, y: 0.16845895, z: 0.15231349}
   m_Center: {x: 0.10783454, y: 0.00000002175682, z: 0.000000008262692}
+--- !u!114 &7382959553329079238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 155434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef21d3584a264449d59bf652c9ed1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectHitEffectType: 5
 --- !u!1 &155776
 GameObject:
   m_ObjectHideFlags: 0
@@ -2148,7 +2190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 414160}
   - component: {fileID: 1302596424112982990}
-  - component: {fileID: 2512913302409733502}
+  - component: {fileID: 7570930715203238056}
   m_Layer: 10
   m_Name: Head1_M
   m_TagString: Untagged
@@ -2196,7 +2238,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.307685, y: 0.19065185, z: 0.19236173}
   m_Center: {x: -0.05098713, y: -0.0000000031895302, z: -0.000000012156277}
---- !u!114 &2512913302409733502
+--- !u!114 &7570930715203238056
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2282,6 +2324,7 @@ GameObject:
   m_Component:
   - component: {fileID: 468240}
   - component: {fileID: 7211963613916939893}
+  - component: {fileID: 5163692351935616498}
   m_Layer: 10
   m_Name: Hip_L
   m_TagString: Untagged
@@ -2326,6 +2369,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.49154738, y: 0.25344026, z: 0.20038769}
   m_Center: {x: 0.25422642, y: 0.019879192, z: 0.0136588765}
+--- !u!114 &5163692351935616498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef21d3584a264449d59bf652c9ed1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectHitEffectType: 5
 --- !u!1 &161540
 GameObject:
   m_ObjectHideFlags: 0
@@ -2336,6 +2392,7 @@ GameObject:
   m_Component:
   - component: {fileID: 453510}
   - component: {fileID: 2837191346670952014}
+  - component: {fileID: 6220521005777086848}
   m_Layer: 10
   m_Name: Chest_M
   m_TagString: Untagged
@@ -2382,6 +2439,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.42411602, y: 0.34624693, z: 0.4890288}
   m_Center: {x: -0.13645624, y: -0.01397268, z: -0.0000000325337}
+--- !u!114 &6220521005777086848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef21d3584a264449d59bf652c9ed1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectHitEffectType: 5
 --- !u!1 &163076
 GameObject:
   m_ObjectHideFlags: 0
@@ -2392,6 +2462,7 @@ GameObject:
   m_Component:
   - component: {fileID: 438188}
   - component: {fileID: 8913093869110568092}
+  - component: {fileID: 3532899660937949391}
   m_Layer: 10
   m_Name: Shoulder_L
   m_TagString: Untagged
@@ -2436,6 +2507,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.43093994, y: 0.17301838, z: 0.1649809}
   m_Center: {x: 0.034917515, y: -4.1992781e-10, z: 0.00000027170142}
+--- !u!114 &3532899660937949391
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef21d3584a264449d59bf652c9ed1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectHitEffectType: 5
 --- !u!1 &163122
 GameObject:
   m_ObjectHideFlags: 0
@@ -2478,6 +2562,7 @@ GameObject:
   m_Component:
   - component: {fileID: 447422}
   - component: {fileID: 1100057480712990710}
+  - component: {fileID: 5213637937308948621}
   m_Layer: 10
   m_Name: Knee_L
   m_TagString: Untagged
@@ -2522,6 +2607,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.509828, y: 0.19184713, z: 0.19257025}
   m_Center: {x: 0.24508612, y: 0.05008277, z: -0.000000016156624}
+--- !u!114 &5213637937308948621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 163392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef21d3584a264449d59bf652c9ed1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectHitEffectType: 5
 --- !u!1 &165488
 GameObject:
   m_ObjectHideFlags: 0
@@ -2532,6 +2630,7 @@ GameObject:
   m_Component:
   - component: {fileID: 465676}
   - component: {fileID: 1587538752619677757}
+  - component: {fileID: 8479569440201756146}
   m_Layer: 10
   m_Name: Knee_R
   m_TagString: Untagged
@@ -2576,6 +2675,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.509828, y: 0.19184713, z: 0.19257025}
   m_Center: {x: -0.2450861, y: 0.05008277, z: -0.000000016156624}
+--- !u!114 &8479569440201756146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef21d3584a264449d59bf652c9ed1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectHitEffectType: 5
 --- !u!1 &166166
 GameObject:
   m_ObjectHideFlags: 0
@@ -3009,6 +3121,7 @@ GameObject:
   m_Component:
   - component: {fileID: 479474}
   - component: {fileID: 1204005697481605164}
+  - component: {fileID: 8469801093210510812}
   m_Layer: 10
   m_Name: Elbow_R
   m_TagString: Untagged
@@ -3053,6 +3166,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.4266096, y: 0.16845895, z: 0.15231349}
   m_Center: {x: -0.1078345, y: 0.00000002175682, z: 0.000000008262692}
+--- !u!114 &8469801093210510812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef21d3584a264449d59bf652c9ed1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectHitEffectType: 5
 --- !u!1 &174420
 GameObject:
   m_ObjectHideFlags: 0
@@ -3363,6 +3489,7 @@ GameObject:
   m_Component:
   - component: {fileID: 479000}
   - component: {fileID: 7705680047562020855}
+  - component: {fileID: 6143159454027332374}
   m_Layer: 10
   m_Name: Shoulder_R
   m_TagString: Untagged
@@ -3407,6 +3534,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.43093994, y: 0.17301838, z: 0.1649809}
   m_Center: {x: -0.03491751, y: -4.1992781e-10, z: 0.00000027170142}
+--- !u!114 &6143159454027332374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef21d3584a264449d59bf652c9ed1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectHitEffectType: 5
 --- !u!1 &181428
 GameObject:
   m_ObjectHideFlags: 0

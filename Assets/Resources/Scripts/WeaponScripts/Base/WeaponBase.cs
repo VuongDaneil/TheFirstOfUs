@@ -113,12 +113,12 @@ namespace WeaponSystem
         #region _events
         private void RegisterAllEvents()
         {
-            PlayerControlEventsMananger.OnWeaponReloadDone.AddListener(OnReloadAnimationComplete);
+            PlayerControlEventMananger.OnWeaponReloadDone.AddListener(OnReloadAnimationComplete);
         }
 
         private void UnregisterAllEvents()
         {
-            PlayerControlEventsMananger.OnWeaponReloadDone.RemoveListener(OnReloadAnimationComplete);
+            PlayerControlEventMananger.OnWeaponReloadDone.RemoveListener(OnReloadAnimationComplete);
         }
 
         public virtual void OnReloadAnimationComplete()
@@ -131,7 +131,7 @@ namespace WeaponSystem
             currentAmmo = ammoAvailableToReload;
             currentAmmoCapacity -= currentAmmo;
 
-            PlayerControlEventsMananger.OnWeaponAmmoChange?.Invoke(currentAmmo, currentAmmoCapacity);
+            PlayerControlEventMananger.OnWeaponAmmoChange?.Invoke(currentAmmo, currentAmmoCapacity);
             PlayAnimation(weaponData.idleState, weaponData.defaultTransitionDuration);
         }
 
@@ -163,7 +163,7 @@ namespace WeaponSystem
             HandleFiring(out Vector3 bulletDirrection);
             lastFireTime = Time.time;
             currentAmmo--;
-            PlayerControlEventsMananger.OnWeaponAmmoChange?.Invoke(currentAmmo, currentAmmoCapacity);
+            PlayerControlEventMananger.OnWeaponAmmoChange?.Invoke(currentAmmo, currentAmmoCapacity);
 
             if (attackCycleCoroutine != null) StopCoroutine(attackCycleCoroutine);
             attackCycleCoroutine = StartCoroutine(AttackingCycle());
@@ -229,7 +229,7 @@ namespace WeaponSystem
             currentAmmoCapacity = weaponData.maxAmmoCapacity;
             lastFireTime = 0f;
 
-            PlayerControlEventsMananger.OnWeaponAmmoChange?.Invoke(currentAmmo, currentAmmoCapacity);
+            PlayerControlEventMananger.OnWeaponAmmoChange?.Invoke(currentAmmo, currentAmmoCapacity);
 
             if (weaponModel != null)
             {
@@ -315,7 +315,7 @@ namespace WeaponSystem
             Vector3 spread = Random.insideUnitSphere * CurrentSpreadFactor;
             bulletDirrection = Quaternion.Euler(spread.x, spread.y, 0) * BulletOutPuter.forward;
             ray.direction = bulletDirrection;
-            PlayerControlEventsMananger.OnWeaponShootDirection?.Invoke(ray.direction);
+            PlayerControlEventMananger.OnWeaponShootDirection?.Invoke(ray.direction);
 
             if (Physics.Raycast(ray, out RaycastHit hit))
                 HandleHit(hit);

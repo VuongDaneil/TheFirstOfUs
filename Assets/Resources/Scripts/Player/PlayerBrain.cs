@@ -25,8 +25,11 @@ public class PlayerBrain : MonoBehaviour, IActor
     [ReadOnly] public PlayerMovementStage CurrentMovementState = PlayerMovementStage.StandStill;
     [ReadOnly] public CharacterStanceStatus CurrentStanceStage = CharacterStanceStatus.Standing;
 
+    [Header("ANIMATION")]
+    public Animation DieAnimation;
+
     public bool IsPlayer => ActorRole == ActorType.Player;
-    public bool IsAlive => throw new System.NotImplementedException();
+    public bool IsAlive => CurrentHealth > 0;
 
     #region _unuse
     public int AttackPower => attackPower;
@@ -60,49 +63,58 @@ public class PlayerBrain : MonoBehaviour, IActor
 
     private void RegisterEvents()
     {
-        PlayerControlEventsMananger.OnPlayerChangeMovementState.AddListener(OnPlayerChangeMovementState);
+        PlayerControlEventMananger.OnPlayerChangeMovementState.AddListener(OnPlayerChangeMovementState);
         GameplayEventManager.OnPlayerIntialized?.Invoke();
     }
 
     private void UnRegisterEvents()
     {
-        PlayerControlEventsMananger.OnPlayerChangeMovementState.RemoveListener(OnPlayerChangeMovementState);
+        PlayerControlEventMananger.OnPlayerChangeMovementState.RemoveListener(OnPlayerChangeMovementState);
     }
 
     private void OnPlayerChangeMovementState(PlayerMovementStage newStage) => CurrentMovementState = newStage;
+    private void OnPlayerDie()
+    {
+
+    }
     #endregion
 
     #region _actions
     public void TakeDamage(int amount, IActor source = null)
     {
+        if (IsAlive && CurrentHealth - amount <= 0)
+        {
+            PlayerControlEventMananger.OnPlayerDie?.Invoke();
+            DieAnimation.Play();
+        }
         CurrentHealth = Mathf.Clamp(CurrentHealth - amount, 0, MaxHealth);
-        PlayerControlEventsMananger.OnPlayerHealthChanged?.Invoke(CurrentHealth, MaxHealth);
+        PlayerControlEventMananger.OnPlayerHealthChanged?.Invoke(CurrentHealth, MaxHealth, false);
     }
 
     public void Heal(int amount)
     {
         CurrentHealth = Mathf.Clamp(CurrentHealth + amount, 0, MaxHealth);
-        PlayerControlEventsMananger.OnPlayerHealthChanged?.Invoke(CurrentHealth, MaxHealth);
+        PlayerControlEventMananger.OnPlayerHealthChanged?.Invoke(CurrentHealth, MaxHealth, true);
     }
 
     public void ConsumeStamina()
     {
         CurrentStamina -= StaminaConsumeRate;
         CurrentStamina = Mathf.Clamp(CurrentStamina, 0, MaxStamina);
-        PlayerControlEventsMananger.OnPlayerStaminaChanged?.Invoke(CurrentStamina, MaxStamina);
+        PlayerControlEventMananger.OnPlayerStaminaChanged?.Invoke(CurrentStamina, MaxStamina);
     }
 
     public void RecoverStamina(float multiplierRate = 1f)
     {
         CurrentStamina += (StaminaConsumeRate / 2f) * multiplierRate;
         CurrentStamina = Mathf.Clamp(CurrentStamina, 0, MaxStamina);
-        PlayerControlEventsMananger.OnPlayerStaminaChanged?.Invoke(CurrentStamina, MaxStamina);
+        PlayerControlEventMananger.OnPlayerStaminaChanged?.Invoke(CurrentStamina, MaxStamina);
     }
 
     public void RestoreStamina()
     {
         CurrentStamina = MaxStamina;
-        PlayerControlEventsMananger.OnPlayerStaminaChanged?.Invoke(CurrentStamina, MaxStamina);
+        PlayerControlEventMananger.OnPlayerStaminaChanged?.Invoke(CurrentStamina, MaxStamina);
     }
 
     public void Attack(IActor target, float damageMultiplier)

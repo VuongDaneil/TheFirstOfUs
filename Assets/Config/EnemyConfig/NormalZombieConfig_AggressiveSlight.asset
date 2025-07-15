@@ -44,6 +44,7 @@ MonoBehaviour:
   ChaseAnim:
   - Zombie_Chase_Fast_01
   - Zombie_Chase_Fast_02
+  - Zombie_Chase_Fast_03
   ChaseSlowAnim:
   - Zombie_Chase_Slow_01
   - Zombie_Chase_Slow_02

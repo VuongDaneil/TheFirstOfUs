@@ -39,12 +39,13 @@ public class PlayerLookController : MonoBehaviour, IDataPersistence
         if (PlayerCamera == null) PlayerCamera = Camera.main;
         PlayerCamera.fieldOfView = FOV;
 
-        PlayerControlEventsMananger.OnRecoilAfterShoot.AddListener(OnRecoil);
-        PlayerControlEventsMananger.OnPlayerSteering.AddListener(OnPlayerSteering);
+        PlayerControlEventMananger.OnRecoilAfterShoot.AddListener(OnRecoil);
+        PlayerControlEventMananger.OnPlayerSteering.AddListener(OnPlayerSteering);
     }
 
     private void Update()
     {
+        if (!PlayerBrain.Instance.IsAlive) return;
         if (Input.GetKeyDown(KeyCode.KeypadPlus))
         {
             Cursor.visible = !Cursor.visible;
@@ -72,8 +73,8 @@ public class PlayerLookController : MonoBehaviour, IDataPersistence
 
     private void OnDestroy()
     {
-        PlayerControlEventsMananger.OnRecoilAfterShoot.RemoveListener(OnRecoil);
-        PlayerControlEventsMananger.OnPlayerSteering.RemoveListener(OnPlayerSteering);
+        PlayerControlEventMananger.OnRecoilAfterShoot.RemoveListener(OnRecoil);
+        PlayerControlEventMananger.OnPlayerSteering.RemoveListener(OnPlayerSteering);
     }
     #endregion
 
@@ -90,8 +91,8 @@ public class PlayerLookController : MonoBehaviour, IDataPersistence
 
     private void CalculateTiltBodyValues()
     {
-        if (Input.GetKey(ControlMapping.TiltBodyRight)) zTiltRotation = -TiltBodyValue;
-        else if (Input.GetKey(ControlMapping.TiltBodyLeft)) zTiltRotation = TiltBodyValue;
+        if (Input.GetKey(ControlMapping.LeanRight)) zTiltRotation = -TiltBodyValue;
+        else if (Input.GetKey(ControlMapping.LeanLeft)) zTiltRotation = TiltBodyValue;
         else
         {
             if (PlayerBrain.Instance.CurrentMovementState != PlayerMovementStage.StandStill)

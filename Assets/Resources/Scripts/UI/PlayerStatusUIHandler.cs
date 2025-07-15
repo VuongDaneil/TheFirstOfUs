@@ -12,6 +12,10 @@ public class PlayerStatusUIHandler : MonoBehaviour
     public Color NormalHealthBarColor = Color.green;
     public Color DangerHealthBarColor = Color.red;
 
+    [Header("DAMAGE VFX")]
+    public CanvasGroup FullScreenVfxCanavs;
+    public List<Animator> DamageFxAnimator = new List<Animator>();
+
     [Header("UI ELEMENT - STAMINA")]
     public Image StaminaBar;
     #endregion
@@ -34,19 +38,26 @@ public class PlayerStatusUIHandler : MonoBehaviour
     #region _events
     private void RegisterAllEvents()
     {
-        PlayerControlEventsMananger.OnPlayerHealthChanged?.AddListener(OnHealthChanged);
-        PlayerControlEventsMananger.OnPlayerStaminaChanged?.AddListener(OnStaminaChanged);
+        PlayerControlEventMananger.OnPlayerHealthChanged?.AddListener(OnHealthChanged);
+        PlayerControlEventMananger.OnPlayerStaminaChanged?.AddListener(OnStaminaChanged);
     }
     private void UnRegisterAllEvents()
     {
-        PlayerControlEventsMananger.OnPlayerHealthChanged?.RemoveListener(OnHealthChanged);
-        PlayerControlEventsMananger.OnPlayerStaminaChanged?.RemoveListener(OnStaminaChanged);
+        PlayerControlEventMananger.OnPlayerHealthChanged?.RemoveListener(OnHealthChanged);
+        PlayerControlEventMananger.OnPlayerStaminaChanged?.RemoveListener(OnStaminaChanged);
     }
-    private void OnHealthChanged(float currentHP, float maxHP)
+    private void OnHealthChanged(float currentHP, float maxHP, bool healing = false)
     {
         float ratio = currentHP / maxHP;
         HealthBar.color = ratio >= 0.5f ? NormalHealthBarColor : DangerHealthBarColor;
         HealthBar.DOFillAmount(ratio, 0.5f);
+
+        if (!healing)
+        {
+            FullScreenVfxCanavs.alpha = 1;
+            var vfx = DamageFxAnimator.GetRandom();
+            vfx.Rebind();
+        }
     }
     private void OnStaminaChanged(float currentStamina, float maxStamina)
     {
@@ -60,6 +71,7 @@ public class PlayerStatusUIHandler : MonoBehaviour
     #region SUPPORTIVE
     private void ResetStatusBarOnAwake()
     {
+        FullScreenVfxCanavs.alpha = 0;
         HealthBar.fillAmount = 0f;
         StaminaBar.fillAmount = 0f;
     }

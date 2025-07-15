@@ -7,6 +7,11 @@ public static class GameplayEventManager
 {
     public static UnityEvent OnPlayerIntialized = new UnityEvent();
 
+    #region _quest
+    public static UnityEvent<RadioTowerQuestObject> OnARadioTowerQuestCompleted = new UnityEvent<RadioTowerQuestObject>();
+    public static UnityEvent<RadioCallingQuestObject> OnARadioCallingQuestCompleted = new UnityEvent<RadioCallingQuestObject>();
+    #endregion
+
     #region _player
     /// <summary>
     /// Event triggered when the player make any noise.

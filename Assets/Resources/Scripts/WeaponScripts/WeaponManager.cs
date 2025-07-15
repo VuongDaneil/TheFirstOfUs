@@ -69,9 +69,10 @@ namespace WeaponSystem
 
         private void Update()
         {
-            if (currentWeapon == null) return;
+            if (currentWeapon == null || !PlayerBrain.Instance.IsAlive) return;
 
             HandleWeaponInput();
+            HandleInteractInput();
             HandleWeaponSwitching();
             UpdateWeaponMovementState();
         }
@@ -86,14 +87,16 @@ namespace WeaponSystem
         #region _events
         private void RegisterEvents()
         {
-            PlayerControlEventsMananger.OnWeaponSwitchInDone.AddListener(OnCurrentWeaponSwitchedIn);
-            PlayerControlEventsMananger.OnWeaponSwitchOutDone.AddListener(OnPreviousWeaponSwitchedOut);
+            PlayerControlEventMananger.OnPlayerDie.AddListener(OnPlayerDie);
+            PlayerControlEventMananger.OnWeaponSwitchInDone.AddListener(OnCurrentWeaponSwitchedIn);
+            PlayerControlEventMananger.OnWeaponSwitchOutDone.AddListener(OnPreviousWeaponSwitchedOut);
         }
 
         private void UnRegisterEvents()
         {
-            PlayerControlEventsMananger.OnWeaponSwitchInDone.RemoveListener(OnCurrentWeaponSwitchedIn);
-            PlayerControlEventsMananger.OnWeaponSwitchOutDone.RemoveListener(OnPreviousWeaponSwitchedOut);
+            PlayerControlEventMananger.OnPlayerDie.RemoveListener(OnPlayerDie);
+            PlayerControlEventMananger.OnWeaponSwitchInDone.RemoveListener(OnCurrentWeaponSwitchedIn);
+            PlayerControlEventMananger.OnWeaponSwitchOutDone.RemoveListener(OnPreviousWeaponSwitchedOut);
         }
 
         private void OnCurrentWeaponSwitchedIn()
@@ -107,10 +110,30 @@ namespace WeaponSystem
             currentWeapon.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
             currentWeapon.OnSwitchIn();
         }
+        private void OnPlayerDie()
+        {
+            currentWeapon?.OnUnequip();
+        }
         #endregion
+
+        private void HandleInteractInput()
+        {
+            if (!initialized || Time.timeScale == 0) return;
+            if (Input.GetKeyDown(controlMapping.Interact))
+            {
+                if (Physics.Raycast(weaponCamera.transform.position, weaponCamera.transform.forward, out RaycastHit hit, 3f))
+                {
+                    if (hit.collider.TryGetComponent(out IQuestObject interactable))
+                    {
+                        interactable.OnPlayerInteract();
+                    }
+                }
+            }
+        }
+
         private void HandleWeaponInput()
         {
-            if (!initialized || !CurrentWeaponReady || currentWeapon == null) return;
+            if (!initialized || !CurrentWeaponReady || currentWeapon == null || Time.timeScale == 0) return;
 
             // Aiming
             if (Input.GetKey(controlMapping.AimDownSight))
@@ -154,7 +177,7 @@ namespace WeaponSystem
             if (currentWeapon != null) UnequipWeapon(currentWeapon);
 
             currentWeapon = weapon;
-            PlayerControlEventsMananger.OnSwitchingWeapon?.Invoke(weapon.WeaponID, weapon.CurrentAmmo, weapon.CurrentAmmoCapacity);
+            PlayerControlEventMananger.OnSwitchingWeapon?.Invoke(weapon.WeaponID, weapon.CurrentAmmo, weapon.CurrentAmmoCapacity);
 
             if (immediately)
             {
