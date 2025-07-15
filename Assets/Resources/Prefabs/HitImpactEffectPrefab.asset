@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ad22156c9f0ebb43850f4a3a15a3762, type: 3}
+  m_Name: HitImpactEffectPrefab
+  m_EditorClassIdentifier: 
+  FleshHitEffect:
+  - {fileID: 100000, guid: e1b713379b1786748b372a594b5dda7b, type: 3}
+  - {fileID: 100004, guid: 4826a28e01211e64ab63e8aab65bf799, type: 3}
+  - {fileID: 100006, guid: ce314d4c8b588de4a9404da9f385b851, type: 3}
+  - {fileID: 100006, guid: ec6377cf80ab59f41bc21d150b41ce85, type: 3}
+  - {fileID: 100006, guid: e403ad2fa2b63fd4d8f00b969df4b7a9, type: 3}
+  - {fileID: 100004, guid: 3ac45dcee8bdc5c4083e505cf87ab7de, type: 3}
+  - {fileID: 100000, guid: 71b5579b1c922d746b8eaff577b2151e, type: 3}
+  WoodHitEffect: {fileID: 138412, guid: c75e5a4fa5c842546a553399e24eb22d, type: 3}
+  MetalHitEffect: {fileID: 180772, guid: 697d9a1e52bb99d468a5d727e5a4b435, type: 3}
+  DirtHitEffect: {fileID: 186004, guid: df6885b13dec8be4582be8c2c2219da2, type: 3}
+  WaterHitEffect: {fileID: 149956, guid: 3dc518bed1b2ee14481a2a155c19da18, type: 3}
+  RockHitEffect: {fileID: 142740, guid: ce4fb833f44504e48b46c3474bc747fc, type: 3}
+  BrickHitEffect: {fileID: 151174, guid: e3c9439885f011549a6460a1f4da82dc, type: 3}
+  ConcreteHitEffect: {fileID: 108086, guid: 547c2e12da8d4214098216299e70a3ba, type: 3}
+  LeavesHitEffect: {fileID: 196912, guid: 881329b761025854294ebdddc9a44083, type: 3}
