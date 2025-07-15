@@ -9,6 +9,7 @@ public class PlayerBrain : MonoBehaviour, IActor
 
     [SerializeField] protected ActorType actorRole = ActorType.Player;
     public ActorType ActorRole => actorRole;
+    public bool IsInvincible = false;
 
     [Header("STAT - HP")]
     [SerializeField] protected int maxHealth = 100;
@@ -59,6 +60,7 @@ public class PlayerBrain : MonoBehaviour, IActor
     #endregion
 
     #region MAIN
+
     #region _events
 
     private void RegisterEvents()
@@ -84,8 +86,15 @@ public class PlayerBrain : MonoBehaviour, IActor
     {
         if (IsAlive && CurrentHealth - amount <= 0)
         {
-            PlayerControlEventMananger.OnPlayerDie?.Invoke();
-            DieAnimation.Play();
+            if (IsInvincible)
+            {
+                Heal(MaxHealth);
+            }
+            else
+            {
+                PlayerControlEventMananger.OnPlayerDie?.Invoke();
+                DieAnimation.Play();
+            }
         }
         CurrentHealth = Mathf.Clamp(CurrentHealth - amount, 0, MaxHealth);
         PlayerControlEventMananger.OnPlayerHealthChanged?.Invoke(CurrentHealth, MaxHealth, false);
@@ -101,6 +110,7 @@ public class PlayerBrain : MonoBehaviour, IActor
     {
         CurrentStamina -= StaminaConsumeRate;
         CurrentStamina = Mathf.Clamp(CurrentStamina, 0, MaxStamina);
+        if (CurrentStamina <= MaxStamina * 0.15f && IsInvincible) RestoreStamina();
         PlayerControlEventMananger.OnPlayerStaminaChanged?.Invoke(CurrentStamina, MaxStamina);
     }
 

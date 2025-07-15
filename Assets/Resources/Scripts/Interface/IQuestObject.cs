@@ -9,6 +9,7 @@ public interface IQuestObject
 
     void UpdateStatus(QuestObjectStatus newStatus);
     void OnPlayerInteract();
+    float GetCurrentProgress();
 }
 
 public enum QuestObjectStatus

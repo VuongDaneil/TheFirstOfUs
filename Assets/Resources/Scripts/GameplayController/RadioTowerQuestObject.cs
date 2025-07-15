@@ -72,6 +72,7 @@ public class RadioTowerQuestObject : MonoBehaviour, IQuestObject
 
         CurrentStatus = QuestObjectStatus.InProgress;
         ProgressCoroutine = StartCoroutine(Progress());
+        GameplayEventManager.OnStartARadioTowerQuest?.Invoke(this);
     }
 
     private IEnumerator Progress()
@@ -90,6 +91,11 @@ public class RadioTowerQuestObject : MonoBehaviour, IQuestObject
         CurrentProgress = 100f;
         CurrentStatus = QuestObjectStatus.Done;
         GameplayEventManager.OnARadioTowerQuestCompleted?.Invoke(this);
+    }
+
+    public float GetCurrentProgress()
+    {
+        return CurrentProgress / 100f;
     }
     #endregion
     #endregion

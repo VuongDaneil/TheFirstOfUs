@@ -1940,7 +1940,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 1940068984238573231, guid: 8fbaa56dce2a53041967b7445bc86799, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2062,6 +2062,7 @@ MonoBehaviour:
   maxHealth: 100
   attackPower: 10
   CurrentHealth: 0
+  IsInMainMenu: 0
   ActorNavAgent: {fileID: 9171702968286103203}
   CurrentStateName: IDLE
 --- !u!114 &7187866646673330084

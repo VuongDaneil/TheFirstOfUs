@@ -72,6 +72,7 @@ public class EnemyConfig : ScriptableObject
         for (int i = 0; i < 5; i++)
         {
             Vector3 randomPoint = center + Random.insideUnitSphere * (range * distanceMultiplier);
+            randomPoint.y += 4;
             if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 2.0f, NavMesh.AllAreas))
             {
                 result = hit.position;

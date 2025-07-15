@@ -8,8 +8,18 @@ public static class GameplayEventManager
     public static UnityEvent OnPlayerIntialized = new UnityEvent();
 
     #region _quest
+    public static UnityEvent<RadioTowerQuestObject> OnStartARadioTowerQuest = new UnityEvent<RadioTowerQuestObject>();
     public static UnityEvent<RadioTowerQuestObject> OnARadioTowerQuestCompleted = new UnityEvent<RadioTowerQuestObject>();
-    public static UnityEvent<RadioCallingQuestObject> OnARadioCallingQuestCompleted = new UnityEvent<RadioCallingQuestObject>();
+
+    public static UnityEvent<RadioCallingQuestObject> OnStartARadioCallQuest = new UnityEvent<RadioCallingQuestObject>();
+    public static UnityEvent<RadioCallingQuestObject> OnRadioCallingQuestCompleted = new UnityEvent<RadioCallingQuestObject>();
+
+    public static UnityEvent<SupportOnTheWayQuestObject> OnStartSupportComingQuest = new UnityEvent<SupportOnTheWayQuestObject>();
+    public static UnityEvent<SupportOnTheWayQuestObject> OnSupportComingQuestCompleted = new UnityEvent<SupportOnTheWayQuestObject>();
+
+    public static UnityEvent OnAQuestFailed = new UnityEvent();
+    public static UnityEvent OnAllRadioTowerQuestsCompleted = new UnityEvent();
+
     #endregion
 
     #region _player

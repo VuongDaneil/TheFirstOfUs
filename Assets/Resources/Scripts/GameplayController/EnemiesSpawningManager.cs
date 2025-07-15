@@ -25,6 +25,7 @@ public class EnemiesSpawningManager : MonoBehaviour
 
     [Header("NORMAL ZOMBIES - DEBUG")]
     [ReadOnly] public int NumberOfNormalZombieAlive = 0;
+    [ReadOnly] public List<NormalZombieActor> ActiveNormalZombies = new List<NormalZombieActor>();
     [ReadOnly] public List<NormalZombieActor> PooledNormalZombies = new List<NormalZombieActor>();
     private Transform PlayerTransform;
 
@@ -57,18 +58,24 @@ public class EnemiesSpawningManager : MonoBehaviour
 
         #region check enemy distance to player
         frameCounterCheckDistance++;
-        if (frameCounterCheckDistance >= 10)
+        if (frameCounterCheckDistance >= 15)
         {
             frameCounterCheckDistance = 0;
             if (NumberOfNormalZombieAlive > 0)
             {
                 Vector3 playerPosition = PlayerTransform.position;
-                foreach (var zombie in PooledNormalZombies.Where(x => x != null && x.gameObject.activeSelf))
+                var botToDespawn = new List<NormalZombieActor>();
+                foreach (var zombie in ActiveNormalZombies)
                 {
                     if (Vector3.SqrMagnitude(zombie.ActorTransform.position - playerPosition) > MaxDistanceSpawnToPlayer * MaxDistanceSpawnToPlayer)
                     {
-                        DespawnBot(zombie);
+                        botToDespawn.Add(zombie);
                     }
+                }
+                foreach (var zombie in botToDespawn)
+                {
+                    DespawnBot(zombie);
+                    SpawnNormalZombie();
                 }
             }
         }
@@ -115,7 +122,7 @@ public class EnemiesSpawningManager : MonoBehaviour
 
     private IEnumerator SpawnStartNormalZombies()
     {
-        for (int i = 0; i < MaxNormalZombiesSpawned / 2; i++)
+        for (int i = 0; i < MaxNormalZombiesSpawned / 2f; i++)
         {
             if (!Stop) SpawnNormalZombie();
             yield return null;
@@ -133,9 +140,8 @@ public class EnemiesSpawningManager : MonoBehaviour
         Vector3 spawnPoint = Vector3.zero;
         spawnPoint = ChooseSpawnPointNearPlayer();
 
-        //GameObject targetZombieModel = null;
-
         newBornZombie.Spawn(NormalZombieConfigs.GetRandom(), spawnPoint);
+        ActiveNormalZombies.Add(newBornZombie);
         NumberOfNormalZombieAlive++;
     }
     #endregion
@@ -148,6 +154,7 @@ public class EnemiesSpawningManager : MonoBehaviour
         if (zombie == null) return;
         zombie.gameObject.SetActive(false);
         PooledNormalZombies.Add(zombie);
+        ActiveNormalZombies.Remove(zombie);
         NumberOfNormalZombieAlive--;
     }
     private NormalZombieActor GetNormalZombiePrefab()
@@ -176,9 +183,8 @@ public class EnemiesSpawningManager : MonoBehaviour
         {
             float distanceToSpawn = Random.Range(MinDistanceSpawnToPlayer, MaxDistanceSpawnToPlayer);
             Vector3 randomPoint = playerPosition + Random.insideUnitSphere * distanceToSpawn;
-            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 10f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 5f, NavMesh.AllAreas))
             {
-                if (hit.position.y > playerPosition.y + 1) continue;
                 return hit.position;
             }
         }

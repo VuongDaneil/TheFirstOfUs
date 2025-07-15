@@ -19,7 +19,8 @@ MonoBehaviour:
   damage: 10
   fireRate: 0.17
   magazineSize: 14
-  NoiseCausedRange: 45
+  maxAmmoCapacity: 500
+  NoiseCausedRange: 15
   MinimumSpreadFactor: 0
   MaximumSpreadFactor: 7
   adsSpreadReduceFactor: 0.7

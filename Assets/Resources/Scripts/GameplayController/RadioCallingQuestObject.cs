@@ -2,10 +2,11 @@ using System.Collections;
 using NaughtyAttributes;
 using UnityEngine;
 
-public class RadioCallingQuestObject : MonoBehaviour,IQuestObject
+public class RadioCallingQuestObject : MonoBehaviour, IQuestObject
 {
     #region PROPERTIES
-    public string Name => "Radio";
+    public string Name => "Radio Calling";
+    public bool Available = false;
 
     public QuestObjectStatus CurrentStatus = QuestObjectStatus.UnDone;
     public QuestObjectStatus Status => CurrentStatus;
@@ -56,6 +57,10 @@ public class RadioCallingQuestObject : MonoBehaviour,IQuestObject
 
     public void OnPlayerInteract()
     {
+        if (!Available)
+        {
+            return;
+        }
         StartProgress();
     }
 
@@ -72,6 +77,7 @@ public class RadioCallingQuestObject : MonoBehaviour,IQuestObject
 
         CurrentStatus = QuestObjectStatus.InProgress;
         ProgressCoroutine = StartCoroutine(Progress());
+        GameplayEventManager.OnStartARadioCallQuest?.Invoke(this);
     }
 
     private IEnumerator Progress()
@@ -89,8 +95,18 @@ public class RadioCallingQuestObject : MonoBehaviour,IQuestObject
         }
         CurrentProgress = 100f;
         CurrentStatus = QuestObjectStatus.Done;
-        GameplayEventManager.OnARadioCallingQuestCompleted?.Invoke(this);
+        GameplayEventManager.OnRadioCallingQuestCompleted?.Invoke(this);
+    }
+
+    public float GetCurrentProgress()
+    {
+        return CurrentProgress / 100f;
     }
     #endregion
+
+    #endregion
+
+    #region SUPPORTIVE
+    public void SetAvailabale(bool isAvailable) => Available = isAvailable;
     #endregion
 }

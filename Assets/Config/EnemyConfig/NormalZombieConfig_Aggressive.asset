@@ -29,7 +29,7 @@ MonoBehaviour:
   VisionAngle: 120
   HearingRange: 30
   SurroundingSenseRange: 7
-  RotationSpeed: 75
+  RotationSpeed: 100
   RotateSpeedAcceleration: 0.35
   DistanceCheckDestinationStop: 1
   IdleDuration: {x: 3, y: 6}
