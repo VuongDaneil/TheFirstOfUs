@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - SunAndMoon
+  - UICamera
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - Terrain
   - Weapon
   - Weather
-  - 
-  - 
+  - Leaves
+  - Enemy
   - 
   - 
   - 
