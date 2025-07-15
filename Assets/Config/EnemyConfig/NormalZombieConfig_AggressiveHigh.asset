@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32ba22294060e0a4497bbc4e52ecf7ee, type: 3}
+  m_Name: NormalZombieConfig_AggressiveHigh
+  m_EditorClassIdentifier: 
+  Sensitive: 2
+  Aggression: 4
+  Brutality: 3
+  Cowardice: 1.15
+  Courage: 2.75
+  Laziness: 1.4
+  Health: 100
+  Speed: 2
+  AttackPower: 10
+  AttackRange: 2
+  AttackRate: 2
+  HealthPercentageCauseStun: 10
+  StunDuration: 3
+  VisionRange: 30
+  VisionAngle: 120
+  HearingRange: 30
+  SurroundingSenseRange: 7
+  RotationSpeed: 75
+  RotateSpeedAcceleration: 0.35
+  DistanceCheckDestinationStop: 1
+  IdleDuration: {x: 3, y: 6}
+  DistanceEachMoveWandering: {x: 10, y: 20}
+  DistanceStopChasing: 50
+  IdleAnim:
+  - Zombie_Idle_01
+  - Zombie_Idle_02
+  MoveAnim:
+  - Zombie_Walk_01
+  - Zombie_Walk_02
+  ChaseAnim:
+  - Zombie_Chase_Fast_01
+  - Zombie_Chase_Fast_02
+  ChaseSlowAnim:
+  - Zombie_Chase_Slow_01
+  - Zombie_Chase_Slow_02
+  AttackAnim:
+  - Zombie_Atk_01
+  - Zombie_Atk_02
+  StunAnim:
+  - Zombie_KnockBack_01
+  - Zombie_KnockBack_02
+  DeadAnim:
+  - Zombie_Death_01
+  - Zombie_Death_02
+  IdleAudioClips:
+  - {fileID: 8300000, guid: 69812e02fdf6c421a938309cc2d45922, type: 3}
+  - {fileID: 8300000, guid: 8b8be6e6b3dd044d782ae23b59519a28, type: 3}
+  - {fileID: 8300000, guid: 50be8f631d6a14da58b3ef230ec1c022, type: 3}
+  MoveAudioClips:
+  - {fileID: 8300000, guid: 69812e02fdf6c421a938309cc2d45922, type: 3}
+  - {fileID: 8300000, guid: 8b8be6e6b3dd044d782ae23b59519a28, type: 3}
+  - {fileID: 8300000, guid: 50be8f631d6a14da58b3ef230ec1c022, type: 3}
+  ChaseAudioClips:
+  - {fileID: 8300000, guid: b7284155518ed4dbe918cab5ae88013a, type: 3}
+  - {fileID: 8300000, guid: 503cac27b8c114382ba06293cf68902c, type: 3}
+  - {fileID: 8300000, guid: 7d76f8d46388e4a88a47beac2f2f0bc6, type: 3}
+  AttackAudioClips:
+  - {fileID: 8300000, guid: b7284155518ed4dbe918cab5ae88013a, type: 3}
+  - {fileID: 8300000, guid: 503cac27b8c114382ba06293cf68902c, type: 3}
+  - {fileID: 8300000, guid: 7d76f8d46388e4a88a47beac2f2f0bc6, type: 3}
+  HurtAudioClips:
+  - {fileID: 8300000, guid: fb7fbee5d5ed64bd1a8ca1ad242ba7eb, type: 3}
+  - {fileID: 8300000, guid: 381951b7e211640659f2659520c3145b, type: 3}
+  - {fileID: 8300000, guid: 967208deb0e2849fdaf89dcc7413d1a9, type: 3}
+  DeadAudioClips:
+  - {fileID: 8300000, guid: fb7fbee5d5ed64bd1a8ca1ad242ba7eb, type: 3}
+  - {fileID: 8300000, guid: 381951b7e211640659f2659520c3145b, type: 3}
+  - {fileID: 8300000, guid: 967208deb0e2849fdaf89dcc7413d1a9, type: 3}

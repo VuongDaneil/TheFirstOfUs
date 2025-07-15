@@ -43,8 +43,8 @@ MonoBehaviour:
   movementTransitionDuration: 1
   inspectTransitionDuration: 0.25
   switchTransitionDuration: 0.15
-  defaultFOV: 65
-  aimingFOV: 50
+  defaultFOV: 90
+  aimingFOV: 60
   fovTransitionSpeed: 0.3
   defaultFireMode: 2
   burstCount: 1
