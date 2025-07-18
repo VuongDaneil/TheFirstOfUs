@@ -8,12 +8,16 @@ public class MainMenuLayer : MonoBehaviour
 {
     #region PROPERTIES
     [Header("UI ELEMENT(s)")]
-    public Button StartGameButton;
+    public GameObject LoadingScene;
+    public Button StartNewGameButton;
+    public Button StartSavedGameButton;
     public Button SettingButton;
     public Button QuitGameButton;
     [Space]
     public CanvasGroup MainMenuCanvasGroup;
     public CanvasGroup SettingCanvasGroup;
+
+    public AudioSource[] MainMenuAudioSource;
 
     private string GameSceneName = "GameScene";
     #endregion
@@ -41,7 +45,10 @@ public class MainMenuLayer : MonoBehaviour
     #region _events
     private void RegisterAllEvents()
     {
-        StartGameButton.onClick.AddListener(OnStartPlaying);
+        LoadingScene.SetActive(false);
+        StartSavedGameButton.interactable = DataPersistenceManager.Instance.HasGameData();
+        StartSavedGameButton.onClick.AddListener(OnStartSavedPlaying);
+        StartNewGameButton.onClick.AddListener(OnStartNewPlaying);
         SettingButton.onClick.AddListener(OnOpenSettingLayer);
         QuitGameButton.onClick.AddListener(OnQuitGame);
         UIEventManager.OnOpenMainMenu?.Invoke();
@@ -49,17 +56,28 @@ public class MainMenuLayer : MonoBehaviour
 
     private void UnregisterAllEvents()
     {
-        StartGameButton.onClick.RemoveListener(OnStartPlaying);
+        StartSavedGameButton.onClick.RemoveListener(OnStartSavedPlaying);
+        StartNewGameButton.onClick.RemoveListener(OnStartNewPlaying);
         SettingButton.onClick.RemoveListener(OnOpenSettingLayer);
         QuitGameButton.onClick.RemoveListener(OnQuitGame);
         UIEventManager.OnCloseMainMenu?.Invoke();
     }
     #endregion
 
-    private void OnStartPlaying()
+    private void OnStartNewPlaying()
     {
+        LoadingScene.SetActive(true);
         MainMenuCanvasGroup.alpha = 0f;
         SettingCanvasGroup.alpha = 0f;
+        DataPersistenceManager.Instance.NewGame();
+        UnityEngine.SceneManagement.SceneManager.LoadScene(GameConstant.GameScene);
+    }
+    private void OnStartSavedPlaying()
+    {
+        LoadingScene.SetActive(true);
+        MainMenuCanvasGroup.alpha = 0f;
+        SettingCanvasGroup.alpha = 0f;
+        foreach (var audioSource in MainMenuAudioSource) audioSource.Stop();
         UnityEngine.SceneManagement.SceneManager.LoadScene(GameConstant.GameScene);
     }
 

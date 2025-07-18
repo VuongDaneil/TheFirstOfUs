@@ -19,6 +19,11 @@ public class RadioCallingQuestObject : MonoBehaviour, IQuestObject
     public float DistanceAllowToInteract = 3f;
     public float ProgressSpeed = 1f;
 
+    [Header("AUDIO")]
+    public AudioSource QuestObjectAudioSource;
+    public AudioClip StartProgressAudioClip;
+    public AudioClip CompleteProgressAudioClip;
+
     [Header("DEBUG(s)")]
     [ReadOnly] public float CurrentProgress = 0f;
 
@@ -26,6 +31,10 @@ public class RadioCallingQuestObject : MonoBehaviour, IQuestObject
     #endregion
 
     #region UNITY CORE
+    private void OnValidate()
+    {
+        if (QuestObjectAudioSource == null) QuestObjectAudioSource = GetComponent<AudioSource>();
+    }
     private void Awake()
     {
         RegisterAllEvents();
@@ -77,11 +86,13 @@ public class RadioCallingQuestObject : MonoBehaviour, IQuestObject
 
         CurrentStatus = QuestObjectStatus.InProgress;
         ProgressCoroutine = StartCoroutine(Progress());
+        QuestObjectAudioSource.PlayOneShot(StartProgressAudioClip);
         GameplayEventManager.OnStartARadioCallQuest?.Invoke(this);
     }
 
     private IEnumerator Progress()
     {
+        if (playerTransform == null) playerTransform = PlayerBrain.Instance.transform;
         while (CurrentProgress < 100f)
         {
             if (Vector3.Distance(playerTransform.position, transform.position) > DistanceAllowToInteract)
@@ -95,6 +106,7 @@ public class RadioCallingQuestObject : MonoBehaviour, IQuestObject
         }
         CurrentProgress = 100f;
         CurrentStatus = QuestObjectStatus.Done;
+        QuestObjectAudioSource.PlayOneShot(CompleteProgressAudioClip);
         GameplayEventManager.OnRadioCallingQuestCompleted?.Invoke(this);
     }
 

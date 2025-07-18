@@ -2,9 +2,11 @@ using NaughtyAttributes;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMovementController : MonoBehaviour, IDataPersistence
+public class PlayerMovementController : MonoBehaviour
 {
     #region PROPERTIES
+    public bool Controllable = true;
+
     [Header("Object - crouch / slide")]
     public CharacterControllerBinding ControlMapping;
     public Transform CharacterDynamicBody;
@@ -87,6 +89,7 @@ public class PlayerMovementController : MonoBehaviour, IDataPersistence
         characterHeightStanding = CharacterDynamicBody.localPosition;
         characterHeightCrouching = characterHeightStanding - new Vector3(0, CrouchHeightOffset, 0);
         characterHeightSliding = characterHeightStanding - new Vector3(0, SlideHeightOffset, 0);
+        UIEventManager.OnQuitToMainMenu.AddListener(OnQuitToMainMenu);
     }
     private void Start()
     {
@@ -94,33 +97,32 @@ public class PlayerMovementController : MonoBehaviour, IDataPersistence
     }
     private void OnEnable()
     {
-        initialized = false;
+        if (!initialized)
+        {
+            initialized = true;
+            transform.SetParent(null);
+            gameplayCamera = Camera.main.transform;
+            defaultCameraY = Head.localPosition.y;
+            originalLocalPos = Head.localPosition;
+            return;
+        }
     }
     private void Update()
     {
-        if (!PlayerBrain.Instance.IsAlive) return;
+        if (!Controllable || !PlayerBrain.Instance.IsAlive || !PlayerBrain.Instance.IsReady) return;
         HandleMovement();
+
+        if (player.position.y <= -10) player.position = new Vector3(player.position.x, 10, player.position.y);
+    }
+    private void OnDestroy()
+    {
+        UIEventManager.OnQuitToMainMenu.RemoveListener(OnQuitToMainMenu);
     }
     #endregion
 
     #region MAIN
     void HandleMovement()
     {
-        if (!initialized)
-        {
-            if (Input.GetKeyDown(ControlMapping.StartControl))
-            {
-                initialized = true;
-                transform.SetParent(null);
-                gameplayCamera = Camera.main.transform;
-                defaultCameraY = Head.localPosition.y;
-                originalLocalPos = Head.localPosition;
-                velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-            }
-            return;
-        }
-        //float moveX = Input.GetAxis("Horizontal");
-        //float moveZ = Input.GetAxis("Vertical");
 
         float moveX = 0f;
         float moveZ = 0f;
@@ -255,7 +257,8 @@ public class PlayerMovementController : MonoBehaviour, IDataPersistence
         float yPos = springPos * jumpLandMove + bobFactor * headBobHeight * headBobFade * speedHeightFactor;
         float xTilt = -springPos * jumpLandTilt;
         float zTilt = bobSwayFactor * headBobSwayAngle * headBobFade;
-        Neck.SetLocalPositionAndRotation(originalLocalPos + new Vector3(xPos, yPos, 0), Quaternion.Euler(xTilt, 0, zTilt));
+
+        if (Time.timeScale > 0) Neck.SetLocalPositionAndRotation(originalLocalPos + new Vector3(xPos, yPos, 0), Quaternion.Euler(xTilt, 0, zTilt));
     }
     private void PlayerSoundHandler()
     {
@@ -307,6 +310,8 @@ public class PlayerMovementController : MonoBehaviour, IDataPersistence
             prevGrounded = false;
         }
     }
+
+    private void OnQuitToMainMenu() => initialized = false;
     #endregion
 
     #region SUPPORTIVE
@@ -354,18 +359,6 @@ public class PlayerMovementController : MonoBehaviour, IDataPersistence
     }
     #endregion
 
-    #region SAVE GAME SYSTEM
-    public void LoadData(GameData data)
-    {
-        thisTransform.position = data.PlayerSavedData.PlayerPosition;
-
-    }
-
-    public void SaveData(ref GameData data)
-    {
-        data.PlayerSavedData.PlayerPosition = thisTransform.position;
-    }
-    #endregion
 }
 public enum PlayerMovementStage
 {

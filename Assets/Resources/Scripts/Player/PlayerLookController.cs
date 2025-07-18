@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
+using static GameConstant;
 using NaughtyAttributes;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class PlayerLookController : MonoBehaviour, IDataPersistence
+public class PlayerLookController : MonoBehaviour
 {
     #region PROPERTIES
     [Header("STAT(s)")]
@@ -24,7 +22,7 @@ public class PlayerLookController : MonoBehaviour, IDataPersistence
 
     [Header("DEBUG")]
     public CharacterControllerBinding ControlMapping;
-    [ReadOnly] public bool Controllable = true;
+    public bool Controllable = true;
     private float xLookRotation = 0f;
     private float yLookRotation = 0f;
     private float zTiltRotation = 0f;
@@ -39,13 +37,16 @@ public class PlayerLookController : MonoBehaviour, IDataPersistence
         if (PlayerCamera == null) PlayerCamera = Camera.main;
         PlayerCamera.fieldOfView = FOV;
 
+        UIEventManager.OnSettingSaved.AddListener(LoadSetting);
         PlayerControlEventMananger.OnRecoilAfterShoot.AddListener(OnRecoil);
         PlayerControlEventMananger.OnPlayerSteering.AddListener(OnPlayerSteering);
+
+        LoadSetting();
     }
 
     private void Update()
     {
-        if (!PlayerBrain.Instance.IsAlive) return;
+        if (!PlayerBrain.Instance.IsAlive || !PlayerBrain.Instance.IsReady) return;
         if (Input.GetKeyDown(KeyCode.KeypadPlus))
         {
             Cursor.visible = !Cursor.visible;
@@ -73,6 +74,7 @@ public class PlayerLookController : MonoBehaviour, IDataPersistence
 
     private void OnDestroy()
     {
+        UIEventManager.OnSettingSaved.RemoveListener(LoadSetting);
         PlayerControlEventMananger.OnRecoilAfterShoot.RemoveListener(OnRecoil);
         PlayerControlEventMananger.OnPlayerSteering.RemoveListener(OnPlayerSteering);
     }
@@ -103,17 +105,9 @@ public class PlayerLookController : MonoBehaviour, IDataPersistence
         }
     }
 
-    #endregion
-
-    #region SAVE GAME DATA
-    public void LoadData(GameData data)
+    private void LoadSetting()
     {
-        PlayerHead.localEulerAngles = data.PlayerSavedData.PlayerEulerAngle;
-    }
-
-    public void SaveData(ref GameData data)
-    {
-        data.PlayerSavedData.PlayerEulerAngle = PlayerHead.localEulerAngles;
+        Sensitivity = PlayerPrefs.GetFloat(SensitivityKey, Sensitivity);
     }
     #endregion
 }

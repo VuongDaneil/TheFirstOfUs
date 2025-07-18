@@ -12,14 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8a348202a80a404991175491080db9d, type: 3}
   m_Name: KeysBinding
   m_EditorClassIdentifier: 
+  MoveForward: 119
+  MoveBackward: 115
+  MoveLeft: 97
+  MoveRight: 100
   Sprint: 304
   Crouch: 306
   Jump: 32
   StartControl: 271
+  LeanRight: 101
+  LeanLeft: 113
+  MainWeapon: 49
+  SubWeapon: 50
   Fire: 323
   AimDownSight: 324
   Reload: 114
-  Inspect: 105
+  Inspect: 116
+  Interact: 102
   Weapon1: 49
   Weapon2: 50
   Weapon3: 51
@@ -27,8 +36,8 @@ MonoBehaviour:
   QuickMelee: 118
   QuickThrow: 103
   WeaponSwap: 113
-  SaveGameKey: 286
-  LoadGameKey: 287
-  ResetSaveFileKey: 288
+  SaveGameKey: 105
+  LoadGameKey: 111
+  ResetSaveFileKey: 112
   ChangeDayPartKey: 107
   ChangeWeatherKey: 106

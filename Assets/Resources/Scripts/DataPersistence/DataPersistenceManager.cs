@@ -8,6 +8,9 @@ using UnityEngine.SceneManagement;
 public class DataPersistenceManager : MonoBehaviour
 {
     #region PROPERTIES
+    public bool IsNewGameProgress = true;
+
+    [Space]
     public CharacterControllerBinding ControllerBinding;
     private GameData gamedata;
     public static DataPersistenceManager Instance { get; private set; }
@@ -43,7 +46,6 @@ public class DataPersistenceManager : MonoBehaviour
 
     private void Update()
     {
-#if UNITY_EDITOR
         if (Input.GetKeyDown(ControllerBinding.SaveGameKey))
         {
             SaveGame();
@@ -57,7 +59,6 @@ public class DataPersistenceManager : MonoBehaviour
             NewGame();
             Application.Quit();
         }
-#endif
     }
 
     //private void OnApplicationQuit()
@@ -68,7 +69,7 @@ public class DataPersistenceManager : MonoBehaviour
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         DataPersistenceObjects = FindAllDataPersistenceObjects();
-        LoadGame();
+        if (!IsNewGameProgress) LoadGame();
 
         Debug.Log("SCENE LOADED: " + scene.name);
     }
@@ -83,11 +84,13 @@ public class DataPersistenceManager : MonoBehaviour
     #region MAIN
     public void NewGame()
     {
+        IsNewGameProgress = true;
         this.gamedata = new GameData();
     }
 
     public void LoadGame()
     {
+        IsNewGameProgress = false;
         this.gamedata = fileDataHandler.Load();
 
         if (this.gamedata == null) NewGame();

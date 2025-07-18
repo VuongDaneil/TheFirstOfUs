@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public class EnemiesSpawningManager : MonoBehaviour
 {
-    [ReadOnly] public bool Ready = false;
+    public bool Ready = false;
     public bool Stop = false;
 
     [Header("NORMAL ZOMBIES - CONFIG")]
@@ -183,7 +183,7 @@ public class EnemiesSpawningManager : MonoBehaviour
         {
             float distanceToSpawn = Random.Range(MinDistanceSpawnToPlayer, MaxDistanceSpawnToPlayer);
             Vector3 randomPoint = playerPosition + Random.insideUnitSphere * distanceToSpawn;
-            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 5f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(randomPoint, out NavMeshHit hit, 2f, NavMesh.AllAreas))
             {
                 return hit.position;
             }

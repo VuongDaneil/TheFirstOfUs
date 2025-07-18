@@ -103,7 +103,7 @@ public class ActorAnimationControl : MonoBehaviour
         if (AttributesConfig.DeadAnim.Count > 0)
         {
             var randomAnimState = AttributesConfig.DeadAnim[Random.Range(0, AttributesConfig.DeadAnim.Count)];
-            ActorAnimator.CrossFade(randomAnimState, 0.5f);
+            ActorAnimator.Play(randomAnimState);
         }
     }
     #endregion

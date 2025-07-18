@@ -13,6 +13,8 @@ public class PauseLayerHandler : MonoBehaviour
     [Header("LAYER")]
     public CanvasGroup SettingLayer;
     public CanvasGroup PauseLayer;
+    public GameObject HUDGameObject;
+    public GameObject LoadingScreen;
 
     [Header("UI ELEMENT")]
     public Button ResumeBtn;
@@ -49,6 +51,7 @@ public class PauseLayerHandler : MonoBehaviour
     #region _events
     private void RegisterAllEvents()
     {
+        LoadingScreen.SetActive(false);
         ResumeBtn.onClick.AddListener(ResumeGame);
         SettingBtn.onClick.AddListener(OnOpenSettingLayer);
         ExitBtn.onClick.AddListener(OnExitGame);
@@ -122,6 +125,10 @@ public class PauseLayerHandler : MonoBehaviour
 
     private void OnExitGame()
     {
+        DataPersistenceManager.Instance.SaveGame();
+        UIEventManager.OnQuitToMainMenu?.Invoke();
+        HUDGameObject.SetActive(false);
+        LoadingScreen.SetActive(true);
         Time.timeScale = 1f;
         SceneManager.LoadScene(GameConstant.MainMenuScene);
     }

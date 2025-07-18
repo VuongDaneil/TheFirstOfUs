@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e00092ba6400fb74082cd44cc64abe93, type: 3}
   m_Name: GameDebugOptions
   m_EditorClassIdentifier: 
-  DateTimeDebug: 1
+  DateTimeDebug: 0

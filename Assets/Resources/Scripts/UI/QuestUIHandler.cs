@@ -51,6 +51,8 @@ public class QuestUIHandler : MonoBehaviour
 
         GameplayEventManager.OnStartSupportComingQuest.AddListener(OnStartSupportComingQuest);
         GameplayEventManager.OnSupportComingQuestCompleted.AddListener(OnSupportComingQuestCompleted);
+
+        PlayerControlEventMananger.OnPlayerDoneIntro.AddListener(QuestInstruction);
     }
 
     private void UnregisterAllEvents()
@@ -66,6 +68,8 @@ public class QuestUIHandler : MonoBehaviour
 
         GameplayEventManager.OnStartSupportComingQuest.RemoveListener(OnStartSupportComingQuest);
         GameplayEventManager.OnSupportComingQuestCompleted.RemoveListener(OnSupportComingQuestCompleted);
+
+        PlayerControlEventMananger.OnPlayerDoneIntro.RemoveListener(QuestInstruction);
     }
 
     private void OnAQuestFailed()
@@ -138,7 +142,6 @@ public class QuestUIHandler : MonoBehaviour
 
     private void OnRadioCallingQuestDone(RadioCallingQuestObject quest)
     {
-        QuestProgressCanvasGroup.DOFade(0, 0.5f);
         QuestProgressBar.DOFillAmount(0, 0.25f);
 
         QuestAnnouncementCanvasGroup.alpha = 1;
@@ -172,6 +175,18 @@ public class QuestUIHandler : MonoBehaviour
         QuestProgressCanvasGroup.DOFade(0, 0.5f);
 
         StartCoroutine(FadeAnnouncement(10f));
+    }
+    #endregion
+
+    #region First Cutscene
+    private void QuestInstruction()
+    {
+        QuestProgressBar.DOFillAmount(0, 0.25f);
+
+        QuestAnnouncementCanvasGroup.alpha = 1;
+        QuestStatusAnnouncementTxt.text = "Fix all the radio towers then call for support";
+
+        StartCoroutine(FadeAnnouncement(5f));
     }
     #endregion
 

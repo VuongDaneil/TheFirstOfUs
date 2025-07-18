@@ -15,6 +15,8 @@ public abstract class ActorBase : MonoBehaviour, IActor
     public IActor Target;
     public Transform TargetTransform;
 
+    public bool Ready = false;
+
     #region events
     public UnityEvent OnActorDead = new UnityEvent();
     public UnityEvent OnActorStunned = new UnityEvent();
@@ -45,12 +47,18 @@ public abstract class ActorBase : MonoBehaviour, IActor
         ActorTransform = transform;
         stateMachine = new StateMachine();
         ActorAnimationController.Initialize(this);
+        PlayerControlEventMananger.OnPlayerReady.AddListener(OnPlayerReady);
         Initialize();
     }
 
     protected virtual void Update()
     {
         stateMachine.Update();
+    }
+
+    private void OnDestroy()
+    {
+        PlayerControlEventMananger.OnPlayerReady.RemoveListener(OnPlayerReady);
     }
     #endregion
 
@@ -130,6 +138,10 @@ public abstract class ActorBase : MonoBehaviour, IActor
 
     #region _events
     public virtual void OnActorDie() {}
+    private void OnPlayerReady()
+    {
+        Ready = true;
+    }
     #endregion
 
     #endregion

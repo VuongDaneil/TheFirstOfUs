@@ -25,12 +25,12 @@ MonoBehaviour:
   DefaultWeather: 0
   WeatherPossibilities: {fileID: 11400000, guid: 08e3c51e04c063f4eb124b6d61bda46a, type: 2}
   ClearDuration: {x: 1, y: 3}
-  FoggyDuration: {x: 1, y: 3}
+  FoggyDuration: {x: 2, y: 6}
   SunnyDuration: {x: 1, y: 3}
-  OvercastDuration: {x: 1, y: 3}
-  SnowDuration: {x: 1, y: 3}
-  SnowStormDuration: {x: 1, y: 3}
-  LightRainDuration: {x: 1, y: 3}
-  MediumRainDuration: {x: 1, y: 3}
-  HeavyRainDuration: {x: 1, y: 3}
-  StormDuration: {x: 1, y: 3}
+  OvercastDuration: {x: 2, y: 6}
+  SnowDuration: {x: 1, y: 1}
+  SnowStormDuration: {x: 1, y: 1}
+  LightRainDuration: {x: 4, y: 8}
+  MediumRainDuration: {x: 4, y: 8}
+  HeavyRainDuration: {x: 4, y: 8}
+  StormDuration: {x: 4, y: 10}

@@ -6,6 +6,8 @@ using UnityEngine;
 using static SceneSharedAttributes;
 using UnityEngine.Events;
 using static VExtension;
+using UnityEditor.iOS.Xcode;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -31,12 +33,13 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
 
     [Header("DAY PARTS DEBUG(s)")]
     public bool PauseTime = false;
-    [ReadOnly] public int DayCount = 0;
+    [ReadOnly] public int CurrentDayCount = 1;
     [ReadOnly] public TimeSpan DayTime = new TimeSpan(0, 0, 0);
     [ReadOnly] public DayPart CurrentDayPart = DayPart.Evening;
     [ReadOnly] public WorldSeasonConfig CurrentSeasonConfig;
 
     [Header("WEATHER DEBUG(s)")]
+    public bool DebugTime;
     [ReadOnly] public WeatherInProgressing CurrentWeatherProgress;
 
     public Weather CurrentWeather => WorldWeatherController.CurrentWeather;
@@ -50,11 +53,19 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
     #endregion
 
     #region UNITY CORE
-    private void Awake()
+    private void Start()
     {
-        ValidateCurrentSeason();
-        ValidateDayPart();
-        ApplyDaypartLightingSettingInstantly(CurrentDayPart);
+        if (DataPersistenceManager.Instance.IsNewGameProgress)
+        {
+            WorldWeatherController.SetWeatherOnPlayerFirstPlay();
+            CurrentWeatherProgress = new WeatherInProgressing(WorldWeatherController.CurrentWeather, 12 * CurrentSeasonConfig.DayTimeConfig.HourInSecond);
+        }
+        else
+        {
+            WorldWeatherController.SetRandomWeather();
+            CurrentWeatherProgress = new WeatherInProgressing(WorldWeatherController.CurrentWeather, 4 * CurrentSeasonConfig.DayTimeConfig.HourInSecond);
+        }
+        ValidateWorld();
     }
     private void Update()
     {
@@ -88,7 +99,7 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
 
         if (DayTime.Hours >= 24)
         {
-            DayCount++;
+            CurrentDayCount++;
             DayTime = new TimeSpan(0, 0, 0);
             ValidateCurrentSeason();
             OnDayPassed?.Invoke();
@@ -98,6 +109,7 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
         {
             ValidateDayPart();
             OnHourPassed?.Invoke();
+            GameplayEventManager.OnAnHourPassed?.Invoke(CurrentDayCount, CurrentDayPart);
         }
     }
 
@@ -106,8 +118,7 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
         weatherFrameCounter++;
         if (weatherFrameCounter >= UpdateWeatherEveryFrames)
         {
-            bool allowedToChangeWeather = (CurrentWeather == CurrentSeasonConfig.DefaultWeather) &&
-                (CurrentWeatherProgress != null && CurrentWeatherProgress.IsFinished());
+            bool allowedToChangeWeather = CurrentWeatherProgress == null || (CurrentWeatherProgress != null && CurrentWeatherProgress.IsFinished());
             if (allowedToChangeWeather)
             {
                 CurrentSeasonConfig.SetNewWeather(out Weather nextWeather, out int duration);
@@ -132,7 +143,7 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
     {
         ApplyDaypartWeatherLighting(weather);
         WorldWeatherController.SetWeather(weather);
-        CurrentWeatherProgress = new WeatherInProgressing(weather, duration);
+        CurrentWeatherProgress = new WeatherInProgressing(weather, duration * CurrentSeasonConfig.DayTimeConfig.HourInSecond);
     }
 
     #endregion
@@ -160,7 +171,7 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
     private void ValidateCurrentSeason()
     {
         int daysPerYear = SpringSeasonConfig.DaysInSeason + SummerSeasonConfig.DaysInSeason + WinterSeasonConfig.DaysInSeason;
-        int daysInCurrentYear = DayCount % daysPerYear;
+        int daysInCurrentYear = CurrentDayCount % daysPerYear;
         WorldSeasonConfig nextSeason;
         if (daysInCurrentYear < SpringSeasonConfig.DaysInSeason)
         {
@@ -194,22 +205,22 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
         switch (daypart)
         {
             case DayPart.Dawn:
-                CurrentSeasonConfig.DawnLightingPreset.ApplySmoothly();
+                CurrentSeasonConfig.DawnLightingPreset.ApplySmoothly(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Morning:
-                CurrentSeasonConfig.MorningLightingPreset.ApplySmoothly();
+                CurrentSeasonConfig.MorningLightingPreset.ApplySmoothly(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Afternoon:
-                CurrentSeasonConfig.AfternoonLightingPreset.ApplySmoothly();
+                CurrentSeasonConfig.AfternoonLightingPreset.ApplySmoothly(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Evening:
-                CurrentSeasonConfig.EveningLightingPreset.ApplySmoothly();
+                CurrentSeasonConfig.EveningLightingPreset.ApplySmoothly(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Night:
-                CurrentSeasonConfig.NightLightingPreset.ApplySmoothly();
+                CurrentSeasonConfig.NightLightingPreset.ApplySmoothly(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Midnight:
-                CurrentSeasonConfig.MidnightLightingPreset.ApplySmoothly();
+                CurrentSeasonConfig.MidnightLightingPreset.ApplySmoothly(WorldWeatherController.CurrentWeather);
                 break;
         }
     }
@@ -218,22 +229,22 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
         switch (daypart)
         {
             case DayPart.Dawn:
-                CurrentSeasonConfig.DawnLightingPreset.ApplyDefault();
+                CurrentSeasonConfig.DawnLightingPreset.ApplyDefault(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Morning:
-                CurrentSeasonConfig.MorningLightingPreset.ApplyDefault();
+                CurrentSeasonConfig.MorningLightingPreset.ApplyDefault(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Afternoon:
-                CurrentSeasonConfig.AfternoonLightingPreset.ApplyDefault();
+                CurrentSeasonConfig.AfternoonLightingPreset.ApplyDefault(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Evening:
-                CurrentSeasonConfig.EveningLightingPreset.ApplyDefault();
+                CurrentSeasonConfig.EveningLightingPreset.ApplyDefault(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Night:
-                CurrentSeasonConfig.NightLightingPreset.ApplyDefault();
+                CurrentSeasonConfig.NightLightingPreset.ApplyDefault(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Midnight:
-                CurrentSeasonConfig.MidnightLightingPreset.ApplyDefault();
+                CurrentSeasonConfig.MidnightLightingPreset.ApplyDefault(WorldWeatherController.CurrentWeather);
                 break;
         }
     }
@@ -243,27 +254,27 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
         {
             case DayPart.Dawn:
                 CurrentDayPart = DayPart.Morning;
-                CurrentSeasonConfig.MorningLightingPreset.ApplySmoothly();
+                CurrentSeasonConfig.MorningLightingPreset.ApplySmoothly(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Morning:
                 CurrentDayPart = DayPart.Afternoon;
-                CurrentSeasonConfig.AfternoonLightingPreset.ApplySmoothly();
+                CurrentSeasonConfig.AfternoonLightingPreset.ApplySmoothly(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Afternoon:
                 CurrentDayPart = DayPart.Evening;
-                CurrentSeasonConfig.EveningLightingPreset.ApplySmoothly();
+                CurrentSeasonConfig.EveningLightingPreset.ApplySmoothly(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Evening:
                 CurrentDayPart = DayPart.Night;
-                CurrentSeasonConfig.NightLightingPreset.ApplySmoothly();
+                CurrentSeasonConfig.NightLightingPreset.ApplySmoothly(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Night:
                 CurrentDayPart = DayPart.Midnight;
-                CurrentSeasonConfig.MidnightLightingPreset.ApplySmoothly();
+                CurrentSeasonConfig.MidnightLightingPreset.ApplySmoothly(WorldWeatherController.CurrentWeather);
                 break;
             case DayPart.Midnight:
                 CurrentDayPart = DayPart.Dawn;
-                CurrentSeasonConfig.DawnLightingPreset.ApplySmoothly();
+                CurrentSeasonConfig.DawnLightingPreset.ApplySmoothly(WorldWeatherController.CurrentWeather);
                 break;
         }
     }
@@ -285,12 +296,40 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
                 CurrentSeasonConfig.MidnightLightingPreset.ApplySmoothly(weather); break;
         }
     }
+
+    private void ValidateWorld()
+    {
+        ValidateCurrentSeason();
+        ValidateDayPart();
+        ApplyDaypartLightingSettingInstantly(CurrentDayPart);
+
+        ValidateCurrentSeason();
+        ValidateDayPart();
+    }
     #endregion
 
     #region SAVE GAME SYSTEM
     public void LoadData(GameData data)
     {
-        DayCount = data.WorldSavedData.DayCount;
+        if (DataPersistenceManager.Instance.IsNewGameProgress)
+        {
+            WorldWeatherController.SetWeatherOnPlayerFirstPlay();
+            CurrentWeatherProgress = new WeatherInProgressing(WorldWeatherController.CurrentWeather, 8 * CurrentSeasonConfig.DayTimeConfig.HourInSecond);
+        }
+        else
+        {
+            WorldWeatherController.SetRandomWeather();
+            CurrentWeatherProgress = new WeatherInProgressing(WorldWeatherController.CurrentWeather, 2 * CurrentSeasonConfig.DayTimeConfig.HourInSecond);
+        }
+        
+        CurrentDayCount = Mathf.Max(1, CurrentDayCount);
+        ValidateCurrentSeason();
+        ValidateDayPart();
+        ApplyDaypartLightingSettingInstantly(CurrentDayPart);
+
+        if (data == null) return;
+        CurrentDayCount = data.WorldSavedData.DayCount;
+        CurrentDayCount = Mathf.Max(1, CurrentDayCount);
         DayTime = new TimeSpan(data.WorldSavedData.DayTimeHour, data.WorldSavedData.DayTimeMinute, 0);
         ValidateCurrentSeason();
         ValidateDayPart();
@@ -298,7 +337,9 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
 
     public void SaveData(ref GameData data)
     {
-        data.WorldSavedData.DayCount = DayCount;
+        if (data == null) data = new GameData();
+        data.WorldSavedData = new WorldPersistenceData();
+        data.WorldSavedData.DayCount = CurrentDayCount;
         data.WorldSavedData.DayTimeHour = DayTime.Hours;
         data.WorldSavedData.DayTimeMinute = DayTime.Minutes;
     }
@@ -313,7 +354,7 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
         style.normal.textColor = Color.green;
 
         GUI.Label(new Rect(10, style.fontSize, 500, style.fontSize + 5), "SEASON: " + CurrentSeason.ToString(), style);
-        GUI.Label(new Rect(10, style.fontSize * 2, 500, style.fontSize + 5), "DAY: " + DayCount + " - TIME: " + DayTime.Hours.ToString("00") + ":" + DayTime.Minutes.ToString("00") + " - " + CurrentDayPart.ToString(), style);
+        GUI.Label(new Rect(10, style.fontSize * 2, 500, style.fontSize + 5), "DAY: " + CurrentDayCount + " - TIME: " + DayTime.Hours.ToString("00") + ":" + DayTime.Minutes.ToString("00") + " - " + CurrentDayPart.ToString(), style);
         GUI.Label(new Rect(10, style.fontSize * 3, 500, style.fontSize + 5), "WEATHER: " + CurrentWeather.ToString(), style);
     }
 #endif
@@ -330,7 +371,7 @@ public class WorldEnvironmentControllerEditor : Editor
         GUILayout.Space(15);
         GUILayout.Button("_DEBUG_");
         GUILayout.Label("SEASON: "  + controller.CurrentSeason.ToString());
-        GUILayout.Label("DAY: "     + controller.DayCount + " - TIME: " + controller.DayTime.Hours + ":" + controller.DayTime.Minutes + " - " + controller.CurrentDayPart.ToString());
+        GUILayout.Label("DAY: "     + controller.CurrentDayCount + " - TIME: " + controller.DayTime.Hours + ":" + controller.DayTime.Minutes + " - " + controller.CurrentDayPart.ToString());
         GUILayout.Label("WEATHER: " + controller.CurrentWeather.ToString());
     }
 }

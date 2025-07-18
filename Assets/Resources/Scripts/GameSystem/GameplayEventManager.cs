@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using static SceneSharedAttributes;
 using UnityEngine.Events;
+using UnityEngine;
 
 public static class GameplayEventManager
 {
@@ -37,5 +36,9 @@ public static class GameplayEventManager
     /// vector3 parameter represents the position of the enemy.
     /// </summary>
     public static UnityEvent<Vector3> OnAnEnemyAttackedByPlayer = new UnityEvent<Vector3>();
+    #endregion
+
+    #region _world
+    public static UnityEvent<int, DayPart> OnAnHourPassed = new UnityEvent<int, DayPart>();
     #endregion
 }

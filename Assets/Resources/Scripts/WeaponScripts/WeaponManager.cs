@@ -62,11 +62,6 @@ namespace WeaponSystem
             }
         }
 
-        private void OnEnable()
-        {
-            InitializeWeapons();
-        }
-
         private void Update()
         {
             if (currentWeapon == null || !PlayerBrain.Instance.IsAlive) return;
@@ -88,6 +83,7 @@ namespace WeaponSystem
         private void RegisterEvents()
         {
             PlayerControlEventMananger.OnPlayerDie.AddListener(OnPlayerDie);
+            PlayerControlEventMananger.OnPlayerInteractAmmoBox.AddListener(RefillAmo);
             PlayerControlEventMananger.OnWeaponSwitchInDone.AddListener(OnCurrentWeaponSwitchedIn);
             PlayerControlEventMananger.OnWeaponSwitchOutDone.AddListener(OnPreviousWeaponSwitchedOut);
         }
@@ -95,6 +91,7 @@ namespace WeaponSystem
         private void UnRegisterEvents()
         {
             PlayerControlEventMananger.OnPlayerDie.RemoveListener(OnPlayerDie);
+            PlayerControlEventMananger.OnPlayerInteractAmmoBox.RemoveListener(RefillAmo);
             PlayerControlEventMananger.OnWeaponSwitchInDone.RemoveListener(OnCurrentWeaponSwitchedIn);
             PlayerControlEventMananger.OnWeaponSwitchOutDone.RemoveListener(OnPreviousWeaponSwitchedOut);
         }
@@ -137,9 +134,21 @@ namespace WeaponSystem
 
             // Aiming
             if (Input.GetKey(controlMapping.AimDownSight))
-                currentWeapon.AimDownSight(true);
+                currentWeapon.AimDownSight(true, false);
             else if (Input.GetKeyUp(controlMapping.AimDownSight))
-                currentWeapon.AimDownSight(false);
+                currentWeapon.AimDownSight(false, false);
+
+            if (currentWeapon.IsAiming)
+            {
+                if (Input.GetKeyDown(KeyCode.Mouse2))
+                {
+                    currentWeapon.AimDownSight(true, true);
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Mouse2))
+            {
+                currentWeapon.AimDownSight(true, true);
+            }
 
             // Shooting
             if (Input.GetKey(controlMapping.Fire))
@@ -210,8 +219,10 @@ namespace WeaponSystem
         public WeaponSlot GetCurrentSlot() => currentSlot;
 
         #region SUPPORTIVE
-        private void InitializeWeapons()
+        public void InitializeWeapons()
         {
+            if (MainWeapon) Destroy(MainWeapon.gameObject);
+            if (SubWeapon) Destroy(SubWeapon.gameObject);
             MainWeapon = GameObject.Instantiate(MainWeaponPrefab, WeaponsContainer);
             SubWeapon = GameObject.Instantiate(SubWeaponPrefab, WeaponsContainer);
 
@@ -227,6 +238,33 @@ namespace WeaponSystem
             EquipWeapon(MainWeapon, immediately: true);
 
             initialized = true;
+        }
+
+        public void InitializeWeaponsFromSavedFile(int mainWeaponMagazine, int mainWeaponAmmoCapacity)
+        {
+            if (MainWeapon) Destroy(MainWeapon.gameObject);
+            if (SubWeapon) Destroy(SubWeapon.gameObject);
+            MainWeapon = GameObject.Instantiate(MainWeaponPrefab, WeaponsContainer);
+            SubWeapon = GameObject.Instantiate(SubWeaponPrefab, WeaponsContainer);
+
+            SubWeapon.Initialize(this);
+            MainWeapon.Initialize(this);
+            MainWeapon.SetAmmomainWeaponAmount(mainWeaponMagazine, mainWeaponAmmoCapacity);
+
+            MainWeapon.gameObject.SetActive(false);
+            SubWeapon.gameObject.SetActive(false);
+            MainWeapon.ApplyDefaultPosition();
+            SubWeapon.ApplyDefaultPosition();
+
+            SubWeapon.OnUnequip();
+            EquipWeapon(MainWeapon, immediately: true);
+
+            initialized = true;
+        }
+
+        public void RefillAmo()
+        {
+            MainWeapon.RefillAmmo();
         }
         #endregion
     }

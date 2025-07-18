@@ -1,11 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+using static GameConstant;
 using UnityEngine.Audio;
 using UnityEngine.UI;
-using static GameConstant;
+using UnityEngine;
+using System;
+using TMPro;
 
 public class SettingLayer : MonoBehaviour
 {
@@ -19,6 +17,7 @@ public class SettingLayer : MonoBehaviour
     public Slider SFXVolumeSlider;
 
     [Space]
+    public Slider SensitivitySlider;
     public TMP_InputField MoveForwardInputField;
     public TMP_InputField MoveBackwardInputField;
     public TMP_InputField MoveLeftInputField;
@@ -51,6 +50,7 @@ public class SettingLayer : MonoBehaviour
     #endregion
 
     #region MAIN
+
     #region _events
     private void RegisterAllEvents()
     {
@@ -79,6 +79,8 @@ public class SettingLayer : MonoBehaviour
 
             KeyBindingData.SaveToPlayerPref();
         }
+
+        PlayerPrefs.SetFloat(SensitivityKey, SensitivitySlider.value);
         PlayerPrefs.SetFloat(MusicVolumeKey, MusicVolumeSlider.value);
         AudioMixer.SetFloat(MusicVolumeKey, Mathf.Log10(MusicVolumeSlider.value) * 20f);
         PlayerPrefs.SetFloat(SFXVolumeKey, SFXVolumeSlider.value);
@@ -101,6 +103,9 @@ public class SettingLayer : MonoBehaviour
             MainWeaponInputField.text = KeyBindingData.MainWeapon.ToString();
             SubWeaponInputField.text = KeyBindingData.SubWeapon.ToString();
         }
+
+        float sensitivity = PlayerPrefs.GetFloat(SensitivityKey, 50);
+        SensitivitySlider.value = sensitivity;
 
         float musicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 0.5f);
         MusicVolumeSlider.value = musicVolume;

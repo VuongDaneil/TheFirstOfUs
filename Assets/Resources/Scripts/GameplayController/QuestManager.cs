@@ -1,12 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using NaughtyAttributes;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.XR;
 
-public class QuestManager : MonoBehaviour
+public class QuestManager : MonoBehaviour, IDataPersistence
 {
     #region PROPETIES
     public static QuestManager Instance;
@@ -83,7 +80,6 @@ public class QuestManager : MonoBehaviour
     {
         CompletedRadioCallingQuest = true;
         StartSupportIsComingQuest();
-        InitArrowIndiacator();
     }
 
     private void StartSupportIsComingQuest()
@@ -111,6 +107,52 @@ public class QuestManager : MonoBehaviour
                 ArrowCompassUI.Instance.SetTarget(RadioTowerQuestObjects.FirstOrDefault(x => x.Status == QuestObjectStatus.UnDone).transform);
             }
         }
+    }
+
+    [Button("SKIP RADIO TOWERS")]
+    public void SetAllRaidoTowerQuestDone()
+    {
+        foreach (var questObject in RadioTowerQuestObjects)
+        {
+            questObject.UpdateStatus(QuestObjectStatus.Done);
+        }
+        CompletedRadioTowerQuest = true;
+        RadioCallingQuestObject.SetAvailabale(true);
+        GameplayEventManager.OnAllRadioTowerQuestsCompleted.Invoke();
+        InitArrowIndiacator();
+    }
+
+    #endregion
+
+    #region SAVE GAME DATA
+    public void LoadData(GameData data)
+    {
+        if (data == null) return;
+        CompletedRadioTowerQuest = data.QuestProgressSavedData.CompletedFirstRadioTowerQuest &&
+                                   data.QuestProgressSavedData.CompletedSecondRadioTowerQuest &&
+                                   data.QuestProgressSavedData.CompletedThirdRadioTowerQuest;
+        RadioTowerQuestObjects[0].UpdateStatus(data.QuestProgressSavedData.CompletedFirstRadioTowerQuest ? QuestObjectStatus.Done : QuestObjectStatus.UnDone);
+        RadioTowerQuestObjects[1].UpdateStatus(data.QuestProgressSavedData.CompletedSecondRadioTowerQuest ? QuestObjectStatus.Done : QuestObjectStatus.UnDone);
+        RadioTowerQuestObjects[2].UpdateStatus(data.QuestProgressSavedData.CompletedThirdRadioTowerQuest ? QuestObjectStatus.Done : QuestObjectStatus.UnDone);
+        CompletedRadioCallingQuest = data.QuestProgressSavedData.CompletedRadioCallingQuest;
+        if (CompletedRadioCallingQuest)
+        {
+            RadioCallingQuestObject.UpdateStatus(QuestObjectStatus.Done);
+            StartSupportIsComingQuest();
+        }
+        else
+        {
+            RadioCallingQuestObject.SetAvailabale(false);
+        }
+        InitArrowIndiacator();
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.QuestProgressSavedData.CompletedFirstRadioTowerQuest = RadioTowerQuestObjects[0].CurrentStatus == QuestObjectStatus.Done;
+        data.QuestProgressSavedData.CompletedSecondRadioTowerQuest = RadioTowerQuestObjects[1].CurrentStatus == QuestObjectStatus.Done;
+        data.QuestProgressSavedData.CompletedThirdRadioTowerQuest = RadioTowerQuestObjects[2].CurrentStatus == QuestObjectStatus.Done;
+        data.QuestProgressSavedData.CompletedRadioCallingQuest = CompletedRadioCallingQuest;
     }
     #endregion
 }

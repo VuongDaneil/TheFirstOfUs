@@ -6,7 +6,10 @@ using UnityEngine.Events;
 public static class PlayerControlEventMananger
 {
     #region _player status
+    public static UnityEvent OnPlayerReady = new UnityEvent();
+    public static UnityEvent OnPlayerDoneIntro = new UnityEvent();
     public static UnityEvent OnPlayerDie = new UnityEvent();
+    public static UnityEvent OnPlayerGetHurt = new UnityEvent();
     /// <summary>
     /// On player's HP change
     /// 1st float - current HP
@@ -47,5 +50,6 @@ public static class PlayerControlEventMananger
     public static UnityEvent<int, int, int> OnSwitchingWeapon = new UnityEvent<int, int, int>();
     public static UnityEvent OnWeaponSwitchInDone = new UnityEvent();
     public static UnityEvent OnWeaponSwitchOutDone = new UnityEvent();
+    public static UnityEvent OnPlayerInteractAmmoBox = new UnityEvent();
     #endregion
 }

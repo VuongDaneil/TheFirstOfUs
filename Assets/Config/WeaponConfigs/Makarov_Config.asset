@@ -33,6 +33,8 @@ MonoBehaviour:
   hipFireRotation: {x: 0, y: 0, z: 0}
   adsPosition: {x: -0.067, y: -0.215, z: -0.162}
   adsRotation: {x: 0.192, y: 2.457, z: -4.464}
+  secondAdsPosition: {x: 0.002, y: -0.282, z: -0.008}
+  secondAdsRotation: {x: 0.19200915, y: 2.456987, z: 52.584393}
   movementTransitionSpeed: 0.2
   idleState: Rig|MK_Idle
   walkState: Rig|MK_walk
@@ -58,6 +60,6 @@ MonoBehaviour:
   opticMountPoint: {x: 0, y: 0.1, z: 0.05}
   muzzleMountPoint: {x: 0, y: 0, z: 0.5}
   AttackSoundEffects:
-  - {fileID: 8300000, guid: 2a581c00ee57608409e959ca96bfc994, type: 3}
-  - {fileID: 8300000, guid: b6048bdd1f3d2b140b4b99d3aa7fe96b, type: 3}
-  - {fileID: 8300000, guid: 8abab599bbc2b2848aae6bfd3f2bb70a, type: 3}
+  - {fileID: 8300000, guid: cc8bd6c9fbec5ed43b4d4c91075a3f08, type: 3}
+  - {fileID: 8300000, guid: d673eda25153a2a46b2e157f743c748d, type: 3}
+  - {fileID: 8300000, guid: a79584ce1c992da4a9271b28461de96f, type: 3}

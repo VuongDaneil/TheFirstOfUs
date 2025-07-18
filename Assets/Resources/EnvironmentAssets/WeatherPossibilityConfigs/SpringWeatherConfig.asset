@@ -12,4 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caeb9f63a6ced7a48aa8e6d39ec845db, type: 3}
   m_Name: SpringWeatherConfig
   m_EditorClassIdentifier: 
-  WeathersPossibility: []
+  WeathersPossibility:
+  - Weather: 0
+    Possibility: 50
+  - Weather: 2
+    Possibility: 50
+  - Weather: 4
+    Possibility: 50
+  - Weather: 5
+    Possibility: 50
+  - Weather: 6
+    Possibility: 50
+  - Weather: 7
+    Possibility: 50
+  - Weather: 1
+    Possibility: 50

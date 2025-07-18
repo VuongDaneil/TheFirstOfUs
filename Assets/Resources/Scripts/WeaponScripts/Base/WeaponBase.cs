@@ -9,8 +9,8 @@ namespace WeaponSystem
     public abstract class WeaponBase : MonoBehaviour, IWeapon
     {
         #region PROPERTIES
-        [ReadOnly]public EquipState CurrentEquipState;
-        public EquipState currentEquipState => CurrentEquipState;
+        [ReadOnly]public EquipState currentEquipState;
+        public EquipState CurrentEquipState => currentEquipState;
         public bool IsEquipped => CurrentEquipState == EquipState.Equipped;
 
         [Header("CONTROLLER")]
@@ -34,6 +34,7 @@ namespace WeaponSystem
         protected bool isInspecting;
         protected bool isAttacking;
         protected bool isAiming;
+        protected bool isSecondaryAiming;
         protected int currentAmmo;
         protected int currentAmmoCapacity;
         protected float lastFireTime;
@@ -147,13 +148,13 @@ namespace WeaponSystem
         public void OnEquip()
         {
             SwitchInAnimation();
-            CurrentEquipState = EquipState.Equipped;
+            currentEquipState = EquipState.Equipped;
         }
 
         public void OnUnequip()
         {
             SwitchOutAnimation();
-            CurrentEquipState = EquipState.Unequipped;
+            currentEquipState = EquipState.Unequipped;
         }
 
         public virtual void Fire()
@@ -178,9 +179,9 @@ namespace WeaponSystem
             PlayAnimation(weaponData.reloadState, weaponData.defaultTransitionDuration);
         }
 
-        public virtual void AimDownSight(bool aiming)
+        public virtual void AimDownSight(bool aiming, bool secondaryAim)
         {
-            if (isAiming == aiming || isReloading || isInspecting) return;
+            if (isAiming == aiming && isSecondaryAiming == secondaryAim || isReloading || isInspecting || isRunning) return;
 
             isAiming = aiming;
 
@@ -190,6 +191,9 @@ namespace WeaponSystem
 
             Vector3 targetPosition = aiming ? weaponData.adsPosition : originalPosition;
             Vector3 targetRotation = aiming ? weaponData.adsRotation : originalRotation;
+
+            targetPosition = secondaryAim ? weaponData.secondAdsPosition : targetPosition;
+            targetRotation = secondaryAim ? weaponData.secondAdsRotation : targetRotation;
 
             LeanTween.cancel(weaponModel.gameObject);
             LeanTween.moveLocal(weaponModel.gameObject, targetPosition, weaponData.movementTransitionSpeed)
@@ -356,7 +360,8 @@ namespace WeaponSystem
             }
             CurrentWeaponAnimState = stateName;
             if (rebind) weaponAnimator.Rebind();
-            weaponAnimator.CrossFade(stateName, transitionDuration);
+            if (transitionDuration == 0) weaponAnimator.Play(stateName);
+            else weaponAnimator.CrossFade(stateName, transitionDuration);
         }
 
         protected virtual void UpdateWeaponPosition()
@@ -474,6 +479,18 @@ namespace WeaponSystem
         public virtual bool CanReload()
         {
             return !isReloading && currentAmmo < weaponData.magazineSize && currentAmmoCapacity > 0 && IsEquipped;
+        }
+
+        public void SetAmmomainWeaponAmount(int magazineLeft, int ammoLeft)
+        {
+            currentAmmo = magazineLeft;
+            currentAmmoCapacity = ammoLeft;
+            PlayerControlEventMananger.OnWeaponAmmoChange?.Invoke(currentAmmo, currentAmmoCapacity);
+        }
+        public void RefillAmmo()
+        {
+            currentAmmoCapacity = weaponData.maxAmmoCapacity;
+            PlayerControlEventMananger.OnWeaponAmmoChange?.Invoke(currentAmmo, currentAmmoCapacity);
         }
         #endregion
     }

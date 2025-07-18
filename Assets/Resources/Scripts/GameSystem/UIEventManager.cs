@@ -10,4 +10,8 @@ public static class UIEventManager
 
     public static UnityEvent OnOpenSettingsMenu = new UnityEvent();
     public static UnityEvent OnCloseSettingsMenu = new UnityEvent();
+
+    public static UnityEvent OnSettingSaved = new UnityEvent();
+
+    public static UnityEvent OnQuitToMainMenu = new UnityEvent();
 }

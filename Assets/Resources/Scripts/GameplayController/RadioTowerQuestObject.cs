@@ -18,6 +18,11 @@ public class RadioTowerQuestObject : MonoBehaviour, IQuestObject
     public float DistanceAllowToInteract = 3f;
     public float ProgressSpeed = 1f;
 
+    [Header("AUDIO")]
+    public AudioSource QuestObjectAudioSource;
+    public AudioClip StartProgressAudioClip;
+    public AudioClip CompleteProgressAudioClip;
+
     [Header("DEBUG(s)")]
     [ReadOnly] public float CurrentProgress = 0f;
 
@@ -29,6 +34,12 @@ public class RadioTowerQuestObject : MonoBehaviour, IQuestObject
     {
         RegisterAllEvents();
     }
+
+    private void OnValidate()
+    {
+        if (QuestObjectAudioSource == null) QuestObjectAudioSource = GetComponent<AudioSource>();
+    }
+
     private void OnDestroy()
     {
         UnregisterAllEvents();
@@ -70,6 +81,7 @@ public class RadioTowerQuestObject : MonoBehaviour, IQuestObject
         if (CurrentStatus == QuestObjectStatus.Done || CurrentStatus == QuestObjectStatus.InProgress) return;
         if (ProgressCoroutine != null) StopCoroutine(ProgressCoroutine);
 
+        QuestObjectAudioSource.PlayOneShot(StartProgressAudioClip);
         CurrentStatus = QuestObjectStatus.InProgress;
         ProgressCoroutine = StartCoroutine(Progress());
         GameplayEventManager.OnStartARadioTowerQuest?.Invoke(this);
@@ -77,6 +89,7 @@ public class RadioTowerQuestObject : MonoBehaviour, IQuestObject
 
     private IEnumerator Progress()
     {
+        if (playerTransform == null) playerTransform = PlayerBrain.Instance.transform;
         while (CurrentProgress < 100f)
         {
             if (Vector3.Distance(playerTransform.position, transform.position) > DistanceAllowToInteract)
@@ -90,6 +103,7 @@ public class RadioTowerQuestObject : MonoBehaviour, IQuestObject
         }
         CurrentProgress = 100f;
         CurrentStatus = QuestObjectStatus.Done;
+        QuestObjectAudioSource.PlayOneShot(CompleteProgressAudioClip);
         GameplayEventManager.OnARadioTowerQuestCompleted?.Invoke(this);
     }
 

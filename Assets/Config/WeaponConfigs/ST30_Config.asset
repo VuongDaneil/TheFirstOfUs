@@ -17,9 +17,9 @@ MonoBehaviour:
   weaponType: 1
   weaponSlot: 0
   damage: 15
-  fireRate: 0.17
-  magazineSize: 35
-  maxAmmoCapacity: 500
+  fireRate: 0.185
+  magazineSize: 40
+  maxAmmoCapacity: 480
   NoiseCausedRange: 15
   MinimumSpreadFactor: 0
   MaximumSpreadFactor: 7
@@ -33,6 +33,8 @@ MonoBehaviour:
   hipFireRotation: {x: 0, y: 0, z: 0}
   adsPosition: {x: -0.054, y: -0.216, z: -0.163}
   adsRotation: {x: 0, y: 0, z: -4.468}
+  secondAdsPosition: {x: -0.015, y: -0.186, z: -0.272}
+  secondAdsRotation: {x: 0, y: 0, z: 24.5}
   movementTransitionSpeed: 0.2
   idleState: Rig|KDW_DPose_Idle
   walkState: Rig|KDW_Walk

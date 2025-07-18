@@ -22,6 +22,7 @@ public class NormalZombieActor : ActorBase
     public NavMeshAgent ActorNavAgent;
 
     [Header("DEBUG")]
+    public bool DebugPath = false;
     [ReadOnly] public string CurrentStateName = "IDLE";
     #endregion
 
@@ -44,7 +45,7 @@ public class NormalZombieActor : ActorBase
     {
         base.Update();
 #if UNITY_EDITOR
-        DebugBotVision();
+        if (DebugPath) DebugBotVision();
 #endif
     }
 
@@ -167,22 +168,34 @@ public class NormalZombieActor : ActorBase
 
     public override bool IsTargetInChaseRange(float rangeMultiplier = 1)
     {
+        SeacrhTarget();
         return TargetTransform != null && AttributesConfig.IsTargetInChaseRange(TargetTransform.position, ActorTransform, rangeMultiplier);
     }
 
     public override bool IsTargetInSurroundingSenseRange()
     {
+        SeacrhTarget();
         return TargetTransform != null && AttributesConfig.IsTargetInSurroundingSenseRange(TargetTransform.position, ActorTransform);
     }
 
     public override bool IsTargetInVisionRange()
     {
+        SeacrhTarget();
         return TargetTransform != null && AttributesConfig.IsTargetInVisionRange(TargetTransform.position, ActorTransform);
     }
 
     public override bool IsTargetInAttackRange()
     {
+        SeacrhTarget();
         return TargetTransform != null && AttributesConfig.IsTargetInAttackRange(TargetTransform.position, ActorTransform);
+    }
+
+    private void SeacrhTarget()
+    {
+        if (TargetTransform == null)
+        {
+            if (PlayerBrain.Instance != null) TargetTransform = PlayerBrain.Instance.transform; 
+        }
     }
     #endregion
 

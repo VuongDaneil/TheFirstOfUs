@@ -22,7 +22,7 @@ public class IdleState : IState
 
     public void OnUpdate()
     {
-        if (detectTargetFrameCounter > 5)
+        if (detectTargetFrameCounter > 5 && actor.Ready)
         {
             detectTargetFrameCounter = 0;
             if (actor.IsTargetInVisionRange() || actor.IsTargetInSurroundingSenseRange())

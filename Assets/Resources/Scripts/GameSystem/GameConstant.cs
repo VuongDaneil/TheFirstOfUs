@@ -13,6 +13,7 @@ public static class GameConstant
     public const string MusicVolumeKey = "Music";
     public const string SFXVolumeKey = "SFX";
 
+    public const string SensitivityKey = "K_Sensitivity";
     public const string MoveForwardInputKey = "K_MoveForward";
     public const string MoveBackwardInputKey = "K_MoveBackward";
     public const string MoveLeftInputKey = "K_MoveLeft";

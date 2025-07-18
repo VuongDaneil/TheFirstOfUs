@@ -74,6 +74,7 @@ public class FileDataHandler
             {
                 dataToSave = EncryptDecrypt(dataToSave);
             }
+
         }
         catch { Debug.LogError("FAILED TO SAVE DATA TO " + fullPath); }
     }

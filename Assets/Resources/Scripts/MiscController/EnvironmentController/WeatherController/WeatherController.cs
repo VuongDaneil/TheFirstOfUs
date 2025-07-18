@@ -28,13 +28,6 @@ public class WeatherController : MonoBehaviour
     public List<GameObject> Crows;
     #endregion
 
-    #region UNITY CORE
-    private void OnEnable()
-    {
-        SetWeather(CurrentWeather);
-    }
-    #endregion
-
     #region MAIN
     public void SetWeather(Weather weather)
     {
@@ -80,6 +73,19 @@ public class WeatherController : MonoBehaviour
         {
             crow.SetActive(enable);
         }
+    }
+
+    public void SetWeatherOnPlayerFirstPlay()
+    {
+        CurrentWeather = Weather.Storm;
+        SetWeather(CurrentWeather);
+    }
+
+    public void SetRandomWeather()
+    {
+        Weather[] weathers = (Weather[])Enum.GetValues(typeof(Weather));
+        int randomIndex = UnityEngine.Random.Range(0, weathers.Length);
+        SetWeather(weathers[randomIndex]);
     }
     #endregion
 }
