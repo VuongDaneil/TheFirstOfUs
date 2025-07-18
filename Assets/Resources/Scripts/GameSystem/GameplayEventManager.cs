@@ -5,6 +5,7 @@ using UnityEngine;
 public static class GameplayEventManager
 {
     public static UnityEvent OnPlayerIntialized = new UnityEvent();
+    public static UnityEvent OnPlayerFallToGround = new UnityEvent();
 
     #region _quest
     public static UnityEvent<RadioTowerQuestObject> OnStartARadioTowerQuest = new UnityEvent<RadioTowerQuestObject>();
