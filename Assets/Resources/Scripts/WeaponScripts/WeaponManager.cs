@@ -249,7 +249,7 @@ namespace WeaponSystem
 
             SubWeapon.Initialize(this);
             MainWeapon.Initialize(this);
-            MainWeapon.SetAmmomainWeaponAmount(mainWeaponMagazine, mainWeaponAmmoCapacity);
+            MainWeapon.SetAmmoMainWeaponAmount(mainWeaponMagazine, mainWeaponAmmoCapacity);
 
             MainWeapon.gameObject.SetActive(false);
             SubWeapon.gameObject.SetActive(false);

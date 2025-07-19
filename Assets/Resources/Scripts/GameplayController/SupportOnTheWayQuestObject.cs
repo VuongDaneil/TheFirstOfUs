@@ -19,6 +19,11 @@ public class SupportOnTheWayQuestObject : MonoBehaviour, IQuestObject
     public float DistanceAllowToInteract = 3f;
     public float ProgressSpeed = 1f;
 
+    [Header("AUDIO")]
+    public AudioSource QuestObjectAudioSource;
+    public AudioClip StartProgressAudioClip;
+    public AudioClip CompleteProgressAudioClip;
+
     [Header("DEBUG(s)")]
     [ReadOnly] public float CurrentProgress = 0f;
 
@@ -26,6 +31,10 @@ public class SupportOnTheWayQuestObject : MonoBehaviour, IQuestObject
     #endregion
 
     #region UNITY CORE
+    private void OnValidate()
+    {
+        if (QuestObjectAudioSource == null) QuestObjectAudioSource = GetComponent<AudioSource>();
+    }
     private void Awake()
     {
         RegisterAllEvents();
@@ -73,6 +82,7 @@ public class SupportOnTheWayQuestObject : MonoBehaviour, IQuestObject
 
         CurrentStatus = QuestObjectStatus.InProgress;
         ProgressCoroutine = StartCoroutine(Progress());
+        QuestObjectAudioSource.PlayOneShot(StartProgressAudioClip);
         GameplayEventManager.OnStartSupportComingQuest?.Invoke(this);
     }
 
@@ -91,6 +101,7 @@ public class SupportOnTheWayQuestObject : MonoBehaviour, IQuestObject
         }
         CurrentProgress = 100f;
         CurrentStatus = QuestObjectStatus.Done;
+        QuestObjectAudioSource.PlayOneShot(CompleteProgressAudioClip);
         GameplayEventManager.OnSupportComingQuestCompleted?.Invoke(this);
     }
 

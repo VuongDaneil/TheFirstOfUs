@@ -10,6 +10,7 @@ public class FirearmWeaponAnimationEvent : MonoBehaviour
     public AudioClip MagInClip;
     public AudioClip BoltBackClip;
     public AudioClip BoltForwardClip;
+    public AudioClip DrawClip;
     #endregion
 
     #region MAIN
@@ -24,5 +25,6 @@ public class FirearmWeaponAnimationEvent : MonoBehaviour
     public void MagIn() => ReloadAudioSource.PlayOneShot(MagInClip);
     public void BoltBack() => ReloadAudioSource.PlayOneShot(BoltBackClip);
     public void BoltForward() => ReloadAudioSource.PlayOneShot(BoltForwardClip);
+    public void DrawWeapon() => ReloadAudioSource.PlayOneShot(DrawClip);
     #endregion
 }

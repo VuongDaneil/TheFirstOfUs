@@ -314,7 +314,7 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
         if (DataPersistenceManager.Instance.IsNewGameProgress)
         {
             WorldWeatherController.SetWeatherOnPlayerFirstPlay();
-            CurrentWeatherProgress = new WeatherInProgressing(WorldWeatherController.CurrentWeather, 8 * CurrentSeasonConfig.DayTimeConfig.HourInSecond);
+            CurrentWeatherProgress = new WeatherInProgressing(WorldWeatherController.CurrentWeather, 5 * CurrentSeasonConfig.DayTimeConfig.HourInSecond);
         }
         else
         {

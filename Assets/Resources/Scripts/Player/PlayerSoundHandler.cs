@@ -8,7 +8,9 @@ public class PlayerSoundHandler : MonoBehaviour
     public AudioSource PlayerAudioSource;
     public List<AudioClip> HurtAudioClip = new List<AudioClip>();
 
-    public AudioClip CallRadioClip;
+    public AudioClip TryCoCallRadioClip1;
+    public AudioClip TryCoCallRadioClip2;
+    public AudioClip UnAnsweredRadioClip;
     public AudioClip BeepSoundClip;
     public AudioClip ImOnPositionClip;
     #endregion
@@ -32,9 +34,9 @@ public class PlayerSoundHandler : MonoBehaviour
         if (!PlayerAudioSource.isPlaying && HurtAudioClip.Count > 0) PlayerAudioSource.PlayOneShot(HurtAudioClip.GetRandom()); 
     }
 
-    public void PlayCallRadio()
+    public void PlayUnansweredRadio()
     {
-        PlayerAudioSource.PlayOneShot(CallRadioClip);
+        PlayerAudioSource.PlayOneShot(UnAnsweredRadioClip);
     }
     public void PlayBeepSound()
     {
@@ -43,6 +45,14 @@ public class PlayerSoundHandler : MonoBehaviour
     public void PlayImOnPosition()
     {
         PlayerAudioSource.PlayOneShot(ImOnPositionClip);
+    }
+    public void PlayTryCoCallRadio1()
+    {
+        PlayerAudioSource.PlayOneShot(TryCoCallRadioClip1);
+    }
+    public void PlayTryCoCallRadio2()
+    {
+        PlayerAudioSource.PlayOneShot(TryCoCallRadioClip2);
     }
     #endregion
 }

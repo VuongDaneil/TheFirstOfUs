@@ -17,7 +17,7 @@ MonoBehaviour:
   weaponType: 1
   weaponSlot: 0
   damage: 15
-  fireRate: 0.185
+  fireRate: 0.17
   magazineSize: 40
   maxAmmoCapacity: 480
   NoiseCausedRange: 15
@@ -60,6 +60,4 @@ MonoBehaviour:
   opticMountPoint: {x: 0, y: 0.1, z: 0.05}
   muzzleMountPoint: {x: 0, y: 0, z: 0.5}
   AttackSoundEffects:
-  - {fileID: 8300000, guid: 2a581c00ee57608409e959ca96bfc994, type: 3}
-  - {fileID: 8300000, guid: b6048bdd1f3d2b140b4b99d3aa7fe96b, type: 3}
-  - {fileID: 8300000, guid: 8abab599bbc2b2848aae6bfd3f2bb70a, type: 3}
+  - {fileID: 8300000, guid: 1e118cc1deb5fce4c886d4a7313094c4, type: 3}

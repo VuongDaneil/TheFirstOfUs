@@ -4,6 +4,8 @@ using UnityEngine;
 
 public static class GameplayEventManager
 {
+    public static UnityEvent OnGameEnd = new UnityEvent();
+
     public static UnityEvent OnPlayerIntialized = new UnityEvent();
     public static UnityEvent OnPlayerFallToGround = new UnityEvent();
 

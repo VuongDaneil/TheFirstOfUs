@@ -1,3 +1,4 @@
+using DG.Tweening;
 using NaughtyAttributes;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ public class PlayerMovementController : MonoBehaviour
 
     [Header("Object - crouch / slide")]
     public CharacterControllerBinding ControlMapping;
+    public Transform CharacterMainRoot;
     public Transform CharacterDynamicBody;
     public float CrouchHeightOffset = 1;
     public float SlideHeightOffset = 1;
@@ -26,24 +28,24 @@ public class PlayerMovementController : MonoBehaviour
     public bool TiltBobbingType = false;
     public float bobbingSpeed = 14f;
     public float bobbingAmount = 0.05f;
-    [SerializeField] float headBobFrequency = 1.5f;             // the base speed of the head bobbing (in cycles per metre)
-    [SerializeField] float headBobHeight = 0.3f;                // the height range of the head bob
-    [SerializeField] float headBobSwayAngle = 0.5f;             // the angle which the head tilts to left & right during the bob cycle
-    [SerializeField] float headBobSideMovement = 0.05f;         // the distance the head moves to left & right during the bob cycle
-    [SerializeField] float bobHeightSpeedMultiplier = 0.3f;     // the amount the bob height increases as the character's speed increases (for a good 'run' effect compared with walking)
-    [SerializeField] float bobStrideSpeedLengthen = 0.3f;       // the amount the stride lengthens based on speed (so that running isn't like a silly speedwalk!)
+    [SerializeField] float headBobFrequency = 1.5f;
+    [SerializeField] float headBobHeight = 0.3f;
+    [SerializeField] float headBobSwayAngle = 0.5f;
+    [SerializeField] float headBobSideMovement = 0.05f;
+    [SerializeField] float bobHeightSpeedMultiplier = 0.3f;
+    [SerializeField] float bobStrideSpeedLengthen = 0.3f;
     [SerializeField] float jumpLandMove = 3;
     [SerializeField] float jumpLandTilt = 60;
 
     [Header("SOUND(s)")]
     public AudioSource FootAudioSource;
-    [SerializeField] AudioClip[] footstepSounds;        // an array of footstep sounds that will be randomly selected from.
-    [SerializeField] AudioClip jumpSound;               // the sound played when character leaves the ground.
-    [SerializeField] AudioClip landSound;				// the sound played when character touches back on ground.
+    [SerializeField] AudioClip[] footstepSounds;
+    [SerializeField] AudioClip jumpSound;
+    [SerializeField] AudioClip landSound;
 
-    float nextStepTime = 0.5f;                                  // the time at which the next footstep sound is due to occur
-    float headBobCycle = 0;                             // the current position through the headbob cycle
-    float headBobFade = 0;								// the current amount to which the head bob position is being applied or not (it is faded out when the character is not moving)
+    float nextStepTime = 0.5f;
+    float headBobCycle = 0;
+    float headBobFade = 0;
 
     // Fields for simple spring calculation:
     float springPos = 0;
@@ -52,7 +54,7 @@ public class PlayerMovementController : MonoBehaviour
     float springDampen = 0.8f;
     float springVelocityThreshold = 0.05f;
     float springPositionThreshold = 0.05f;
-    Vector3 originalLocalPos;							// the original local position of this gameobject at Start
+    Vector3 originalLocalPos;
 
     private UnityEngine.CharacterController characterController;
     private Transform player => characterController.transform;
@@ -90,6 +92,7 @@ public class PlayerMovementController : MonoBehaviour
         characterHeightCrouching = characterHeightStanding - new Vector3(0, CrouchHeightOffset, 0);
         characterHeightSliding = characterHeightStanding - new Vector3(0, SlideHeightOffset, 0);
         UIEventManager.OnQuitToMainMenu.AddListener(OnQuitToMainMenu);
+        PlayerControlEventMananger.OnPlayerReady.AddListener(OnPLayerReady);
     }
     private void Start()
     {
@@ -117,10 +120,16 @@ public class PlayerMovementController : MonoBehaviour
     private void OnDestroy()
     {
         UIEventManager.OnQuitToMainMenu.RemoveListener(OnQuitToMainMenu);
+        PlayerControlEventMananger.OnPlayerReady.RemoveListener(OnPLayerReady);
     }
     #endregion
 
     #region MAIN
+    private void OnPLayerReady()
+    {
+        CharacterMainRoot.DOLocalMove(Vector3.zero, 0.5f);
+        CharacterMainRoot.DOLocalRotate(Vector3.zero, 0.5f);
+    }
     void HandleMovement()
     {
 
@@ -205,60 +214,59 @@ public class PlayerMovementController : MonoBehaviour
     }
     void HeadBobbingWithFootstep()
     {
-        Vector3 velocity = (player.position - prevPosition) / Time.deltaTime;
-        Vector3 velocityChange = velocity - prevVelocity;
-        prevPosition = player.position;
-        prevVelocity = velocity;
-
-        // vertical head position "spring simulation" for jumping/landing impacts
-        springVelocity -= velocityChange.y;                         // input to spring from change in character Y velocity
-        springVelocity -= springPos * springElastic;                    // elastic spring force towards zero position
-        springVelocity *= springDampen;                             // damping towards zero velocity
-        springPos += springVelocity * Time.deltaTime;               // output to head Y position
-        springPos = Mathf.Clamp(springPos, -.3f, .3f);          // clamp spring distance
-
-        // snap spring values to zero if almost stopped:
-        if (Mathf.Abs(springVelocity) < springVelocityThreshold && Mathf.Abs(springPos) < springPositionThreshold)
+        if (Time.timeScale < 0) return;
+        try
         {
-            springVelocity = 0;
-            springPos = 0;
+            Vector3 velocity = (player.position - prevPosition) / Time.deltaTime;
+            Vector3 velocityChange = velocity - prevVelocity;
+            prevPosition = player.position;
+            prevVelocity = velocity;
+
+            springVelocity -= velocityChange.y;
+            springVelocity -= springPos * springElastic;
+            springVelocity *= springDampen;
+            springPos += springVelocity * Time.deltaTime;
+            springPos = Mathf.Clamp(springPos, -.3f, .3f);
+
+            if (Mathf.Abs(springVelocity) < springVelocityThreshold && Mathf.Abs(springPos) < springPositionThreshold)
+            {
+                springVelocity = 0;
+                springPos = 0;
+            }
+
+            float flatVelocity = new Vector3(velocity.x, 0, velocity.z).magnitude;
+
+            float strideLengthen = 1 + (flatVelocity * bobStrideSpeedLengthen);
+
+            headBobCycle += (flatVelocity / strideLengthen) * (Time.deltaTime / headBobFrequency);
+
+            float bobFactor = Mathf.Sin(headBobCycle * Mathf.PI * 2);
+            float bobSwayFactor = Mathf.Sin(headBobCycle * Mathf.PI * 2 + Mathf.PI * .5f); 
+            bobFactor = 1 - (bobFactor * .5f + 1);
+            bobFactor *= bobFactor;
+
+            if (new Vector3(velocity.x, 0, velocity.z).magnitude < 0.1f)
+            {
+                headBobFade = Mathf.Lerp(headBobFade, 0, Time.deltaTime);
+            }
+            else
+            {
+                headBobFade = Mathf.Lerp(headBobFade, 1, Time.deltaTime);
+            }
+            float speedHeightFactor = 1 + (flatVelocity * bobHeightSpeedMultiplier);
+
+            float xPos = -headBobSideMovement * bobSwayFactor;
+            float yPos = springPos * jumpLandMove + bobFactor * headBobHeight * headBobFade * speedHeightFactor;
+            float xTilt = -springPos * jumpLandTilt;
+            float zTilt = bobSwayFactor * headBobSwayAngle * headBobFade;
+            if (double.IsNaN(xPos) || double.IsNaN(yPos)) return;
+            Neck.localPosition = originalLocalPos + new Vector3(xPos, yPos, 0);
+            Neck.localRotation = Quaternion.Euler(xTilt, 0, zTilt);
         }
-
-        // head bob cycle is based on "flat" velocity (i.e. excluding Y)
-        float flatVelocity = new Vector3(velocity.x, 0, velocity.z).magnitude;
-
-        // lengthen stride based on speed (so run bobbing isn't lots of little steps)
-        float strideLengthen = 1 + (flatVelocity * bobStrideSpeedLengthen);
-
-        // increment cycle
-        headBobCycle += (flatVelocity / strideLengthen) * (Time.deltaTime / headBobFrequency);
-
-        // actual bobbing and swaying values calculated using Sine wave
-        float bobFactor = Mathf.Sin(headBobCycle * Mathf.PI * 2);
-        float bobSwayFactor = Mathf.Sin(headBobCycle * Mathf.PI * 2 + Mathf.PI * .5f); // sway is offset along the sin curve by a quarter-turn in radians
-        bobFactor = 1 - (bobFactor * .5f + 1); // bob value is brought into 0-1 range and inverted
-        bobFactor *= bobFactor; // bob value is biased towards 0
-
-        // fade head bob effect to zero if not moving
-        if (new Vector3(velocity.x, 0, velocity.z).magnitude < 0.1f)
+        catch
         {
-            headBobFade = Mathf.Lerp(headBobFade, 0, Time.deltaTime);
+
         }
-        else
-        {
-            headBobFade = Mathf.Lerp(headBobFade, 1, Time.deltaTime);
-        }
-
-        // height of bob is exaggerated based on speed
-        float speedHeightFactor = 1 + (flatVelocity * bobHeightSpeedMultiplier);
-
-        // finally, set the position and rotation values
-        float xPos = -headBobSideMovement * bobSwayFactor;
-        float yPos = springPos * jumpLandMove + bobFactor * headBobHeight * headBobFade * speedHeightFactor;
-        float xTilt = -springPos * jumpLandTilt;
-        float zTilt = bobSwayFactor * headBobSwayAngle * headBobFade;
-
-        if (Time.timeScale > 0) Neck.SetLocalPositionAndRotation(originalLocalPos + new Vector3(xPos, yPos, 0), Quaternion.Euler(xTilt, 0, zTilt));
     }
     private void PlayerSoundHandler()
     {

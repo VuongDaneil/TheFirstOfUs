@@ -218,7 +218,7 @@ Transform:
   - {fileID: 8759752170664686740}
   - {fileID: 698755175757334053}
   m_Father: {fileID: 7986602825085714524}
-  m_LocalEulerAnglesHint: {x: 43.359756, y: 10.192129, z: 6.830224}
+  m_LocalEulerAnglesHint: {x: -5.1672544, y: -23.256933, z: -21.933884}
 --- !u!1 &3331180085888442330
 GameObject:
   m_ObjectHideFlags: 0
@@ -579,14 +579,14 @@ CharacterController:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 48
+    m_Bits: 1072
   m_LayerOverridePriority: -1
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.25
+  m_Radius: 0.15
   m_SlopeLimit: 45
   m_StepOffset: 0.6
   m_SkinWidth: 0.1
@@ -665,7 +665,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e4e6fbb8a78034a47a060e3f61a8272e, type: 3}
   - {fileID: 8300000, guid: 1c1cfa02537c2894aa4710e2a85173a9, type: 3}
   - {fileID: 8300000, guid: 2e6950707ac1fbe4fb841c284826f6cd, type: 3}
-  CallRadioClip: {fileID: 8300000, guid: c40ec6b3ccf283047a54754e9cbb0a77, type: 3}
+  TryCoCallRadioClip1: {fileID: 8300000, guid: acd592240fb91a14a9a4b55402090f3a, type: 3}
+  TryCoCallRadioClip2: {fileID: 8300000, guid: 2763dde892fc6934a97f0dc7b7eed46e, type: 3}
+  UnAnsweredRadioClip: {fileID: 8300000, guid: c40ec6b3ccf283047a54754e9cbb0a77, type: 3}
+  BeepSoundClip: {fileID: 8300000, guid: 1f1ff54b295cc5243ac40951544f309e, type: 3}
+  ImOnPositionClip: {fileID: 8300000, guid: b9e1d462a89d17c48b149a988d29b4f0, type: 3}
 --- !u!114 &1362004241809255309
 MonoBehaviour:
   m_ObjectHideFlags: 0

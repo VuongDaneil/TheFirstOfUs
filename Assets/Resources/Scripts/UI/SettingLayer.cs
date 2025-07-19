@@ -68,23 +68,28 @@ public class SettingLayer : MonoBehaviour
         if (KeyBindingData != null)
         {
             KeyBindingData.MoveForward = (KeyCode)Enum.Parse(typeof(KeyCode), MoveForwardInputField.text.ToUpper());
-            KeyBindingData.MoveBackward = (KeyCode)Enum.Parse(typeof(KeyCode), MoveBackwardInputField.text);
-            KeyBindingData.MoveLeft = (KeyCode)Enum.Parse(typeof(KeyCode), MoveLeftInputField.text);
-            KeyBindingData.MoveRight = (KeyCode)Enum.Parse(typeof(KeyCode), MoveRightInputField.text);
-            KeyBindingData.LeanLeft = (KeyCode)Enum.Parse(typeof(KeyCode), LeanLeftInputField.text);
-            KeyBindingData.LeanRight = (KeyCode)Enum.Parse(typeof(KeyCode), LeanRightInputField.text);
-            KeyBindingData.Reload = (KeyCode)Enum.Parse(typeof(KeyCode), ReloadInputField.text);
-            KeyBindingData.MainWeapon = (KeyCode)Enum.Parse(typeof(KeyCode), MainWeaponInputField.text);
-            KeyBindingData.SubWeapon = (KeyCode)Enum.Parse(typeof(KeyCode), SubWeaponInputField.text);
+            KeyBindingData.MoveBackward = (KeyCode)Enum.Parse(typeof(KeyCode), MoveBackwardInputField.text.ToUpper());
+            KeyBindingData.MoveLeft = (KeyCode)Enum.Parse(typeof(KeyCode), MoveLeftInputField.text.ToUpper());
+            KeyBindingData.MoveRight = (KeyCode)Enum.Parse(typeof(KeyCode), MoveRightInputField.text.ToUpper());
+            KeyBindingData.LeanLeft = (KeyCode)Enum.Parse(typeof(KeyCode), LeanLeftInputField.text.ToUpper());
+            KeyBindingData.LeanRight = (KeyCode)Enum.Parse(typeof(KeyCode), LeanRightInputField.text.ToUpper());
+            KeyBindingData.Reload = (KeyCode)Enum.Parse(typeof(KeyCode), ReloadInputField.text.ToUpper());
+            KeyBindingData.MainWeapon = (KeyCode)Enum.Parse(typeof(KeyCode), MainWeaponInputField.text.ToUpper());
+            KeyBindingData.SubWeapon = (KeyCode)Enum.Parse(typeof(KeyCode), SubWeaponInputField.text.ToUpper());
 
             KeyBindingData.SaveToPlayerPref();
         }
 
         PlayerPrefs.SetFloat(SensitivityKey, SensitivitySlider.value);
         PlayerPrefs.SetFloat(MusicVolumeKey, MusicVolumeSlider.value);
-        AudioMixer.SetFloat(MusicVolumeKey, Mathf.Log10(MusicVolumeSlider.value) * 20f);
         PlayerPrefs.SetFloat(SFXVolumeKey, SFXVolumeSlider.value);
-        AudioMixer.SetFloat(SFXVolumeKey, Mathf.Log10(SFXVolumeSlider.value) * 20f);
+
+
+        float music = Mathf.Log10(MusicVolumeSlider.value) * 20f;
+        float sfx = Mathf.Log10(SFXVolumeSlider.value) * 20f;
+
+        AudioMixer.SetFloat(MusicVolumeKey, music);
+        AudioMixer.SetFloat(SFXVolumeKey, sfx);
         PlayerPrefs.Save();
     }
     #endregion

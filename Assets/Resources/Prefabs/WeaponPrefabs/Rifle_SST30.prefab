@@ -5665,7 +5665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdbcf0c1f9a3de44dab1301242298892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentEquipState: 0
+  currentEquipState: 0
   weaponManager: {fileID: 0}
   weaponData: {fileID: 11400000, guid: 6ad099f96f03f884db687a11aa516ebf, type: 2}
   sway: 1
@@ -17352,6 +17352,7 @@ MonoBehaviour:
   MagInClip: {fileID: 8300000, guid: 48e17854a1b675846a24e9ba32bcba38, type: 3}
   BoltBackClip: {fileID: 8300000, guid: 68d701cefb94e6c429963b7c2465b8ff, type: 3}
   BoltForwardClip: {fileID: 8300000, guid: d29d23ae2ee10804d96cb145d5476601, type: 3}
+  DrawClip: {fileID: 8300000, guid: 6285e67564303b140ae4571f48c0cf50, type: 3}
 --- !u!1001 &2315172477751287302
 PrefabInstance:
   m_ObjectHideFlags: 0

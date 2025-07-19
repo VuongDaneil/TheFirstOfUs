@@ -43,13 +43,17 @@ public class ArrowCompassUI : MonoBehaviour
     #region MAIN
     private void IndicatorHanlde()
     {
-        if (target == null) return;
+        try
+        {
+            if (target == null) return;
 
-        Vector3 dir = target.position - camTransform.position;
-        Vector3 flatDir = new Vector3(dir.x, 0, dir.z);
+            Vector3 dir = target.position - camTransform.position;
+            Vector3 flatDir = new Vector3(dir.x, 0, dir.z);
 
-        float angle = Vector3.SignedAngle(camTransform.forward, flatDir, Vector3.up);
-        arrow.localEulerAngles = new Vector3(0, 0, -angle);
+            float angle = Vector3.SignedAngle(camTransform.forward, flatDir, Vector3.up);
+            arrow.localEulerAngles = new Vector3(0, 0, -angle);
+        }
+        catch { }
     }
     #endregion
 

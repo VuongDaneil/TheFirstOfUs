@@ -112,16 +112,25 @@ public class PlayerBrain : MonoBehaviour, IActor, IDataPersistence
 
     private void RegisterEvents()
     {
+        GameplayEventManager.OnGameEnd.AddListener(OnGameEnd);
         PlayerControlEventMananger.OnPlayerChangeMovementState.AddListener(OnPlayerChangeMovementState);
         GameplayEventManager.OnPlayerIntialized?.Invoke();
     }
 
     private void UnRegisterEvents()
     {
+        GameplayEventManager.OnGameEnd.RemoveListener(OnGameEnd);
         PlayerControlEventMananger.OnPlayerChangeMovementState.RemoveListener(OnPlayerChangeMovementState);
     }
 
     private void OnPlayerChangeMovementState(PlayerMovementStage newStage) => CurrentMovementState = newStage;
+    private void OnGameEnd()
+    {
+        WeaponManager.enabled = false;
+        LookController.enabled = false;
+        MovementController.enabled = false;
+        IsInvincible = true;
+    }
     /// <summary>
     /// used in animation event
     /// </summary>

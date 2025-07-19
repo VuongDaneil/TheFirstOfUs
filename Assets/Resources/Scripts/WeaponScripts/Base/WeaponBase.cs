@@ -128,9 +128,11 @@ namespace WeaponSystem
             isReloading = false;
 
             int ammoAvailableToReload = Mathf.Min(weaponData.magazineSize, currentAmmoCapacity);
+            int ammoLost = ammoAvailableToReload - currentAmmo;
 
             currentAmmo = ammoAvailableToReload;
-            currentAmmoCapacity -= currentAmmo;
+
+            if (weaponData.maxAmmoCapacity > 0) currentAmmoCapacity -= ammoLost;
 
             PlayerControlEventMananger.OnWeaponAmmoChange?.Invoke(currentAmmo, currentAmmoCapacity);
             PlayAnimation(weaponData.idleState, weaponData.defaultTransitionDuration);
@@ -230,7 +232,9 @@ namespace WeaponSystem
             isAttacking = false;
             isInspecting = false;
             currentAmmo = weaponData.magazineSize;
-            currentAmmoCapacity = weaponData.maxAmmoCapacity;
+
+            if (weaponData.maxAmmoCapacity < 0) currentAmmoCapacity = 999;
+            else currentAmmoCapacity = weaponData.maxAmmoCapacity;
             lastFireTime = 0f;
 
             PlayerControlEventMananger.OnWeaponAmmoChange?.Invoke(currentAmmo, currentAmmoCapacity);
@@ -481,7 +485,7 @@ namespace WeaponSystem
             return !isReloading && currentAmmo < weaponData.magazineSize && currentAmmoCapacity > 0 && IsEquipped;
         }
 
-        public void SetAmmomainWeaponAmount(int magazineLeft, int ammoLeft)
+        public void SetAmmoMainWeaponAmount(int magazineLeft, int ammoLeft)
         {
             currentAmmo = magazineLeft;
             currentAmmoCapacity = ammoLeft;

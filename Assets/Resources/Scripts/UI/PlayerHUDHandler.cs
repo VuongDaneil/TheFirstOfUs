@@ -15,13 +15,15 @@ public class PlayerHUDHandler : MonoBehaviour
         if (!DataPersistenceManager.Instance.IsNewGameProgress) ShowHud();
         else HideHud();
 
-        PlayerControlEventMananger.OnPlayerDie.AddListener(OnPlayerDie);
+        GameplayEventManager.OnGameEnd.AddListener(OnGameEnd);
+        PlayerControlEventMananger.OnPlayerDie.AddListener(OnGameEnd);
         PlayerControlEventMananger.OnPlayerDoneIntro.AddListener(OnPlayerDoneIntro);
     }
 
     private void OnDestroy()
     {
-        PlayerControlEventMananger.OnPlayerDie.RemoveListener(OnPlayerDie);
+        GameplayEventManager.OnGameEnd.RemoveListener(OnGameEnd);
+        PlayerControlEventMananger.OnPlayerDie.RemoveListener(OnGameEnd);
         PlayerControlEventMananger.OnPlayerDoneIntro.RemoveListener(OnPlayerDoneIntro);
     }
 
@@ -30,10 +32,11 @@ public class PlayerHUDHandler : MonoBehaviour
         HUDFadeIn();
     }
 
-    private void OnPlayerDie()
+    private void OnGameEnd()
     {
         HUDFadeOut();
-        StartCoroutine(DelayDeadlAyerShowUp());
+        if (PlayerBrain.Instance.IsAlive) StartCoroutine(DelayAfterEndgame());
+        else StartCoroutine(DelayDeadLayerShowUp());
     }
 
     public void ShowHud() => HUDCanvasGroup.alpha = 1f;
@@ -49,11 +52,18 @@ public class PlayerHUDHandler : MonoBehaviour
         HUDCanvasGroup.DOFade(0f, 1f);
     }
 
-    IEnumerator DelayDeadlAyerShowUp()
+    IEnumerator DelayDeadLayerShowUp()
     {
         yield return new WaitForSeconds(3f);
         DeadLayerCanvasGroup.DOFade(1, 2);
         yield return new WaitForSeconds(2f);
+        GameplayEventManager.OnPlayerFallToGround?.Invoke();
+        SceneManager.LoadScene(GameConstant.MainMenuScene);
+    }
+
+    IEnumerator DelayAfterEndgame()
+    {
+        yield return new WaitForSeconds(10f);
         GameplayEventManager.OnPlayerFallToGround?.Invoke();
         SceneManager.LoadScene(GameConstant.MainMenuScene);
     }

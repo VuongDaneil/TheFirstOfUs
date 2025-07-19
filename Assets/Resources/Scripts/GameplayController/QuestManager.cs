@@ -20,6 +20,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
     [Header("QUEST: SUPPORTS ARE ON THEIR WAY")]
     [ReadOnly] public bool SupportComingIsCompleted = false;
     public SupportOnTheWayQuestObject SupportComingQuestObject;
+    public GameObject EndgameCutSceneGO;
     #endregion
 
     #region UNITY CORE
@@ -50,6 +51,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         GameplayEventManager.OnPlayerIntialized.AddListener(OnPlayerInitialized);
         GameplayEventManager.OnARadioTowerQuestCompleted.AddListener(OnARadioTowerQuestCompleted);
         GameplayEventManager.OnRadioCallingQuestCompleted.AddListener(OnARadioCallingQuestCompleted);
+        GameplayEventManager.OnSupportComingQuestCompleted.AddListener(OnSupportArrived);
     }
 
     private void UnregisterAllEvents()
@@ -57,6 +59,7 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         GameplayEventManager.OnPlayerIntialized.RemoveListener(OnPlayerInitialized);
         GameplayEventManager.OnARadioTowerQuestCompleted.RemoveListener(OnARadioTowerQuestCompleted);
         GameplayEventManager.OnRadioCallingQuestCompleted.RemoveListener(OnARadioCallingQuestCompleted);
+        GameplayEventManager.OnSupportComingQuestCompleted.RemoveListener(OnSupportArrived);
     }
 
     private void OnPlayerInitialized()
@@ -88,6 +91,12 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         SupportComingQuestObject.OnPlayerInteract();
     }
     #endregion
+
+    private void OnSupportArrived(SupportOnTheWayQuestObject questObject)
+    {
+        EndgameCutSceneGO.SetActive(true);
+        GameplayEventManager.OnGameEnd?.Invoke();
+    }
 
     #endregion
 
