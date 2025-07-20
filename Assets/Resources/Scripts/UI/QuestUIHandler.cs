@@ -99,7 +99,7 @@ public class QuestUIHandler : MonoBehaviour
         QuestStatusProgressTxt.text = "Done";
         QuestProgressBar.DOFillAmount(0, 0.25f);
 
-        int radioTowerFixed = QuestManager.Instance.RadioTowerQuestDone + 1;
+        int radioTowerFixed = QuestManager.Instance.RadioTowerQuestDone;
         int radioTowerNeedToFixed = QuestManager.Instance.RadioTowerQuestObjects.Count;
 
         if (radioTowerFixed >= radioTowerNeedToFixed) return;
@@ -126,7 +126,7 @@ public class QuestUIHandler : MonoBehaviour
     }
     #endregion
 
-    #region _radio tower quest
+    #region _radio calling quest
     private void OnStartARadioCallingQuest(RadioCallingQuestObject quest)
     {
         QuestProgressCanvasGroup.alpha = 1f;

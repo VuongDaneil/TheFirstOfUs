@@ -31,6 +31,7 @@ public class PlayerSoundHandler : MonoBehaviour
 
     private void OnPlayerGetHurt()
     {
+        if (!PlayerBrain.Instance.IsAlive) return;
         if (!PlayerAudioSource.isPlaying && HurtAudioClip.Count > 0) PlayerAudioSource.PlayOneShot(HurtAudioClip.GetRandom()); 
     }
 

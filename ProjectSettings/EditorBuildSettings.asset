@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Resources/Scenes/Boston_Hell.unity
-    guid: 7fa8abdb78400f540ba830c657c984b2
-  - enabled: 1
     path: Assets/Resources/Scenes/MainMenuScene.unity
     guid: 06b39e31696c6e4448317b26e4c663c6
+  - enabled: 1
+    path: Assets/Resources/Scenes/Boston_Hell.unity
+    guid: 7fa8abdb78400f540ba830c657c984b2
   m_configObjects: {}

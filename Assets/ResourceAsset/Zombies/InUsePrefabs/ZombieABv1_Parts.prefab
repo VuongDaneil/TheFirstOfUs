@@ -2658,8 +2658,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.8365865, y: -1.1304977, z: 1.8635283}
-  m_LocalScale: {x: 2.2, y: 2.2, z: 2.2}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.7, y: 2.7, z: 2.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 472368}
   - {fileID: 415524}
@@ -2695,14 +2695,14 @@ NavMeshAgent:
   m_GameObject: {fileID: 166984}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.3
+  m_Radius: 0.1
   m_Speed: 0
   m_Acceleration: 0
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -2720,7 +2720,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 1940068984238573231, guid: 8fbaa56dce2a53041967b7445bc86799, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2829,6 +2829,7 @@ MonoBehaviour:
   AttributesConfig: {fileID: 11400000, guid: 6bdc716ab8dab404084dc83b406f078f, type: 2}
   ActorTransform: {fileID: 0}
   TargetTransform: {fileID: 0}
+  Ready: 0
   OnActorDead:
     m_PersistentCalls:
       m_Calls: []
@@ -2844,6 +2845,7 @@ MonoBehaviour:
   CurrentHealth: 0
   IsInMainMenu: 0
   ActorNavAgent: {fileID: 3150731569754461895}
+  DebugPath: 0
   CurrentStateName: IDLE
 --- !u!114 &-7836510200762193605
 MonoBehaviour:

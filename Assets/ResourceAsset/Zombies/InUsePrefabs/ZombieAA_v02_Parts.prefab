@@ -1915,14 +1915,14 @@ NavMeshAgent:
   m_GameObject: {fileID: 141528}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.3
+  m_Radius: 0.1
   m_Speed: 0
   m_Acceleration: 0
   avoidancePriority: 50
   m_AngularSpeed: 0
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -1940,7 +1940,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 1940068984238573231, guid: 8fbaa56dce2a53041967b7445bc86799, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.8
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2049,6 +2049,7 @@ MonoBehaviour:
   AttributesConfig: {fileID: 11400000, guid: 33622ddc436b7da4b943c41d3a2285d3, type: 2}
   ActorTransform: {fileID: 0}
   TargetTransform: {fileID: 0}
+  Ready: 0
   OnActorDead:
     m_PersistentCalls:
       m_Calls: []
@@ -2064,6 +2065,7 @@ MonoBehaviour:
   CurrentHealth: 0
   IsInMainMenu: 0
   ActorNavAgent: {fileID: 9171702968286103203}
+  DebugPath: 0
   CurrentStateName: IDLE
 --- !u!114 &7187866646673330084
 MonoBehaviour:

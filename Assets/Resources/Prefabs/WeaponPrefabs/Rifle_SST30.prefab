@@ -210,14 +210,14 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0.92068106, b: 0.7377358, a: 1}
+  m_Color: {r: 1, g: 0.8774993, b: 0.5896226, a: 1}
   m_Intensity: 0
   m_Range: 7
   m_SpotAngle: 75.3
   m_InnerSpotAngle: 1
   m_CookieSize: 1
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -13942,7 +13942,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4145135274647918437, guid: 2ee8b0410cf557d499522b7560914320, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17739,7 +17739,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 649339251362673231, guid: 03a48cd8ab5fada4cad82477e3a545f8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3997693244748497182, guid: 03a48cd8ab5fada4cad82477e3a545f8, type: 3}
       propertyPath: m_Layer

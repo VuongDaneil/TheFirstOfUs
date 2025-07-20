@@ -120,5 +120,7 @@ public class DataPersistenceManager : MonoBehaviour
     }
 
     public bool HasGameData() => this.gamedata != null;
+
+    public void DeleteSavedGamedata() => this.gamedata = null;
     #endregion
 }

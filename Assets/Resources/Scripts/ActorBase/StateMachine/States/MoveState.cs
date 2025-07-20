@@ -56,7 +56,7 @@ public class MoveState : IState
         if (navMeshAgent == null) return;
         if (!reachedDestination)
         {
-            if (frameCounter == 0 || frameCounter.DivisibleFor(10))
+            if (frameCounter > 10 && navMeshAgent.isOnNavMesh)
             {
                 navMeshAgent.SetDestination(currentDestination);
 
@@ -68,6 +68,7 @@ public class MoveState : IState
                         temporaryDestination = navMeshAgent.path.corners[1];
                     }
                 }
+                else temporaryDestination = currentDestination;
 
                 lookingAtTemporaryDestination = IsLookAtIgnoreY(actor.ActorTransform, temporaryDestination, 0.9f);
 
@@ -75,6 +76,8 @@ public class MoveState : IState
                 {
                     reachedDestination = true;
                 }
+
+                frameCounter = 0;
             }
         }
         else

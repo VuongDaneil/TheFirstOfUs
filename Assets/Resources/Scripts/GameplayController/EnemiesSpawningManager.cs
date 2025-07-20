@@ -25,8 +25,8 @@ public class EnemiesSpawningManager : MonoBehaviour
 
     [Header("NORMAL ZOMBIES - DEBUG")]
     [ReadOnly] public int NumberOfNormalZombieAlive = 0;
-    [ReadOnly] public List<NormalZombieActor> ActiveNormalZombies = new List<NormalZombieActor>();
-    [ReadOnly] public List<NormalZombieActor> PooledNormalZombies = new List<NormalZombieActor>();
+    public List<NormalZombieActor> ActiveNormalZombies = new List<NormalZombieActor>();
+    public List<NormalZombieActor> PooledNormalZombies = new List<NormalZombieActor>();
     private Transform PlayerTransform;
 
 
@@ -88,18 +88,21 @@ public class EnemiesSpawningManager : MonoBehaviour
     }
     #endregion
 
+    
     #region MAIN
 
     #region _events
     private void RegisterAllEvents()
     {
         GameplayEventManager.OnAnEnemyDead.AddListener(OnAnEnemyDead);
+        GameplayEventManager.OnGameEnd.AddListener(DespawnAllEnemies);
         GameplayEventManager.OnPlayerIntialized?.AddListener(OnPlayerInitialized);
     }
 
     private void UnRegisterAllEvents()
     {
         GameplayEventManager.OnAnEnemyDead.RemoveListener(OnAnEnemyDead);
+        GameplayEventManager.OnGameEnd.RemoveListener(DespawnAllEnemies);
         GameplayEventManager.OnPlayerIntialized.RemoveListener(OnPlayerInitialized);
     }
 
@@ -195,6 +198,11 @@ public class EnemiesSpawningManager : MonoBehaviour
     {
         int modelTypesCount = NormalZombiePrefabs.Count;
         return NormalZombiePrefabs[(NumberOfNormalZombieAlive % modelTypesCount)];
+    }
+
+    private void DespawnAllEnemies()
+    {
+        foreach (var enemies in ActiveNormalZombies) enemies.gameObject.SetActive(false);
     }
     #endregion
 }

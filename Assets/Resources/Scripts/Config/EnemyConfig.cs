@@ -17,7 +17,6 @@ public class EnemyConfig : ScriptableObject
 
     [Header("STAT ATTRIBUTES")]
     public int Health = 100;
-    public float Speed = 2f;
     public float AttackPower = 10f;
     public float AttackRange = 2f;
     public float AttackRate = 2f;
@@ -69,7 +68,7 @@ public class EnemyConfig : ScriptableObject
     public bool GetRandomPointOnNavMesh(Vector3 center, out Vector3 result, float distanceMultiplier = 1)
     {
         float range = Random.Range(DistanceEachMoveWandering.x, DistanceEachMoveWandering.y);
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 11; i++)
         {
             Vector3 randomPoint = center + Random.insideUnitSphere * (range * distanceMultiplier);
             randomPoint.y += 4;
@@ -80,7 +79,7 @@ public class EnemyConfig : ScriptableObject
             }
         }
 
-        result = Vector3.zero;
+        result = center;
         return false;
     }
 

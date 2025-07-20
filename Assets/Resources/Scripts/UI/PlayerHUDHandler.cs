@@ -54,17 +54,22 @@ public class PlayerHUDHandler : MonoBehaviour
 
     IEnumerator DelayDeadLayerShowUp()
     {
-        yield return new WaitForSeconds(3f);
+        DataPersistenceManager.Instance.DeleteSavedGamedata();
         DeadLayerCanvasGroup.DOFade(1, 2);
+        yield return new WaitForSeconds(3f);
         yield return new WaitForSeconds(2f);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         GameplayEventManager.OnPlayerFallToGround?.Invoke();
         SceneManager.LoadScene(GameConstant.MainMenuScene);
     }
 
     IEnumerator DelayAfterEndgame()
     {
+        DataPersistenceManager.Instance.DeleteSavedGamedata();
         yield return new WaitForSeconds(10f);
-        GameplayEventManager.OnPlayerFallToGround?.Invoke();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene(GameConstant.MainMenuScene);
     }
 }

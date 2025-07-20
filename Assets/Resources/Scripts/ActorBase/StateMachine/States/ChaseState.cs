@@ -54,27 +54,31 @@ public class ChaseState : IState
         if (navMeshAgent == null) return;
         if (!reachedDestination)
         {
-            currentDestination = actor.TargetTransform.position;
-
-            if (frameCounter == 0 || frameCounter.DivisibleFor(5))
+            if (frameCounter > 3)
             {
+                currentDestination = actor.TargetTransform.position;
                 navMeshAgent.SetDestination(currentDestination);
+                Vector3 currentPos = actor.ActorTransform.position;
 
-
-                if (navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete)
+                if (navMeshAgent.hasPath && navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete)
                 {
-                    if (navMeshAgent.path.corners.Length > 1)
-                    {
-                        temporaryDestination = navMeshAgent.path.corners[1];
-                    }
+                    var corner = navMeshAgent.path.corners;
+                    if (corner.Length > 1) temporaryDestination = corner[1];
+                    else temporaryDestination = currentDestination;
+
+                    if (Vector3.SqrMagnitude(currentPos - temporaryDestination) <= checkDistance * checkDistance) temporaryDestination = currentDestination;
                 }
+                else temporaryDestination = currentDestination;
 
                 lookingAtTemporaryDestination = IsLookAtIgnoreY(actor.ActorTransform, temporaryDestination, 0.9f);
 
-                if (Vector3.SqrMagnitude(actor.ActorTransform.position - currentDestination) <= checkDistance * checkDistance)
+                //if (Vector3.SqrMagnitude(currentPos - currentDestination) <= checkDistance * checkDistance)
+                if (Vector3.SqrMagnitude(currentPos - currentDestination) <= checkDistance * checkDistance)
                 {
                     reachedDestination = true;
                 }
+
+                frameCounter = 0;
             }
         }
         else

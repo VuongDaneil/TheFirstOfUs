@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PlayerAttributesConfig
   m_EditorClassIdentifier: 
   MaxHealth: 500
-  MaxStamina: 500
+  MaxStamina: 300
   StaminaConsumeRate: 0.4
   WalkSpeed: 3
-  RunSpeed: 5.6
+  RunSpeed: 5.5
   JumpHeight: 2

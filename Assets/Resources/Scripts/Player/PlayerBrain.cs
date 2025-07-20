@@ -126,6 +126,7 @@ public class PlayerBrain : MonoBehaviour, IActor, IDataPersistence
     private void OnPlayerChangeMovementState(PlayerMovementStage newStage) => CurrentMovementState = newStage;
     private void OnGameEnd()
     {
+        WeaponManager.HideAllWeapon();
         WeaponManager.enabled = false;
         LookController.enabled = false;
         MovementController.enabled = false;
@@ -186,7 +187,7 @@ public class PlayerBrain : MonoBehaviour, IActor, IDataPersistence
 
     public void RecoverStamina(float multiplierRate = 1f)
     {
-        CurrentStamina += (StaminaConsumeRate / 2f) * multiplierRate;
+        CurrentStamina += (StaminaConsumeRate / 1.25f) * multiplierRate;
         CurrentStamina = Mathf.Clamp(CurrentStamina, 0, MaxStamina);
         PlayerControlEventMananger.OnPlayerStaminaChanged?.Invoke(CurrentStamina, MaxStamina);
     }

@@ -16,8 +16,8 @@ MonoBehaviour:
   weaponName: ST30
   weaponType: 1
   weaponSlot: 0
-  damage: 15
-  fireRate: 0.17
+  damage: 33
+  fireRate: 0.125
   magazineSize: 40
   maxAmmoCapacity: 480
   NoiseCausedRange: 15

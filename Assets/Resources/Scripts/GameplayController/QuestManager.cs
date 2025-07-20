@@ -143,6 +143,12 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         RadioTowerQuestObjects[0].UpdateStatus(data.QuestProgressSavedData.CompletedFirstRadioTowerQuest ? QuestObjectStatus.Done : QuestObjectStatus.UnDone);
         RadioTowerQuestObjects[1].UpdateStatus(data.QuestProgressSavedData.CompletedSecondRadioTowerQuest ? QuestObjectStatus.Done : QuestObjectStatus.UnDone);
         RadioTowerQuestObjects[2].UpdateStatus(data.QuestProgressSavedData.CompletedThirdRadioTowerQuest ? QuestObjectStatus.Done : QuestObjectStatus.UnDone);
+
+        RadioTowerQuestDone = 0;
+        if (RadioTowerQuestObjects[0].CurrentStatus == QuestObjectStatus.Done) RadioTowerQuestDone ++;
+        if (RadioTowerQuestObjects[1].CurrentStatus == QuestObjectStatus.Done) RadioTowerQuestDone ++;
+        if (RadioTowerQuestObjects[2].CurrentStatus == QuestObjectStatus.Done) RadioTowerQuestDone ++;
+
         CompletedRadioCallingQuest = data.QuestProgressSavedData.CompletedRadioCallingQuest;
         if (CompletedRadioCallingQuest)
         {

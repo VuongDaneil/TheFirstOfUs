@@ -19,19 +19,18 @@ MonoBehaviour:
   Courage: 1
   Laziness: 1
   Health: 100
-  Speed: 2
   AttackPower: 10
-  AttackRange: 2
+  AttackRange: 3
   AttackRate: 2
   HealthPercentageCauseStun: 10
   StunDuration: 3
   VisionRange: 30
   VisionAngle: 90
   HearingRange: 10
-  SurroundingSenseRange: 4
+  SurroundingSenseRange: 6
   RotationSpeed: 150
-  RotateSpeedAcceleration: 0.6
-  DistanceCheckDestinationStop: 1
+  RotateSpeedAcceleration: 1
+  DistanceCheckDestinationStop: 3
   IdleDuration: {x: 3, y: 6}
   DistanceEachMoveWandering: {x: 10, y: 20}
   DistanceStopChasing: 50

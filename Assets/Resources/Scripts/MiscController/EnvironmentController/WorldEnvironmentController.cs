@@ -1,12 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using NaughtyAttributes;
-using UnityEngine;
 using static SceneSharedAttributes;
 using UnityEngine.Events;
+using NaughtyAttributes;
 using static VExtension;
-using UnityEditor.iOS.Xcode;
+using UnityEngine;
+using System;
 
 
 #if UNITY_EDITOR
@@ -69,7 +66,6 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
     }
     private void Update()
     {
-        #if UNITY_EDITOR
         if (Input.GetKeyDown(controlMapping.ChangeDayPartKey))
         {
             ApplyNextDaypartLightingSettingSmoothly();
@@ -78,7 +74,6 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
         {
             SetRandomWeather();
         }
-#endif
 
         if (!PauseTime) 
         { 

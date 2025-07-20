@@ -215,9 +215,6 @@ namespace WeaponSystem
         }
         #endregion
 
-        public WeaponBase GetCurrentWeapon() => currentWeapon;
-        public WeaponSlot GetCurrentSlot() => currentSlot;
-
         #region SUPPORTIVE
         public void InitializeWeapons()
         {
@@ -265,6 +262,15 @@ namespace WeaponSystem
         public void RefillAmo()
         {
             MainWeapon.RefillAmmo();
+        }
+
+        public WeaponBase GetCurrentWeapon() => currentWeapon;
+        public WeaponSlot GetCurrentSlot() => currentSlot;
+
+        public void HideAllWeapon()
+        {
+            MainWeapon.gameObject.SetActive(false);
+            SubWeapon.gameObject.SetActive(false);
         }
         #endregion
     }
