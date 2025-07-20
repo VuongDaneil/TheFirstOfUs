@@ -31,6 +31,7 @@ public class DataPersistenceManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName, useEncryption);
+        this.gamedata = fileDataHandler.Load();
     }
     private void OnEnable()
     {
@@ -61,11 +62,6 @@ public class DataPersistenceManager : MonoBehaviour
         }
     }
 
-    //private void OnApplicationQuit()
-    //{
-    //    SaveGame();
-    //}
-
     public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         DataPersistenceObjects = FindAllDataPersistenceObjects();
@@ -76,7 +72,6 @@ public class DataPersistenceManager : MonoBehaviour
 
     public void OnSceneUnloaded(Scene scene)
     {
-        SaveGame();
         Debug.Log("SCENE UNLOADED: " + scene.name);
     }
     #endregion

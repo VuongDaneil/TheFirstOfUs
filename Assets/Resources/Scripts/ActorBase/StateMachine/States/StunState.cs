@@ -22,6 +22,7 @@ public class StunState : IState
 
     public void OnUpdate()
     {
+        if (!actor.IsAlive) return;
         if (timer > 0) timer -= Time.deltaTime;
         else
         {

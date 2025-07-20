@@ -70,8 +70,11 @@ public class NormalZombieActor : ActorBase
             case StateType.AggressiveChase: nextState = aggressiveChaseState; break;
             case StateType.RunAway:         nextState = runAwayState; break;
         }
+
         if (nextState != null)
         {
+            if (nextState != deadState && !IsAlive) return;
+
             CurrentStateName = nextState.StateName;
 
             stateMachine.PreviousStateType = stateMachine.CurrentStateType;
@@ -143,13 +146,14 @@ public class NormalZombieActor : ActorBase
     {
         base.TakeDamage(amount, source);
 
+        if (!IsAlive) return;
         if (source != null && source.IsPlayer)
         {
             OnActorBeingAttackedByPlayer?.Invoke();
             GameplayEventManager.OnAnEnemyAttackedByPlayer?.Invoke(ActorTransform.position);
         }
 
-        bool canbeStunned = amount >= maxHealth * AttributesConfig.HealthPercentageCauseStun / 100f;
+        bool canbeStunned = CurrentHealth > 0 && amount >= maxHealth * AttributesConfig.HealthPercentageCauseStun / 100f;
         if (!canbeStunned) canbeStunned = Random.Range(0f, 1f) <= 0.35f;
 
         if (IsAlive && canbeStunned)
@@ -157,6 +161,7 @@ public class NormalZombieActor : ActorBase
             OnActorStunned?.Invoke();
         }
     }
+
     #endregion
 
     #region SUPPORTIVE

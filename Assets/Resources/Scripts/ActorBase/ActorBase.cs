@@ -47,18 +47,12 @@ public abstract class ActorBase : MonoBehaviour, IActor
         ActorTransform = transform;
         stateMachine = new StateMachine();
         ActorAnimationController.Initialize(this);
-        PlayerControlEventMananger.OnPlayerReady.AddListener(OnPlayerReady);
         Initialize();
     }
 
     protected virtual void Update()
     {
         stateMachine.Update();
-    }
-
-    private void OnDestroy()
-    {
-        PlayerControlEventMananger.OnPlayerReady.RemoveListener(OnPlayerReady);
     }
     #endregion
 
@@ -71,7 +65,7 @@ public abstract class ActorBase : MonoBehaviour, IActor
         Heal(maxHealth + 99);
         ActorTransform.position = spawnPoint;
     }
-    public virtual void ChangeState(StateType nextState) {}
+    public virtual void ChangeState(StateType nextState) { }
     #endregion
 
     #region _actions
@@ -94,6 +88,7 @@ public abstract class ActorBase : MonoBehaviour, IActor
         {
             OnActorDie();
             OnActorDead?.Invoke();
+            return;
         }
     }
     #endregion
@@ -137,11 +132,7 @@ public abstract class ActorBase : MonoBehaviour, IActor
     #endregion
 
     #region _events
-    public virtual void OnActorDie() {}
-    private void OnPlayerReady()
-    {
-        Ready = true;
-    }
+    public virtual void OnActorDie() { }
     #endregion
 
     #endregion
@@ -151,6 +142,13 @@ public abstract class ActorBase : MonoBehaviour, IActor
     {
         AttributesConfig = attributes;
         maxHealth = attributes.Health;
+    }
+
+    public bool IsReady()
+    {
+        if (Ready || PlayerBrain.Instance == null) return false;
+        Ready = PlayerBrain.Instance.IsReady;
+        return Ready;
     }
     #endregion
 }

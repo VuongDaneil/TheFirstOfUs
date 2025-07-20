@@ -183,7 +183,7 @@ namespace WeaponSystem
 
         public virtual void AimDownSight(bool aiming, bool secondaryAim)
         {
-            if (isAiming == aiming && isSecondaryAiming == secondaryAim || isReloading || isInspecting || isRunning) return;
+            if (isAiming == aiming && isSecondaryAiming == secondaryAim || isReloading || isInspecting || ((aiming || secondaryAim) && isRunning)) return;
 
             isAiming = aiming;
 

@@ -60,8 +60,6 @@ public class PlayerBrain : MonoBehaviour, IActor, IDataPersistence
             Instance = this;
             SetUpPLayerStats();
 
-            Heal(99999);
-            RestoreStamina();
             RegisterEvents();
 
             if (DataPersistenceManager.Instance == null)
@@ -72,6 +70,8 @@ public class PlayerBrain : MonoBehaviour, IActor, IDataPersistence
             {
                 if (DataPersistenceManager.Instance.IsNewGameProgress)
                 {
+                    Heal(99999);
+                    RestoreStamina();
                     PlayerAnimator.Play(IntroAnimState);
                 }
                 else
@@ -237,7 +237,7 @@ public class PlayerBrain : MonoBehaviour, IActor, IDataPersistence
     {
         IsReady = true;
         PlayerAnimator.enabled = false;
-        WeaponManager.InitializeWeapons();
+        if (DataPersistenceManager.Instance.IsNewGameProgress) WeaponManager.InitializeWeapons();
         PlayerControlEventMananger.OnPlayerReady?.Invoke();
     }
     #endregion

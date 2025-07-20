@@ -42,7 +42,7 @@ public class MoveState : IState
     public void OnUpdate()
     {
 
-        if (detectTargetFrameCounter > 5 && actor.Ready)
+        if (detectTargetFrameCounter > 5 && actor.IsReady())
         {
             detectTargetFrameCounter = 0;
             if (actor.IsTargetInVisionRange() || actor.IsTargetInSurroundingSenseRange())

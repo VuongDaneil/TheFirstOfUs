@@ -77,6 +77,7 @@ public class MainMenuLayer : MonoBehaviour
         LoadingScene.SetActive(true);
         MainMenuCanvasGroup.alpha = 0f;
         SettingCanvasGroup.alpha = 0f;
+        DataPersistenceManager.Instance.LoadGame();
         foreach (var audioSource in MainMenuAudioSource) audioSource.Stop();
         UnityEngine.SceneManagement.SceneManager.LoadScene(GameConstant.GameScene);
     }
