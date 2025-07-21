@@ -146,7 +146,8 @@ public abstract class ActorBase : MonoBehaviour, IActor
 
     public bool IsReady()
     {
-        if (Ready || PlayerBrain.Instance == null) return false;
+        if (Ready) return true;
+        if (PlayerBrain.Instance == null) return false;
         Ready = PlayerBrain.Instance.IsReady;
         return Ready;
     }

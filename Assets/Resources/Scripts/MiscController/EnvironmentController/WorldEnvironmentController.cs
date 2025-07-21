@@ -72,7 +72,7 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
         }
         if (Input.GetKeyDown(controlMapping.ChangeWeatherKey))
         {
-            SetRandomWeather();
+            SetNextWeather();
         }
 
         if (!PauseTime) 
@@ -132,6 +132,14 @@ public class WorldEnvironmentController : MonoBehaviour, IDataPersistence
     {
         Weather randomWeather = GetRandomEnumValue<Weather>();
         ChangeWeather(randomWeather, UnityEngine.Random.Range(1, 5));
+    }
+
+    private void SetNextWeather()
+    {
+        Weather theNextWeather = GetRandomEnumValue<Weather>();
+        if (CurrentWeather == Weather.Storm) theNextWeather = Weather.Clear;
+        else theNextWeather = CurrentWeather + 1;
+        ChangeWeather(theNextWeather, UnityEngine.Random.Range(1, 5));
     }
 
     private void ChangeWeather(Weather weather, int duration)

@@ -2084,6 +2084,113 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 110802, guid: 89f79f1bf5f167d4298cf43d900f56c1, type: 3}
   m_PrefabInstance: {fileID: 490260527}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &66218677
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 66218681}
+  - component: {fileID: 66218680}
+  - component: {fileID: 66218679}
+  - component: {fileID: 66218678}
+  m_Layer: 6
+  m_Name: Terrain_Tree_HightSetting
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!114 &66218678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66218677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7eef21d3584a264449d59bf652c9ed1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectHitEffectType: 1
+--- !u!154 &66218679
+TerrainCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66218677}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_TerrainData: {fileID: 15600000, guid: f8821b331c9dd5b44b859d11d6261f44, type: 2}
+  m_EnableTreeColliders: 1
+--- !u!218 &66218680
+Terrain:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66218677}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_TerrainData: {fileID: 15600000, guid: f8821b331c9dd5b44b859d11d6261f44, type: 2}
+  m_TreeDistance: 500
+  m_TreeBillboardDistance: 200
+  m_TreeCrossFadeLength: 10
+  m_TreeMaximumFullLODCount: 1500
+  m_DetailObjectDistance: 500
+  m_DetailObjectDensity: 0.002
+  m_HeightmapPixelError: 200
+  m_SplatMapDistance: 30
+  m_HeightmapMinimumLODSimplification: 1
+  m_HeightmapMaximumLOD: 1
+  m_ShadowCastingMode: 0
+  m_DrawHeightmap: 1
+  m_DrawInstanced: 1
+  m_DrawTreesAndFoliage: 1
+  m_StaticShadowCaster: 0
+  m_IgnoreQualitySettings: 0
+  m_ReflectionProbeUsage: 0
+  m_MaterialTemplate: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+  m_BakeLightProbesForTrees: 0
+  m_PreserveTreePrototypeLayers: 0
+  m_DeringLightProbesForTrees: 1
+  m_ReceiveGI: 1
+  m_ScaleInLightmap: 1
+  m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
+  m_GroupingID: 0
+  m_RenderingLayerMask: 1
+  m_AllowAutoConnect: 0
+  m_EnableHeightmapRayTracing: 0
+  m_EnableTreesAndDetailsRayTracing: 0
+  m_TreeMotionVectorModeOverride: 3
+--- !u!4 &66218681
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66218677}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -319, y: 0, z: -322}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &66770774
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18468,7 +18575,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ready: 0
-  Stop: 0
+  Stop: 1
   NormalZombiePrefabs:
   - {fileID: -7064471875864635884, guid: 3d75ede6382d28e4882c3327780818fe, type: 3}
   - {fileID: 2873058704277516398, guid: 8e58f725f7a2c78459ef05118a7ac2dc, type: 3}
@@ -42444,7 +42551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1876609255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47181,7 +47288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4189575525314241108, guid: 7261c2f2e097e1349acaf1f528b5c6f3, type: 3}
       propertyPath: IsInvincible
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4189575525314241108, guid: 7261c2f2e097e1349acaf1f528b5c6f3, type: 3}
       propertyPath: SelfHealingRate
@@ -47261,6 +47368,7 @@ SceneRoots:
   - {fileID: 362202630}
   - {fileID: 682644765}
   - {fileID: 1876609258}
+  - {fileID: 66218681}
   - {fileID: 998972955}
   - {fileID: 1621710088}
   - {fileID: 423663305}
