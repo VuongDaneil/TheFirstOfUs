@@ -222,6 +222,8 @@ public class PlayerMovementController : MonoBehaviour
             prevPosition = player.position;
             prevVelocity = velocity;
 
+            if (double.IsNaN(springPos)) springPos = 0;
+            if (double.IsNaN(springVelocity)) springVelocity = 0;
             springVelocity -= velocityChange.y;
             springVelocity -= springPos * springElastic;
             springVelocity *= springDampen;

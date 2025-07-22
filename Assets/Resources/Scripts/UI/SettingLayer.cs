@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using System;
 using TMPro;
+using UnityEngine.Windows;
 
 public class SettingLayer : MonoBehaviour
 {
@@ -118,6 +119,16 @@ public class SettingLayer : MonoBehaviour
         float sfxVolume = PlayerPrefs.GetFloat(SFXVolumeKey, 0.5f);
         SFXVolumeSlider.value = sfxVolume;
         AudioMixer.SetFloat(SFXVolumeKey, Mathf.Log10(sfxVolume) * 20f);
+    }
+
+    private string NormaizeInputCoontent(string content)
+    {
+        if (int.TryParse(content, out int number))
+        {
+            if (number >= 1 && number <= 9) return content;
+            return "0" + content;
+        }
+        else return content.ToUpper();
     }
 
     #endregion
