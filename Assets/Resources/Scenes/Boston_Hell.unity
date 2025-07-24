@@ -8888,7 +8888,7 @@ MonoBehaviour:
   SummerSeasonConfig: {fileID: 11400000, guid: 6bc5bb69345dee34e8654e3b50514725, type: 2}
   WinterSeasonConfig: {fileID: 11400000, guid: 6bc5bb69345dee34e8654e3b50514725, type: 2}
   UpdateWeatherEveryFrames: 60
-  PauseTime: 0
+  PauseTime: 1
   CurrentDayCount: 1
   CurrentDayPart: 0
   CurrentSeasonConfig: {fileID: 11400000, guid: 6bc5bb69345dee34e8654e3b50514725, type: 2}

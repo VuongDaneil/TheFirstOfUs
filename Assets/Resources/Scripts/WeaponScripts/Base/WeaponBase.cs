@@ -216,6 +216,13 @@ namespace WeaponSystem
 
             isInspecting = true;
             PlayAnimation(weaponData.inspectState, weaponData.inspectTransitionDuration);
+            StartCoroutine(StopInspecting());
+        }
+
+        IEnumerator StopInspecting()
+        {
+            yield return new WaitForSeconds(4);
+            isInspecting = false;
         }
         #endregion
 

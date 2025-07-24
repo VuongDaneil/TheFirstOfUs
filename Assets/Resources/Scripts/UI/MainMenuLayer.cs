@@ -70,7 +70,7 @@ public class MainMenuLayer : MonoBehaviour
         MainMenuCanvasGroup.alpha = 0f;
         SettingCanvasGroup.alpha = 0f;
         DataPersistenceManager.Instance.NewGame();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(GameConstant.GameScene);
+        StartCoroutine(DelayLoadGameplayScene());
     }
     private void OnStartSavedPlaying()
     {
@@ -78,8 +78,7 @@ public class MainMenuLayer : MonoBehaviour
         MainMenuCanvasGroup.alpha = 0f;
         SettingCanvasGroup.alpha = 0f;
         DataPersistenceManager.Instance.LoadGame();
-        foreach (var audioSource in MainMenuAudioSource) audioSource.Stop();
-        UnityEngine.SceneManagement.SceneManager.LoadScene(GameConstant.GameScene);
+        StartCoroutine(DelayLoadGameplayScene());
     }
 
     private void OnOpenSettingLayer()
@@ -96,5 +95,11 @@ public class MainMenuLayer : MonoBehaviour
         Application.Quit();
     }
 
+    private IEnumerator DelayLoadGameplayScene()
+    {
+        foreach(var audioSource in MainMenuAudioSource) audioSource.Stop();
+        yield return new WaitForSeconds(2f);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(GameConstant.GameScene);
+    }
     #endregion
 }

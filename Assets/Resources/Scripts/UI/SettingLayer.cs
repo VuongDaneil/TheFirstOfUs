@@ -99,15 +99,15 @@ public class SettingLayer : MonoBehaviour
     {
         if (KeyBindingData != null)
         {
-            MoveForwardInputField.text = KeyBindingData.MoveForward.ToString();
-            MoveBackwardInputField.text = KeyBindingData.MoveBackward.ToString();
-            MoveLeftInputField.text = KeyBindingData.MoveLeft.ToString();
-            MoveRightInputField.text = KeyBindingData.MoveRight.ToString();
-            LeanLeftInputField.text = KeyBindingData.LeanLeft.ToString();
-            LeanRightInputField.text = KeyBindingData.LeanRight.ToString();
-            ReloadInputField.text = KeyBindingData.Reload.ToString();
-            MainWeaponInputField.text = KeyBindingData.MainWeapon.ToString();
-            SubWeaponInputField.text = KeyBindingData.SubWeapon.ToString();
+            MoveForwardInputField.text = ConvertKeyCodeToString(KeyBindingData.MoveForward);
+            MoveBackwardInputField.text = ConvertKeyCodeToString(KeyBindingData.MoveBackward);
+            MoveLeftInputField.text = ConvertKeyCodeToString(KeyBindingData.MoveLeft);
+            MoveRightInputField.text = ConvertKeyCodeToString(KeyBindingData.MoveRight);
+            LeanLeftInputField.text = ConvertKeyCodeToString(KeyBindingData.LeanLeft);
+            LeanRightInputField.text = ConvertKeyCodeToString(KeyBindingData.LeanRight);
+            ReloadInputField.text = ConvertKeyCodeToString(KeyBindingData.Reload);
+            MainWeaponInputField.text = ConvertKeyCodeToString(KeyBindingData.MainWeapon);
+            SubWeaponInputField.text = ConvertKeyCodeToString(KeyBindingData.SubWeapon);
         }
 
         float sensitivity = PlayerPrefs.GetFloat(SensitivityKey, 50);
@@ -131,5 +131,14 @@ public class SettingLayer : MonoBehaviour
         else return content.ToUpper();
     }
 
+    private string ConvertKeyCodeToString(KeyCode keyCode)
+    {
+        string keyString = keyCode.ToString();
+        if (keyString.Contains("Alpha", StringComparison.OrdinalIgnoreCase))
+        {
+            return keyString.Replace("Alpha", "");
+        }
+        return keyString;
+    }
     #endregion
 }
