@@ -74,6 +74,7 @@ public class PlayerMovementController : MonoBehaviour
     public PlayerMovementStage CurrentMovementStage = PlayerMovementStage.StandStill;
     public CharacterStanceStatus CurrentStanceStage = CharacterStanceStatus.Standing;
     Vector3 currentHeadPosition = Vector3.zero;
+    public bool SnappingPosition = false;
 
     Vector3 prevPosition;                               // the position from last frame
     Vector3 prevVelocity = Vector3.zero;                // the velocity from last frame

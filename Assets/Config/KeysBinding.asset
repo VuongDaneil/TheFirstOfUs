@@ -36,8 +36,8 @@ MonoBehaviour:
   QuickMelee: 118
   QuickThrow: 103
   WeaponSwap: 113
-  SaveGameKey: 105
-  LoadGameKey: 111
+  SaveGameKey: 110
+  LoadGameKey: 109
   ResetSaveFileKey: 112
-  ChangeDayPartKey: 107
-  ChangeWeatherKey: 106
+  ChangeDayPartKey: 105
+  ChangeWeatherKey: 111

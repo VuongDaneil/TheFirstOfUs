@@ -98,6 +98,9 @@ public class PlayerBrain : MonoBehaviour, IActor, IDataPersistence
             Heal(50);
             hurtedTimer = SelfHealingRate;
         }
+
+        if (Input.GetKeyDown(KeyCode.J)) IsInvincible = true;
+        if (Input.GetKeyDown(KeyCode.K)) IsInvincible = false;
     }
 
     private void OnDestroy()

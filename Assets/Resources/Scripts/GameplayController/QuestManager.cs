@@ -38,6 +38,11 @@ public class QuestManager : MonoBehaviour, IDataPersistence
         RegisterAllEvents();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.L)) SetAllRaidoTowerQuestDone();    
+    }
+
     private void OnDestroy()
     {
         UnregisterAllEvents();

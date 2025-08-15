@@ -207,6 +207,7 @@ public class NormalZombieActor : ActorBase
     #region DEBUG(s)
     private void DebugBotVision()
     {
+        if (TargetTransform == null && PlayerBrain.Instance != null) TargetTransform = PlayerBrain.Instance.transform;
         if (AttributesConfig == null || TargetTransform == null) return;
         Vector3 actorPosition = ActorTransform.position;
         Debug.DrawRay(actorPosition, ActorTransform.forward * AttributesConfig.VisionRange, Color.green);
