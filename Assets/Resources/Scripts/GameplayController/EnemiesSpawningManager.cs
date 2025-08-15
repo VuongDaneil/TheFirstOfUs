@@ -80,6 +80,9 @@ public class EnemiesSpawningManager : MonoBehaviour
             }
         }
         #endregion
+
+        if (Input.GetKeyDown(KeyCode.Y)) KillAllZombie();
+        if (Input.GetKeyDown(KeyCode.U)) SpawnZombies();
     }
 
     private void OnDestroy()
@@ -152,6 +155,26 @@ public class EnemiesSpawningManager : MonoBehaviour
     #endregion
 
     #region SUPPORTIVE
+    private void KillAllZombie()
+    {
+        var botToDespawn = new List<NormalZombieActor>();
+        foreach (var zombie in ActiveNormalZombies)
+        {
+            botToDespawn.Add(zombie);
+        }
+        foreach (var zombie in botToDespawn)
+        {
+            DespawnBot(zombie);
+        }
+    }
+
+    private void SpawnZombies()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            SpawnNormalZombie();
+        }
+    }
     private void DespawnBot(NormalZombieActor zombie)
     {
         if (zombie == null) return;
